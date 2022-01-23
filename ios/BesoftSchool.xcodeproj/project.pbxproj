@@ -41,6 +41,7 @@
 		6A4494B98EBA3143E13ADB3F /* Pods-BesoftSchool.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BesoftSchool.release.xcconfig"; path = "Target Support Files/Pods-BesoftSchool/Pods-BesoftSchool.release.xcconfig"; sourceTree = "<group>"; };
 		71A6A3C7A050C2EED7041105 /* libPods-BesoftSchool-BesoftSchoolTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-BesoftSchool-BesoftSchoolTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = BesoftSchool/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		B91B5CDA2799C06600B819DB /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = MaterialCommunityIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
 		DCB08FABACF80E377320CB7F /* Pods-BesoftSchool.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BesoftSchool.debug.xcconfig"; path = "Target Support Files/Pods-BesoftSchool/Pods-BesoftSchool.debug.xcconfig"; sourceTree = "<group>"; };
 		DE334B4B20B9089DABC170EC /* libPods-BesoftSchool.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-BesoftSchool.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
@@ -91,13 +92,13 @@
 				1FEEDE8303DC5538B687449B /* Pods-BesoftSchool-BesoftSchoolTests.debug.xcconfig */,
 				10E2E469B150C99BF9A3DF82 /* Pods-BesoftSchool-BesoftSchoolTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
 		13B07FAE1A68108700A75B9A /* BesoftSchool */ = {
 			isa = PBXGroup;
 			children = (
+				B91B5CD92799BF2600B819DB /* Fonts */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
@@ -147,6 +148,14 @@
 				00E356EE1AD99517003FC87E /* BesoftSchoolTests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		B91B5CD92799BF2600B819DB /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				B91B5CDA2799C06600B819DB /* MaterialCommunityIcons.ttf */,
+			);
+			name = Fonts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
