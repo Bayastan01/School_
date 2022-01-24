@@ -17,6 +17,7 @@ const USER_TYPES = [
   // {name: 'head_teacher', label: 'Директор школы'},
   {name: 'student', label: 'Школьник'},
   // {name: 'сlassroom_teacher', label: 'Классный руководитель'},
+  {name: 'salesman', label: 'Продавец'},
 ];
 
 const WelcomeScreen = ({navigation}) => {
@@ -38,7 +39,9 @@ const WelcomeScreen = ({navigation}) => {
           <Icon name="school-outline" size={80} color={teal[900]} />
         </View>
         <View>
-          <Headline style={{color: grey[600], textAlign: 'center'}}>{APP_TITLE}</Headline>
+          <Headline style={{color: grey[600], textAlign: 'center'}}>
+            {APP_TITLE}
+          </Headline>
           <Subheading style={{color: grey[800], textAlign: 'center'}}>
             Добро пожаловать в {APP_TITLE}!
           </Subheading>
@@ -55,8 +58,15 @@ const WelcomeScreen = ({navigation}) => {
           borderTopLeftRadius: 30,
           backgroundColor: teal[900],
         }}>
-        <Icon style={{alignSelf: 'center'}} name="account-question-outline" size={50} color={grey[100]} />
-        <Title style={{color: common.white, textAlign: 'center'}}>Кем вы являетесь?</Title>
+        <Icon
+          style={{alignSelf: 'center'}}
+          name="account-question-outline"
+          size={50}
+          color={grey[100]}
+        />
+        <Title style={{color: common.white, textAlign: 'center'}}>
+          Кем вы являетесь?
+        </Title>
         <View style={{marginVertical: 12}}>
           <RadioButton.Group
             onValueChange={v => setWhoAreYou(v)}

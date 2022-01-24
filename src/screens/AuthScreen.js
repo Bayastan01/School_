@@ -1,7 +1,5 @@
 import React from 'react';
-import {
-  StyleSheet,
-} from 'react-native';
+import {StyleSheet} from 'react-native';
 import {
   Box,
   Center,
@@ -14,7 +12,7 @@ import {
   HStack,
   Text,
 } from 'native-base';
-import { APP_TITLE } from './utils/settings';
+import {APP_TITLE} from './utils/settings';
 
 const AuthScreen = () => {
   return (
