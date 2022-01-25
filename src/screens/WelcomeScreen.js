@@ -11,16 +11,19 @@ import {
 } from 'react-native-paper';
 import {grey, teal, common} from 'material-ui-colors';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import AuthSellerComponent from '../components/AuthSellerComponent';
 
 const USER_TYPES = [
   {name: 'parent', label: 'Родитель'},
   // {name: 'head_teacher', label: 'Директор школы'},
   {name: 'student', label: 'Школьник'},
+  {name: 'seller', label: 'Продавец или кафе'},
   // {name: 'сlassroom_teacher', label: 'Классный руководитель'},
   {name: 'salesman', label: 'Продавец'},
 ];
 
 const WelcomeScreen = ({navigation}) => {
+  const [step, setStep] = useState(0);
   const [who_are_you, setWhoAreYou] = useState(null);
 
   return (
@@ -68,25 +71,40 @@ const WelcomeScreen = ({navigation}) => {
           Кем вы являетесь?
         </Title>
         <View style={{marginVertical: 12}}>
-          <RadioButton.Group
-            onValueChange={v => setWhoAreYou(v)}
-            value={who_are_you}>
-            {USER_TYPES.map(g => (
-              <TouchableOpacity
-                onPress={() => setWhoAreYou(g.name)}
-                style={{flexDirection: 'row', alignItems: 'center'}}>
-                <RadioButton
-                  color={grey[100]}
-                  uncheckedColor={grey[100]}
-                  value={g.name}
-                />
-                <Text style={{color: grey[100]}}>{g.label}</Text>
-              </TouchableOpacity>
-            ))}
-          </RadioButton.Group>
+          {step === 0 ? (
+            <RadioButton.Group
+              onValueChange={v => setWhoAreYou(v)}
+              value={who_are_you}>
+              {USER_TYPES.map(g => (
+                <TouchableOpacity
+                  onPress={() => setWhoAreYou(g.name)}
+                  style={{flexDirection: 'row', alignItems: 'center'}}>
+                  <RadioButton
+                    color={grey[100]}
+                    uncheckedColor={grey[100]}
+                    value={g.name}
+                  />
+                  <Text style={{color: grey[100]}}>{g.label}</Text>
+                </TouchableOpacity>
+              ))}
+            </RadioButton.Group>
+          ) : null}
+          {step === 1 ? (
+            <>
+              {who_are_you === 'seller' ? (
+                <></>
+              ) : null}
+              {who_are_you === 'student' ? (
+                <></>
+              ) : null}
+              {who_are_you === 'seller' ? <AuthSellerComponent /> : null}
+            </>
+          ) : null}
         </View>
         <Button
+          onPress={() => setStep(s => s + 1)}
           mode={'contained'}
+          disabled={who_are_you === null}
           contentStyle={{backgroundColor: 'white'}}
           labelStyle={{color: teal[900]}}>
           Далее
