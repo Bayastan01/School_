@@ -11,15 +11,19 @@
   },
   "dependencies": {
     "@react-navigation/material-bottom-tabs": "^6.0.9",
+    "@react-navigation/material-top-tabs": "^6.0.6",
     "@react-navigation/native": "^6.0.6",
     "@react-navigation/native-stack": "^6.2.5",
     "material-ui-colors": "^1.0.0",
     "react": "17.0.2",
     "react-native": "0.67.0",
+    "react-native-file-picker": "^0.0.21",
+    "react-native-pager-view": "^5.4.9",
     "react-native-paper": "^4.11.2",
     "react-native-safe-area-context": "^3.3.2",
     "react-native-screens": "^3.10.2",
     "react-native-smooth-pincode-input": "^1.0.9",
+    "react-native-tab-view": "^3.1.1",
     "react-native-vector-icons": "^9.0.0"
   },
   "devDependencies": {

@@ -2,7 +2,7 @@ import React from 'react';
 import {StyleSheet} from 'react-native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import WelcomeScreen from '../screens/WelcomeScreen';
-import IntroScreen from '../screens/IntroScreen';
+import IntroScreen from '../screens/ParentSumScreen';
 
 const Stack = createNativeStackNavigator();
 

@@ -1,9 +1,10 @@
 import React from 'react';
 import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
-import MainSreen from '../screens/MainSreen';
-import Information from '../screens/Information';
+import ParentProfileScreen from '../screens/ParentProfileScreen';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { grey, teal } from "material-ui-colors";
+import {grey, teal} from 'material-ui-colors';
+import ParentHomeScreen from '../screens/ParentHomeScreen';
+import ParentSumScreen from '../screens/ParentSumScreen';
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -14,8 +15,8 @@ const ParentStack = () => {
       activeColor={grey[100]}
       barStyle={{backgroundColor: teal[900]}}>
       <Tab.Screen
-        name="Home"
-        component={MainSreen}
+        name="ParentHomeScreen"
+        component={ParentHomeScreen}
         options={{
           tabBarLabel: 'Главная',
           tabBarIcon: ({color}) => (
@@ -23,13 +24,29 @@ const ParentStack = () => {
           ),
         }}
       />
+
       <Tab.Screen
-        name="Information"
-        component={Information}
+        name="ParentSumScreen"
+        component={ParentSumScreen}
         options={{
-          tabBarLabel: 'Updates',
+          tabBarLabel: 'Финансы',
           tabBarIcon: ({color}) => (
-            <MaterialCommunityIcons name="bell" color={color} size={26} />
+            <MaterialCommunityIcons
+              name="currency-usd"
+              color={color}
+              size={26}
+            />
+          ),
+        }}
+      />
+
+      <Tab.Screen
+        name="ParentProfileScreen"
+        component={ParentProfileScreen}
+        options={{
+          tabBarLabel: 'Профиль',
+          tabBarIcon: ({color}) => (
+            <MaterialCommunityIcons name="account" color={color} size={26} />
           ),
         }}
       />
