@@ -6,7 +6,8 @@ import StudentScreen from './screens/StudentScreen';
 import SellerStack from './stacks/SellerStack';
 
 const App = () => {
-  const is_authorized = false;
+  const is_authorized = true;
+
   const user_type = 'parent';
 
   return (
