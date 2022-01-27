@@ -3,7 +3,7 @@ import {Image, Text, View} from 'react-native';
 import {Avatar, Headline} from 'react-native-paper';
 import {teal} from 'material-ui-colors';
 
-const StudentStack = () => {
+const StudentScreen = () => {
   return (
     <View
       style={{
@@ -54,4 +54,4 @@ const StudentStack = () => {
   );
 };
 
-export default StudentStack;
+export default StudentScreen;

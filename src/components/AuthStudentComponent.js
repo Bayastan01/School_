@@ -1,20 +1,19 @@
 import React, {useState} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {TextInput} from 'react-native-paper';
 import SmoothPinCodeInput from 'react-native-smooth-pincode-input';
 
 const AuthStudentComponent = () => {
-  // const [text, setText] = useState('');
-  const [studentNumber, setStudentNumber] = useState('+996 ');
-  const [studentCode, setStudentCode] = useState('');
+  const [phone_number, setPhoneNumber] = useState('+996 ');
+  const [verification_code, setVerificationCode] = useState('');
 
   return (
     <View style={styles.container}>
       <TextInput
         label="Номер мобильного телефона"
-        value={studentNumber}
+        value={phone_number}
         keyboardType={'phone-pad'}
-        onChangeText={studentNumber => setStudentNumber(studentNumber)}
+        onChangeText={t => setPhoneNumber(t)}
         style={styles.myInput}
       />
 
@@ -28,8 +27,8 @@ const AuthStudentComponent = () => {
           cellStyleFocused={{
             borderColor: 'black',
           }}
-          value={studentCode}
-          onTextChange={a => setStudentCode(a)}
+          value={verification_code}
+          onTextChange={a => setVerificationCode(a)}
         />
       </View>
     </View>

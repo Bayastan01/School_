@@ -2,7 +2,8 @@ import React from 'react';
 import {StyleSheet} from 'react-native';
 import WelcomeStack from './stacks/WelcomeStack';
 import ParentStack from './stacks/ParentStack';
-import StudentStack from './stacks/StudentStack';
+import StudentScreen from './screens/StudentScreen';
+import SellerStack from './stacks/SellerStack';
 
 const App = () => {
   const is_authorized = false;
@@ -15,9 +16,9 @@ const App = () => {
       ) : user_type === 'parent' ? (
         <ParentStack />
       ) : user_type === 'student' ? (
-        <StudentStack />
+        <StudentScreen />
       ) : user_type === 'seller' ? (
-        <ParentStack />
+        <SellerStack />
       ) : null}
     </>
   );

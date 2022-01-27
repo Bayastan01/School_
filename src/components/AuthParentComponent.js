@@ -1,26 +1,27 @@
 import React, {useState} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {TextInput} from 'react-native-paper';
 import SmoothPinCodeInput from 'react-native-smooth-pincode-input';
 
 const AuthParentComponent = () => {
-  const [Parenttext, setParentText] = useState('');
-  const [Parentnumber, setParentnumber] = useState('+996 ');
-  const [Parentcode, setParentCode] = useState('');
+  const [full_name, setFullName] = useState('');
+  const [phone_number, setPhoneNumber] = useState('+996 ');
+  const [verification_code, setVerificationCode] = useState('');
+
   return (
     <View style={styles.container}>
       <TextInput
-        label="Имя"
-        value={Parenttext}
-        onChangeText={Parenttext => setParentText(Parenttext)}
+        label="Полное имя"
+        value={full_name}
+        onChangeText={t => setFullName(t)}
         style={styles.myInput}
       />
 
       <TextInput
         label="Номер мобильного телефона"
-        value={Parentnumber}
+        value={phone_number}
         keyboardType={'phone-pad'}
-        onChangeText={Parentnumber => setParentnumber(Parentnumber)}
+        onChangeText={t => setPhoneNumber(t)}
         style={styles.myInput}
       />
 
@@ -34,8 +35,8 @@ const AuthParentComponent = () => {
           cellStyleFocused={{
             borderColor: 'black',
           }}
-          value={Parentcode}
-          onTextChange={a => setParentCode(a)}
+          value={verification_code}
+          onTextChange={a => setVerificationCode(a)}
         />
       </View>
     </View>

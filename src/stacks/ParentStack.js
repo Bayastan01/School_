@@ -4,7 +4,7 @@ import ParentProfileScreen from '../screens/ParentProfileScreen';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {grey, teal} from 'material-ui-colors';
 import ParentHomeScreen from '../screens/ParentHomeScreen';
-import ParentSumScreen from '../screens/ParentSumScreen';
+import ParentFinanceScreen from '../screens/ParentFinanceScreen';
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -26,8 +26,8 @@ const ParentStack = () => {
       />
 
       <Tab.Screen
-        name="ParentSumScreen"
-        component={ParentSumScreen}
+        name="ParentFinanceScreen"
+        component={ParentFinanceScreen}
         options={{
           tabBarLabel: 'Финансы',
           tabBarIcon: ({color}) => (

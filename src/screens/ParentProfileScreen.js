@@ -4,9 +4,7 @@ import {Text, View} from 'react-native';
 const ParentProfileScreen = () => {
   return (
     <View>
-      <Text>
-        Profile
-      </Text>
+      <Text>Profile</Text>
     </View>
   );
 };

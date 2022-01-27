@@ -7,7 +7,7 @@ import ParentCostScreen from './ParentCostScreen';
 
 const Tab = createMaterialTopTabNavigator();
 
-const ParentSumScreen = () => {
+const ParentFinanceScreen = () => {
   return (
     <Tab.Navigator
       initialRouteName="Feed"
@@ -32,4 +32,4 @@ const ParentSumScreen = () => {
 
 const styles = StyleSheet.create({});
 
-export default ParentSumScreen;
+export default ParentFinanceScreen;
