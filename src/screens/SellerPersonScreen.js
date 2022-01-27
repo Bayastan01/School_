@@ -1,7 +1,7 @@
 import React from 'react';
 import {Text, View} from 'react-native';
 
-const Information = () => {
+const SellerPersonScreen = () => {
   return (
     <View>
 
@@ -9,4 +9,4 @@ const Information = () => {
   );
 };
 
-export default Information;
+export default SellerPersonScreen;

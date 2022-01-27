@@ -4,7 +4,7 @@ import WelcomeStack from './stacks/WelcomeStack';
 import ParentStack from './stacks/ParentStack';
 
 const App = () => {
-  const is_authorized = true;
+  const is_authorized = false;
 
   return (
     <>

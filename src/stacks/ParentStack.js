@@ -1,7 +1,7 @@
 import React from 'react';
 import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
-import MainSreen from '../screens/MainSreen';
-import Information from '../screens/Information';
+import MainSreen from '../screens/SelllerMainSreen';
+import Information from '../screens/SellerPersonScreen';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { grey, teal } from "material-ui-colors";
 

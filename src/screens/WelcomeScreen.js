@@ -132,6 +132,7 @@ const WelcomeScreen = () => {
             </RadioButton.Group>
           ) : null}
           {step === 1 ? (
+            
             <>{who_are_you === 'parent' ? <AuthParentComponent /> : null}</>
           ) : null}
           {step === 1 ? (
