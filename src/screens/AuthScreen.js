@@ -12,7 +12,7 @@ import {
   HStack,
   Text,
 } from 'native-base';
-import {APP_TITLE} from './utils/settings';
+import {APP_TITLE} from '../utils/settings';
 
 const AuthScreen = () => {
   return (

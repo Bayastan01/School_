@@ -5,7 +5,7 @@ import ParentStack from './stacks/ParentStack';
 import StudentStack from './stacks/StudentStack';
 
 const App = () => {
-  const is_authorized = true;
+  const is_authorized = false;
   const user_type = 'student';
 
   return (
