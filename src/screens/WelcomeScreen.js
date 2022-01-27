@@ -91,10 +91,14 @@ const WelcomeScreen = ({navigation}) => {
           {step === 1 ? (
             <>
               {who_are_you === 'seller' ? (
-                <></>
+                <>
+
+                </>
               ) : null}
               {who_are_you === 'student' ? (
-                <></>
+                <> 
+                
+                </>
               ) : null}
               {who_are_you === 'seller' ? <AuthSellerComponent /> : null}
             </>
