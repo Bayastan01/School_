@@ -11,7 +11,7 @@ const Tab = createMaterialBottomTabNavigator();
 const ParentStack = () => {
   return (
     <Tab.Navigator
-      initialRouteName="Feed"
+      initialRouteName="ParentHomeScreen"
       activeColor={grey[100]}
       barStyle={{backgroundColor: teal[900]}}>
       <Tab.Screen

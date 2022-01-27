@@ -1,7 +1,9 @@
 import React from 'react';
-import {Image, Text, View} from 'react-native';
-import {Avatar, Headline} from 'react-native-paper';
+import {Image, View, Dimensions} from 'react-native';
+import {Avatar, Text, Headline} from 'react-native-paper';
 import {teal} from 'material-ui-colors';
+
+const screenSize = Dimensions.get('window');
 
 const StudentScreen = () => {
   return (
@@ -14,7 +16,7 @@ const StudentScreen = () => {
       }}>
       <View style={{alignItems: 'center'}}>
         <Avatar.Image
-          size={200}
+          size={(screenSize.height / 100) * 20}
           source={{
             uri: 'https://www.gannett-cdn.com/presto/2018/08/14/PTAL/6e4fff76-595d-4069-9112-cfe15dbfaa43-IMG_Stadium.jpeg?width=660&height=319&fit=crop&format=pjpg&auto=webp',
           }}
@@ -23,7 +25,6 @@ const StudentScreen = () => {
       <View
         style={{
           alignSelf: 'stretch',
-          backgroundColor: 'red',
           flexGrow: 1,
           marginTop: 18,
         }}>
@@ -31,6 +32,7 @@ const StudentScreen = () => {
           style={{
             flexGrow: 1,
           }}
+          resizeMode={'contain'}
           source={{
             uri: 'https://www.kaspersky.ru/content/ru-ru/images/repository/isc/2020/9910/a-guide-to-qr-codes-and-how-to-scan-qr-codes-2.png',
           }}
