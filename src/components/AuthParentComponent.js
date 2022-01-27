@@ -3,20 +3,27 @@ import {StyleSheet, Text, View} from 'react-native';
 import {TextInput} from 'react-native-paper';
 import SmoothPinCodeInput from 'react-native-smooth-pincode-input';
 
-const AuthSellerComponent = ({}) => {
-  // const [text, setText] = useState('');
-  const [sellertNumber, setSellerNumber] = useState('+996 ');
-  const [sellerCode, setSellerCode] = useState('');
-
+const AuthParentComponent = () => {
+  const [Parenttext, setParentText] = useState('');
+  const [Parentnumber, setParentnumber] = useState('+996 ');
+  const [Parentcode, setParentCode] = useState('');
   return (
     <View style={styles.container}>
       <TextInput
-        label="Номер мобильного телефона"
-        value={sellertNumber}
-        keyboardType={'phone-pad'}
-        onChangeText={sellertNumber => setSellerNumber(sellertNumber)}
+        label="Имя"
+        value={Parenttext}
+        onChangeText={Parenttext => setParentText(Parenttext)}
         style={styles.myInput}
       />
+
+      <TextInput
+        label="Номер мобильного телефона"
+        value={Parentnumber}
+        keyboardType={'phone-pad'}
+        onChangeText={Parentnumber => setParentnumber(Parentnumber)}
+        style={styles.myInput}
+      />
+
       <View style={styles.codeStyle}>
         <SmoothPinCodeInput
           cellStyle={{
@@ -27,8 +34,8 @@ const AuthSellerComponent = ({}) => {
           cellStyleFocused={{
             borderColor: 'black',
           }}
-          value={sellerCode}
-          onTextChange={a => setSellerCode(a)}
+          value={Parentcode}
+          onTextChange={a => setParentCode(a)}
         />
       </View>
     </View>
@@ -47,4 +54,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AuthSellerComponent;
+export default AuthParentComponent;
