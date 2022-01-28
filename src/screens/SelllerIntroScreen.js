@@ -3,7 +3,7 @@ import {StyleSheet} from 'react-native';
 import {Text} from 'react-native-paper';
 import SellerFinance from './SellerFinance';
 import SellerFinanceOtchet from './SellerFinanceOtchet';
-
+import { grey, teal } from "material-ui-colors";
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 const Tab = createMaterialTopTabNavigator();
 
@@ -12,21 +12,21 @@ const SellerIntroScreen = () => {
     <Tab.Navigator
       initialRouteName="Feed"
       screenOptions={{
-        tabBarActiveTintColor: '#e91e63',
+        tabBarActiveTintColor: 'white',
         tabBarLabelStyle: { fontSize: 12 },
-        tabBarStyle: { backgroundColor: 'powderblue' },
+        tabBarStyle: { backgroundColor: teal[900]},
       }}
     >
       <Tab.Screen
         name="Finas"
         component={SellerFinance}
-        options={{ tabBarLabel: 'Home' }}
+        options={{ tabBarLabel: 'Обналичи' }}
       />
 
       <Tab.Screen
         name="Otchet"
         component={SellerFinanceOtchet}
-        options={{ tabBarLabel: 'Updates' }}
+        options={{ tabBarLabel: 'Оплаты' }}
       />
 
     </Tab.Navigator>
