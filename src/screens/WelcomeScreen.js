@@ -162,14 +162,6 @@ const WelcomeScreen = () => {
                   labelStyle={{color: teal[900]}}>
                   Отправить код
                 </Button>
-                <Button
-                  style={{marginTop: 10}}
-                  onPress={() => setStep(0)}
-                  mode={'contained'}
-                  contentStyle={{backgroundColor: 'white'}}
-                  labelStyle={{color: teal[900]}}>
-                  Назад
-                </Button>
               </>
             ) : null}
 
@@ -182,14 +174,6 @@ const WelcomeScreen = () => {
                   contentStyle={{backgroundColor: 'white'}}
                   labelStyle={{color: teal[900]}}>
                   Отправить код
-                </Button>
-                <Button
-                  style={{marginTop: 10}}
-                  onPress={() => setStep(0)}
-                  mode={'contained'}
-                  contentStyle={{backgroundColor: 'white'}}
-                  labelStyle={{color: teal[900]}}>
-                  Назад
                 </Button>
               </>
             ) : null}
@@ -204,16 +188,18 @@ const WelcomeScreen = () => {
                   labelStyle={{color: teal[900]}}>
                   Отправить код
                 </Button>
-                <Button
-                  style={{marginTop: 10}}
-                  onPress={() => setStep(0)}
-                  mode={'contained'}
-                  contentStyle={{backgroundColor: 'white'}}
-                  labelStyle={{color: teal[900]}}>
-                  Назад
-                </Button>
               </>
             ) : null}
+            <>
+              <Button
+                style={{marginTop: 10}}
+                onPress={() => setStep(0)}
+                mode={'contained'}
+                contentStyle={{backgroundColor: 'white'}}
+                labelStyle={{color: teal[900]}}>
+                Назад
+              </Button>
+            </>
           </>
         ) : null}
       </View>
