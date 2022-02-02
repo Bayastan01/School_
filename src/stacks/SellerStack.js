@@ -3,7 +3,6 @@ import {createMaterialBottomTabNavigator} from '@react-navigation/material-botto
 import SelllerMainSreen from '../screens/SelllerMainSreen';
 import SellerPersonScreen from '../screens/SellerPersonScreen';
 import SellerIntroScreen from '../screens/SelllerIntroScreen';
-import SellerMenuScreen from '../screens/SellerMenuScreen';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { grey, teal } from "material-ui-colors";
 
@@ -26,11 +25,6 @@ const SellerStack = () => {
           ),
         }}
       />
-
-   
-
-  
-      
       <Tab.Screen
         name="Finas"
         component={SellerIntroScreen}
@@ -41,16 +35,7 @@ const SellerStack = () => {
           ),
         }}
       />
-<Tab.Screen
-        name="Menu"
-        component={SellerMenuScreen}
-        options={{
-          tabBarLabel: 'Menu',
-          tabBarIcon: ({color}) => (
-            <MaterialCommunityIcons name="view-headline" color={color} size={26} />
-          ),
-        }}
-      />
+
       <Tab.Screen
         name="Dom"
         component={SellerPersonScreen}

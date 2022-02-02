@@ -44,6 +44,7 @@ const WelcomeScreen = () => {
           justifyContent: 'space-around',
           alignItems: 'center',
           marginHorizontal: 18,
+          
         }}>
         <View />
         {step === 0 ? (

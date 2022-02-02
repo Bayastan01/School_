@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, TouchableOpacity, StyleSheet, Dimensions,Text } from 'react-native';
+import { View, TouchableOpacity, StyleSheet, Dimensions,Text ,Image} from 'react-native';
 import { RNCamera } from 'react-native-camera';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -14,16 +14,14 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'flex-end',
     alignItems: 'center',
-    // marginTop:330,
     width:300,
     height:320,
-    alignItems:'center',
     margin:66,
   },
-  // topButtons: {
-  //   flex: 1,
-  //   alignItems: 'flex-start',
-  // },
+  topButtons: {
+    flex: 1,
+    alignItems: 'flex-start',
+  },
   bottomButtons: {
     flex: 1,
     alignItems:'center',
@@ -47,14 +45,18 @@ const styles = StyleSheet.create({
   },
   bottomButtonsCamera: {
     marginBottom:40
+  },
+  tinyLogo:{
+    width:200,
+    height:200
   }
 });
 
 class SelllerMainSreen extends React.PureComponent {
   state = {
     type: RNCamera.Constants.Type.back,
-  };
 
+  };
   flipCamera = () =>
     this.setState({
       type:
@@ -75,6 +77,7 @@ class SelllerMainSreen extends React.PureComponent {
     onTakePhoto(data.base64);
   };
   render() {
+    
     const { type } = this.state;
     return (
       <View style={styles.container}>
@@ -86,11 +89,16 @@ class SelllerMainSreen extends React.PureComponent {
           type={type}
           style={styles.preview}
         />
+       {
+    }
+      
         {/* <View style={styles.topButtons}>
           <TouchableOpacity onPress={this.flipCamera} style={styles.flipButton}>
-            <Icon name="rocket" size={35} color="orange" />
+            <Icon name="camera" size={35} color="orange" />
+          <MaterialCommunityIcons name="camera" color={''} size={66} style={styles.bottomButtonsCamera}/>
           </TouchableOpacity>
         </View> */}
+
         <View style={styles.bottomButtons}>
           <TouchableOpacity onPress={this.takePhoto} style={styles.recordingButton}>
           <MaterialCommunityIcons name="camera" color={''} size={66} style={styles.bottomButtonsCamera}/>
