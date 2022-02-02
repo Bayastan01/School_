@@ -10,7 +10,7 @@ const Tab = createMaterialTopTabNavigator();
 const ParentFinanceScreen = () => {
   return (
     <Tab.Navigator
-      initialRouteName="Feed"
+      initialRouteName="ParentPaymentScreen"
       screenOptions={{
         tabBarActiveTintColor: grey[100],
         tabBarLabelStyle: {fontSize: 12},
