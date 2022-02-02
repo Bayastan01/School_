@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
   },
 });
 
-class SelllerMainSreen extends React.PureComponent {
+class SellerMainScreen extends React.PureComponent {
   state = {
     type: RNCamera.Constants.Type.back,
   };
@@ -112,4 +112,4 @@ class SelllerMainSreen extends React.PureComponent {
   }
 }
 
-export default SelllerMainSreen;
+export default SellerMainScreen;

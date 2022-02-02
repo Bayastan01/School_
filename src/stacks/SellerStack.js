@@ -1,6 +1,6 @@
 import React from 'react';
 import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
-import SelllerMainSreen from '../screens/SelllerMainSreen';
+import SellerMainScreen from '../screens/SellerMainScreen';
 import SellerPersonScreen from '../screens/SellerPersonScreen';
 import SellerIntroScreen from '../screens/SelllerIntroScreen';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -17,7 +17,7 @@ const SellerStack = () => {
         barStyle={{backgroundColor: teal[900]}}>
         <Tab.Screen
           name="Home"
-          component={SelllerMainSreen}
+          component={SellerMainScreen}
           options={{
             tabBarLabel: 'Главная',
             tabBarIcon: ({color}) => (
@@ -31,7 +31,11 @@ const SellerStack = () => {
           options={{
             tabBarLabel: 'Финас',
             tabBarIcon: ({color}) => (
-              <MaterialCommunityIcons name="currency-usd" color={color} size={26} />
+              <MaterialCommunityIcons
+                name="currency-usd"
+                color={color}
+                size={26}
+              />
             ),
           }}
         />
@@ -42,7 +46,11 @@ const SellerStack = () => {
           options={{
             tabBarLabel: 'Дом',
             tabBarIcon: ({color}) => (
-              <MaterialCommunityIcons name="account-multiple" color={color} size={26} />
+              <MaterialCommunityIcons
+                name="account-multiple"
+                color={color}
+                size={26}
+              />
             ),
           }}
         />
