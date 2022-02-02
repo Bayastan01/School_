@@ -7,7 +7,6 @@ import SellerStack from './stacks/SellerStack';
 
 const App = () => {
   const is_authorized = true;
-
   const user_type = 'parent';
 
   return (
