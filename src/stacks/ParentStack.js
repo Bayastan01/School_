@@ -5,6 +5,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import {grey, teal} from 'material-ui-colors';
 import ParentHomeScreen from '../screens/ParentHomeScreen';
 import ParentFinanceScreen from '../screens/ParentFinanceScreen';
+import ParentHomeStack from './ParentHomeStack';
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -16,7 +17,7 @@ const ParentStack = () => {
       barStyle={{backgroundColor: teal[900]}}>
       <Tab.Screen
         name="ParentHomeScreen"
-        component={ParentHomeScreen}
+        component={ParentHomeStack}
         options={{
           tabBarLabel: 'Главная',
           tabBarIcon: ({color}) => (

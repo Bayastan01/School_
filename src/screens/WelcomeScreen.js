@@ -153,37 +153,53 @@ const WelcomeScreen = () => {
         {step === 1 ? (
           <>
             {who_are_you === 'seller' ? (
-              <Button
-                onPress={() => setStep(s => s + 1)}
-                mode={'contained'}
-                // disabled={sellertNumber === 13}
-                contentStyle={{backgroundColor: 'white'}}
-                labelStyle={{color: teal[900]}}>
-                Отправить код
-              </Button>
+              <>
+                <Button
+                  onPress={() => setStep(s => s + 1)}
+                  mode={'contained'}
+                  // disabled={sellertNumber === 13}
+                  contentStyle={{backgroundColor: 'white'}}
+                  labelStyle={{color: teal[900]}}>
+                  Отправить код
+                </Button>
+              </>
             ) : null}
 
             {who_are_you === 'parent' ? (
-              <Button
-                onPress={() => setStep(s => s + 1)}
-                mode={'contained'}
-                // disabled={sellertNumber.length === 9}
-                contentStyle={{backgroundColor: 'white'}}
-                labelStyle={{color: teal[900]}}>
-                Отправить код
-              </Button>
+              <>
+                <Button
+                  onPress={() => setStep(s => s + 1)}
+                  mode={'contained'}
+                  // disabled={sellertNumber.length === 9}
+                  contentStyle={{backgroundColor: 'white'}}
+                  labelStyle={{color: teal[900]}}>
+                  Отправить код
+                </Button>
+              </>
             ) : null}
 
             {who_are_you === 'student' ? (
+              <>
+                <Button
+                  onPress={() => setStep(s => s + 1)}
+                  mode={'contained'}
+                  // disabled={who_are_you === null}
+                  contentStyle={{backgroundColor: 'white'}}
+                  labelStyle={{color: teal[900]}}>
+                  Отправить код
+                </Button>
+              </>
+            ) : null}
+            <>
               <Button
-                onPress={() => setStep(s => s + 1)}
+                style={{marginTop: 10}}
+                onPress={() => setStep(0)}
                 mode={'contained'}
-                // disabled={who_are_you === null}
                 contentStyle={{backgroundColor: 'white'}}
                 labelStyle={{color: teal[900]}}>
-                Отправить код
+                Назад
               </Button>
-            ) : null}
+            </>
           </>
         ) : null}
       </View>
