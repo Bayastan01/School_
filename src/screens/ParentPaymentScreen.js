@@ -9,7 +9,6 @@ const ParentPaymentScreen = () => {
         Пополнения счета
       </Button>
       <FlatList
-        keyExtractor={({item, i}) => i}
         data={[
           {key: 'Devin', price: 100},
           {key: 'Dan', price: 100},
@@ -22,6 +21,7 @@ const ParentPaymentScreen = () => {
           {key: 'Jimmy', price: 100},
           {key: 'Julie', price: 100},
         ]}
+        keyExtractor={({item, i}) => i}
         renderItem={({item}) => {
           return (
             <>
