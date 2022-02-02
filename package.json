@@ -17,6 +17,7 @@
     "material-ui-colors": "^1.0.0",
     "react": "17.0.2",
     "react-native": "0.67.0",
+    "react-native-camera": "^4.2.1",
     "react-native-pager-view": "^5.4.9",
     "react-native-paper": "^4.11.2",
     "react-native-safe-area-context": "^3.3.2",
