@@ -23,7 +23,15 @@ export const getKey = async key => {
       },
     });
   } catch (e) {
-    console.log(e);
+    console.warn(e.message);
+    switch (e.name) {
+      case 'NotFoundError':
+        // TODO;
+        break;
+      case 'ExpiredError':
+        // TODO
+        break;
+    }
   }
 
   return data;

@@ -101,8 +101,9 @@ const WelcomeScreen = () => {
             <RadioButton.Group
               onValueChange={v => setWhoAreYou(v)}
               value={who_are_you}>
-              {USER_TYPES.map(g => (
+              {USER_TYPES.map((g, k) => (
                 <TouchableOpacity
+                  key={k}
                   onPress={() => setWhoAreYou(g.name)}
                   style={{flexDirection: 'row', alignItems: 'center'}}>
                   <RadioButton

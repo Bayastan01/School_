@@ -4,7 +4,7 @@ import {getKey} from './storage';
 
 const request = async (cmd, method, data) => {
   try {
-    const token = getKey('token');
+    const token = await getKey('token');
 
     const res = await axios.request({
       url: `/v${API_VERSION}/${cmd}`,

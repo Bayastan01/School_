@@ -12,7 +12,7 @@ const App = () => {
 
   useEffect(() => {
     try {
-      checkUser();
+      checkUser().then();
     } catch (e) {
       console.log(e);
     }
