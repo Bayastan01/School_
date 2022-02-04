@@ -79,29 +79,13 @@ const WelcomeScreen = () => {
         />
         <Title style={{color: common.white, textAlign: 'center'}}>
           {step === 0 ? (
-            <Text
-              style={{
-                color: ' white',
-              }}>
-              {' '}
-              Кем вы являетесь?{' '}
-            </Text>
+            <Text style={{color: '#fff'}}> Кем вы являетесь? </Text>
           ) : null}
           {step === 1 && who_are_you === 'parent' ? (
-            <Text
-              style={{
-                color: ' white',
-              }}>
-              Заполните !{' '}
-            </Text>
+            <Text style={{color: '#fff'}}>Заполните ! </Text>
           ) : null}
           {step === 1 && who_are_you === 'seller' ? (
-            <Text
-              style={{
-                color: ' white',
-              }}>
-              Заполните !{' '}
-            </Text>
+            <Text style={{color: '#fff'}}>Заполните ! </Text>
           ) : null}
           {step === 1 && who_are_you === 'student' ? (
             <Text
