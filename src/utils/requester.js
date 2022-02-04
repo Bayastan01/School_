@@ -17,7 +17,7 @@ const request = async (cmd, method, data) => {
     });
     return res.data;
   } catch (e) {
-    console.log(e);
+    console.dir(e);
     throw e;
   }
 };

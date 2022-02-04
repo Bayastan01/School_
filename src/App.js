@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import {StyleSheet} from 'react-native';
 import WelcomeStack from './stacks/WelcomeStack';
 import ParentStack from './stacks/ParentStack';
-import SellerStack from './stacks/SellerStack';
+import StoreStack from './stacks/StoreStack';
 import StudentScreen from './screens/StudentScreen';
 import {checkUser} from './controllers/auth';
 
@@ -27,7 +27,7 @@ const App = () => {
       ) : user_type === 'student' ? (
         <StudentScreen />
       ) : user_type === 'seller' ? (
-        <SellerStack />
+        <StoreStack />
       ) : null}
     </>
   );

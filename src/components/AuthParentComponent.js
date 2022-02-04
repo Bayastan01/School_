@@ -9,7 +9,7 @@ const AuthParentComponent = () => {
   const [verification_code, setVerificationCode] = useState('');
 
   return (
-    <View style={styles.container}>
+    <View>
       <TextInput
         label="Полное имя"
         value={full_name}
