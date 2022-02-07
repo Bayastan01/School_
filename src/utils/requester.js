@@ -1,6 +1,7 @@
 import axios from 'axios';
 import {API_URL, API_VERSION} from './settings';
 import {getKey} from './storage';
+import {BaseException} from './index';
 
 const request = async (cmd, method, data) => {
   try {
@@ -17,8 +18,19 @@ const request = async (cmd, method, data) => {
     });
     return res.data;
   } catch (e) {
+    const err = new BaseException(e.message);
+
     console.dir(e);
-    throw e;
+
+    if ('response' in e && e.response !== undefined) {
+      err.handleFromResponse(e);
+    } else {
+      err.handleNetworkError(e);
+    }
+
+    err.show();
+
+    throw err;
   }
 };
 
