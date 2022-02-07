@@ -40,7 +40,13 @@ const AuthStoreComponent = ({onBack}) => {
         verification_code,
       })
       .then(res => {
-        dispatch(makeAuth({user: res.user, token: res.token}));
+        dispatch(
+          makeAuth({
+            user: res.payload.user,
+            token: res.payload.token,
+            from_storage: false,
+          }),
+        );
         console.log(res);
       })
       .catch(e => {

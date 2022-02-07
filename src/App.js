@@ -1,23 +1,69 @@
-import React, {useEffect} from 'react';
-import {StyleSheet} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {View} from 'react-native';
 import WelcomeStack from './stacks/WelcomeStack';
 import ParentStack from './stacks/ParentStack';
 import StoreStack from './stacks/StoreStack';
 import StudentScreen from './screens/StudentScreen';
-import {checkUser} from './controllers/auth';
-import {useAppSelector} from './utils';
+import {useAppDispatch, useAppSelector} from './utils';
+import storage from './utils/storage';
+import requester from './utils/requester';
+import {clearSession, makeAuth} from './stores/appStore';
+import {Text} from 'react-native-paper';
 
 const App = () => {
+  const dispatch = useAppDispatch();
+
   const is_authorized = useAppSelector(state => state.app.is_authorized);
   const user_type = 'store';
+  const [checking, setChecking] = useState(false);
+
+  const checkUser = async () => {
+    if (checking) {
+      return;
+    }
+
+    setChecking(true);
+
+    storage
+      .load({key: 'user'})
+      .then(ret => {
+        dispatch(makeAuth({...ret, from_storage: true}));
+        requester
+          .get('auth/me')
+          .then(res => {
+            dispatch(makeAuth({...res.payload, from_storage: true}));
+          })
+          .catch(e => {
+            if (e.status !== 'network_error') {
+              dispatch(clearSession());
+            }
+            // TODO: handle invalid or expired token exception
+          });
+      })
+      .catch(err => {
+        console.warn(err.message);
+        switch (err.name) {
+          case 'ExpiredError':
+            // TODO: handle expired token exception
+            break;
+        }
+      })
+      .finally(() => {
+        setChecking(false);
+      });
+  };
 
   useEffect(() => {
-    try {
-      checkUser().then();
-    } catch (e) {
-      console.log(e);
-    }
+    checkUser().then();
   }, []);
+
+  if (checking) {
+    return (
+      <View>
+        <Text>Loading...</Text>
+      </View>
+    );
+  }
 
   return (
     <>
@@ -33,7 +79,5 @@ const App = () => {
     </>
   );
 };
-
-const styles = StyleSheet.create({});
 
 export default App;

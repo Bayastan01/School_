@@ -101,7 +101,6 @@ class SellerMainScreen extends React.PureComponent {
             style={styles.recordingButton}>
             <MaterialCommunityIcons
               name="camera"
-              color={''}
               size={66}
               style={styles.bottomButtonsCamera}
             />

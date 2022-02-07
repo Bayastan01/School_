@@ -5,7 +5,7 @@ import {BaseException} from './index';
 
 const request = async (cmd, method, data, silence = false) => {
   try {
-    const token = await getKey('token');
+    const user = await getKey('user');
 
     const res = await axios.request({
       url: `/v${API_VERSION}/${cmd}`,
@@ -13,7 +13,7 @@ const request = async (cmd, method, data, silence = false) => {
       method,
       [method === 'post' ? 'data' : 'params']: data,
       headers: {
-        Authorization: token ? `Bearer ${token}` : null,
+        Authorization: user?.token ? `Bearer ${user?.token}` : null,
       },
     });
 

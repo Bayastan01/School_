@@ -1,4 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit';
+import storage from '../utils/storage';
 
 const initialState = {
   is_authorized: false,
@@ -12,13 +13,16 @@ export const appStore = createSlice({
   reducers: {
     makeAuth: (state, action) => {
       state.is_authorized = true;
-
       state.user = action.payload.user;
-      //localStorage.setItem('user', JSON.stringify(state.user))
+      state.token = action.payload.token;
 
-      if (action.payload.token) {
-        state.token = action.payload.token;
-        //localStorage.setItem('token', JSON.stringify(state.token))
+      if (!action.payload.from_storage) {
+        storage
+          .save({
+            key: 'user',
+            data: action.payload,
+          })
+          .then();
       }
     },
     clearSession: state => {
@@ -26,12 +30,11 @@ export const appStore = createSlice({
       state.user = null;
       state.token = null;
 
-      //localStorage.removeItem('user')
-      //localStorage.removeItem('token')
+      storage.remove({key: 'user'}).then();
     },
   },
 });
 
-export const {makeAuth, clearSession, setPageTitle} = appStore.actions;
+export const {makeAuth, clearSession} = appStore.actions;
 
 export default appStore.reducer;

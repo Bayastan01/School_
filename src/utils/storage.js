@@ -16,11 +16,11 @@ export const getKey = async key => {
   try {
     data = await storage.load({
       key,
-      autoSync: true,
-      syncInBackground: true,
-      syncParams: {
-        extraFetchOptions: {},
-      },
+      //autoSync: true,
+      //syncInBackground: true,
+      //syncParams: {
+      //  extraFetchOptions: {},
+      //},
     });
   } catch (e) {
     console.warn(e.message);
