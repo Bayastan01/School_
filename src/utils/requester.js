@@ -16,6 +16,7 @@ const request = async (cmd, method, data) => {
         Authorization: token ? `Bearer ${token}` : null,
       },
     });
+
     return res.data;
   } catch (e) {
     const err = new BaseException(e.message);
