@@ -1,7 +1,11 @@
 import {Alert} from 'react-native';
+import {useDispatch, useSelector} from 'react-redux';
 
 export const phoneNumberValidator = p =>
   typeof p === 'string' && p.startsWith('+996') && p.length === 13;
+
+export const useAppDispatch = useDispatch;
+export const useAppSelector = useSelector;
 
 const EXCEPTION_TITLES = {};
 

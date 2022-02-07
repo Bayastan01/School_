@@ -7,7 +7,12 @@ export const checkUser = async () => {
     return;
   }
 
-  requester.get('auth/me').then(res => {
-    console.log(res);
-  });
+  requester
+    .get('auth/me')
+    .then(res => {
+      console.log(res);
+    })
+    .catch(e => {
+      // TODO: handle invalid or expired token exception
+    });
 };

@@ -3,7 +3,7 @@ import {API_URL, API_VERSION} from './settings';
 import {getKey} from './storage';
 import {BaseException} from './index';
 
-const request = async (cmd, method, data) => {
+const request = async (cmd, method, data, silence = false) => {
   try {
     const token = await getKey('token');
 
@@ -29,23 +29,25 @@ const request = async (cmd, method, data) => {
       err.handleNetworkError(e);
     }
 
-    err.show();
+    if (!silence) {
+      err.show();
+    }
 
     throw err;
   }
 };
 
 export default {
-  get: (cmd, data) => {
+  get: (cmd, data, silence = false) => {
     try {
-      return request(cmd, 'get', data);
+      return request(cmd, 'get', data, silence);
     } catch (e) {
       throw e;
     }
   },
-  post: (cmd, data) => {
+  post: (cmd, data, silence = false) => {
     try {
-      return request(cmd, 'post', data);
+      return request(cmd, 'post', data, silence);
     } catch (e) {
       throw e;
     }

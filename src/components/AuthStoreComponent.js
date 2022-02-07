@@ -3,11 +3,14 @@ import {StyleSheet, View} from 'react-native';
 import {Button, TextInput} from 'react-native-paper';
 import SmoothPinCodeInput from 'react-native-smooth-pincode-input';
 import {teal} from 'material-ui-colors';
-import {phoneNumberValidator} from '../utils';
+import {phoneNumberValidator, useAppDispatch} from '../utils';
 import requester from '../utils/requester';
 import {VERIFICATION_CODE_LENGTH} from '../utils/settings';
+import {makeAuth} from '../stores/appStore';
 
 const AuthStoreComponent = ({onBack}) => {
+  const dispatch = useAppDispatch();
+
   const [phone_number, setPhoneNumber] = useState('+996');
   const [verification_code, setVerificationCode] = useState('');
   const [step, setStep] = useState(0);
@@ -37,7 +40,7 @@ const AuthStoreComponent = ({onBack}) => {
         verification_code,
       })
       .then(res => {
-        // TODO: make sign in
+        dispatch(makeAuth({user: res.user, token: res.token}));
         console.log(res);
       })
       .catch(e => {

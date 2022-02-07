@@ -24,7 +24,7 @@ const USER_TYPES = [
   {name: 'parent', label: 'Родитель'},
   // {name: 'head_teacher', label: 'Директор школы'},
   // {name: 'student', label: 'Школьник'},
-  {name: 'seller', label: 'Продавец или кафе'},
+  {name: 'store', label: 'Продавец или кафе'},
   // {name: 'сlassroom_teacher', label: 'Классный руководитель'},
 ];
 
@@ -84,7 +84,7 @@ const WelcomeScreen = () => {
           {step === 1 && who_are_you === 'parent' ? (
             <Text style={{color: '#fff'}}>Заполните ! </Text>
           ) : null}
-          {step === 1 && who_are_you === 'seller' ? (
+          {step === 1 && who_are_you === 'store' ? (
             <Text style={{color: '#fff'}}>Заполните ! </Text>
           ) : null}
         </Title>
@@ -115,7 +115,7 @@ const WelcomeScreen = () => {
           {/*  <>{who_are_you === 'student' ? <AuthStudentComponent /> : null}</>*/}
           {/*) : null}*/}
           {step === 1 ? (
-            <>{who_are_you === 'seller' ? <AuthStoreComponent onBack={() => setStep(0)} /> : null}</>
+            <>{who_are_you === 'store' ? <AuthStoreComponent onBack={() => setStep(0)} /> : null}</>
           ) : null}
         </View>
         {step === 0 ? (

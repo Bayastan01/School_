@@ -11,17 +11,21 @@ import {StatusBar, useColorScheme} from 'react-native';
 import {Provider as PaperProvider} from 'react-native-paper';
 import {NavigationContainer} from '@react-navigation/native';
 import App from './App';
+import {Provider} from 'react-redux';
+import stores from './stores';
 
 const Root = () => {
   const isDarkMode = useColorScheme() === 'dark';
 
   return (
-    <NavigationContainer>
-      <PaperProvider>
-        <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-        <App />
-      </PaperProvider>
-    </NavigationContainer>
+    <Provider store={stores}>
+      <NavigationContainer>
+        <PaperProvider>
+          <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
+          <App />
+        </PaperProvider>
+      </NavigationContainer>
+    </Provider>
   );
 };
 
