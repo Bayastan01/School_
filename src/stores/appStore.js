@@ -5,6 +5,9 @@ const initialState = {
   is_authorized: false,
   user: null,
   token: null,
+  store: null,
+  employee: null,
+  user_type: null,
 };
 
 export const appStore = createSlice({
@@ -13,14 +16,20 @@ export const appStore = createSlice({
   reducers: {
     makeAuth: (state, action) => {
       state.is_authorized = true;
-      state.user = action.payload.user;
-      state.token = action.payload.token;
+      state.user = action.payload.data.user;
+      state.store = action.payload.data.store;
+      state.employee = action.payload.data.employee;
+      state.token = action.payload.data.token;
+
+      if (state.store && state.employee) {
+        state.user_type = 'store';
+      }
 
       if (!action.payload.from_storage) {
         storage
           .save({
             key: 'user',
-            data: action.payload,
+            data: action.payload.data,
           })
           .then();
       }
@@ -29,6 +38,9 @@ export const appStore = createSlice({
       state.is_authorized = false;
       state.user = null;
       state.token = null;
+      state.store = null;
+      state.employee = null;
+      state.user_type = null;
 
       storage.remove({key: 'user'}).then();
     },

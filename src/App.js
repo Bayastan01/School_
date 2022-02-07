@@ -14,7 +14,7 @@ const App = () => {
   const dispatch = useAppDispatch();
 
   const is_authorized = useAppSelector(state => state.app.is_authorized);
-  const user_type = 'store';
+  const user_type = useAppSelector(state => state.app.user_type);
   const [checking, setChecking] = useState(false);
 
   const checkUser = async () => {
@@ -27,11 +27,16 @@ const App = () => {
     storage
       .load({key: 'user'})
       .then(ret => {
-        dispatch(makeAuth({...ret, from_storage: true}));
+        dispatch(makeAuth({data: ret, from_storage: true}));
         requester
           .get('auth/me')
           .then(res => {
-            dispatch(makeAuth({...res.payload, from_storage: true}));
+            dispatch(
+              makeAuth({
+                data: res.payload,
+                from_storage: true,
+              }),
+            );
           })
           .catch(e => {
             if (e.status !== 'network_error') {

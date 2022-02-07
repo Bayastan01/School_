@@ -42,8 +42,7 @@ const AuthStoreComponent = ({onBack}) => {
       .then(res => {
         dispatch(
           makeAuth({
-            user: res.payload.user,
-            token: res.payload.token,
+            data: res.payload,
             from_storage: false,
           }),
         );
