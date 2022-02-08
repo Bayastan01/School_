@@ -5,9 +5,6 @@ import {Button, List} from 'react-native-paper';
 const ParentCostScreen = () => {
   return (
     <View style={styles.container}>
-      <Button icon="currency-usd" mode="contained">
-        Все разходы
-      </Button>
       <FlatList
         keyExtractor={({item, i}) => i}
         data={[

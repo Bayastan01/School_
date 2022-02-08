@@ -7,6 +7,7 @@ import {
   KeyboardAvoidingView,
 } from 'react-native';
 import {Avatar, Button, TextInput, Title} from 'react-native-paper';
+import {teal} from 'material-ui-colors';
 
 const screenSize = Dimensions.get('window');
 
@@ -14,6 +15,7 @@ const ParentProfileScreen = () => {
   const [name, onChangeName] = useState('Асан');
   const [surname, onChangeSurname] = useState('Асанов');
   const [disabled, setDisabled] = useState(false);
+
   return (
     <View
       style={{
@@ -48,10 +50,14 @@ const ParentProfileScreen = () => {
           value={surname}
           disabled={!disabled}
         />
-        <Button mode="contained" onPress={() => setDisabled(true)}>
+        <Button
+          mode="contained"
+          color={teal[900]}
+          onPress={() => setDisabled(true)}>
           Редактировать
         </Button>
         <Button
+          color={teal[900]}
           mode="contained"
           style={{marginTop: 10}}
           onPress={() => setDisabled(false)}>

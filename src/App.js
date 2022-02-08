@@ -1,5 +1,4 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
 import WelcomeStack from './stacks/WelcomeStack';
 import ParentStack from './stacks/ParentStack';
 import SellerStack from './stacks/SellerStack';
@@ -7,7 +6,7 @@ import StudentScreen from './screens/StudentScreen';
 
 const App = () => {
   const is_authorized = false;
-  const user_type = 'parent';
+  const user_type = 'seller';
 
   return (
     <>
@@ -23,7 +22,5 @@ const App = () => {
     </>
   );
 };
-
-const styles = StyleSheet.create({});
 
 export default App;

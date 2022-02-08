@@ -23,7 +23,7 @@ import AuthSellerComponent from '../components/AuthSellerComponent';
 const USER_TYPES = [
   {name: 'parent', label: 'Родитель'},
   // {name: 'head_teacher', label: 'Директор школы'},
-  {name: 'student', label: 'Школьник'},
+  // {name: 'student', label: 'Школьник'},
   {name: 'seller', label: 'Продавец или кафе'},
   // {name: 'сlassroom_teacher', label: 'Классный руководитель'},
 ];
