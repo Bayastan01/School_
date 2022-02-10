@@ -2,6 +2,7 @@ import React, {createRef, useState} from 'react';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {Button, TextInput, IconButton} from 'react-native-paper';
 import {grey, teal} from 'material-ui-colors';
+import requester from '../utils/requester';
 import ActionSheet from 'react-native-actions-sheet';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
@@ -12,14 +13,24 @@ const IMAGE_PICKER_OPTIONS = {
   mediaType: 'photo',
 };
 
-const AddStudentScreen = ({setDataValue}) => {
-  const [addName, setAddName] = useState();
-  const [nameItem, setNameItem] = useState([]);
+const AddStudentScreen = ({navigation}) => {
+  const [addName, setAddName] = useState('');
+  const [limit, setLimit] = useState('');
+
   const actionSheetRef = createRef();
 
   const handleAddName = () => {
-    setNameItem([...nameItem, addName]);
-    setAddName(null);
+    requester
+      .post('parent/student', {
+        full_name: addName,
+        limit: limit.length === 0 ? 0 : +limit,
+      })
+      .then(res => {
+        navigation.goBack();
+      })
+      .catch(e => {
+        console.log(e);
+      });
   };
 
   const appendImage = img => {
@@ -28,7 +39,7 @@ const AddStudentScreen = ({setDataValue}) => {
       type: img.type,
       uri: img.uri,
     };
-    setDataValue('images', o => [...o, image]);
+    //setDataValue('images', o => [...o, image]);
   };
 
   return (
@@ -115,15 +126,21 @@ const AddStudentScreen = ({setDataValue}) => {
 
       <TextInput
         label="Полное имя"
-        // value={addName}
+        value={addName}
         onChangeText={text => setAddName(text)}
         style={styles.input}
       />
-
+      <TextInput
+        label="Веедите лимит за день"
+        onChangeText={l => setLimit(l)}
+        style={styles.input}
+        value={limit}
+        keyboardType={'numeric'}
+      />
       <Button
         onPress={() => handleAddName()}
         style={styles.inputBtn}
-        //  disabled={addInput}
+        disabled={addName.length < 3 || limit.length < 1}
         color={grey[100]}>
         Сохранить
       </Button>
