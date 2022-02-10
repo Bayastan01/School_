@@ -25,7 +25,6 @@ const ParentStack = () => {
           ),
         }}
       />
-
       <Tab.Screen
         name="ParentFinanceScreen"
         component={ParentFinanceScreen}
@@ -40,7 +39,6 @@ const ParentStack = () => {
           ),
         }}
       />
-
       <Tab.Screen
         name="ParentProfileScreen"
         component={ParentProfileScreen}
@@ -54,5 +52,4 @@ const ParentStack = () => {
     </Tab.Navigator>
   );
 };
-
 export default ParentStack;
