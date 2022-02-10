@@ -6,7 +6,7 @@ const SellerFinance = () => {
     <View style={{flex: 1}}>
       <View style={styles.ListStyle}>
         <Text style={styles.TextStyle}>10:00</Text>
-        <View style={styles.view}/>
+        <View style={styles.view} />
         <Text style={styles.TextStyle}>170 c</Text>
       </View>
       <View style={styles.ListStyle}>

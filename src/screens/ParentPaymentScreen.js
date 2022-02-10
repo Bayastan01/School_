@@ -1,11 +1,12 @@
 import React from 'react';
 import {FlatList, StyleSheet, View} from 'react-native';
 import {Button, List} from 'react-native-paper';
+import {teal} from 'material-ui-colors';
 
 const ParentPaymentScreen = () => {
   return (
     <View style={styles.container}>
-      <Button icon="plus" mode="contained">
+      <Button icon="plus" mode="contained" color={teal[700]}>
         Пополнения счета
       </Button>
       <FlatList

@@ -109,19 +109,28 @@ const WelcomeScreen = () => {
             </RadioButton.Group>
           ) : null}
           {step === 1 ? (
-            <>{who_are_you === 'parent' ? <AuthParentComponent /> : null}</>
+            <>
+              {who_are_you === 'parent' ? (
+                <AuthParentComponent onBack={() => setStep(0)} />
+              ) : null}
+            </>
           ) : null}
           {/*{step === 1 ? (*/}
           {/*  <>{who_are_you === 'student' ? <AuthStudentComponent /> : null}</>*/}
           {/*) : null}*/}
           {step === 1 ? (
-            <>{who_are_you === 'store' ? <AuthStoreComponent onBack={() => setStep(0)} /> : null}</>
+            <>
+              {who_are_you === 'store' ? (
+                <AuthStoreComponent onBack={() => setStep(0)} />
+              ) : null}
+            </>
           ) : null}
         </View>
         {step === 0 ? (
           <Button
             onPress={() => setStep(s => s + 1)}
             mode={'contained'}
+            disabled={!who_are_you}
             contentStyle={{backgroundColor: 'white'}}
             labelStyle={{color: teal[900]}}>
             Далее

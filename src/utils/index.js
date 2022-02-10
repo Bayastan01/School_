@@ -11,6 +11,7 @@ const EXCEPTION_TITLES = {};
 
 const EXCEPTION_MESSAGES = {
   user_not_found: 'Пользователь не найден!',
+  employee_not_found: 'Сотрудник не найден!',
   network_error: 'Ошибка соединения с сервером!',
 };
 
