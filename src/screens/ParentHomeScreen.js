@@ -1,19 +1,15 @@
-import React, {useState} from 'react';
-import {
-  Image,
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {Image, SafeAreaView, StyleSheet, Text, View} from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {grey, teal} from 'material-ui-colors';
 import {FAB} from 'react-native-paper';
 import TopUpYourAccount from './TopUpYourAccount';
+import requester from '../utils/requester';
+import {useAppSelector} from '../utils';
 
 const ParentHomeScreen = ({navigation}) => {
   const [nameItem, setNameItem] = useState([]);
+  const parent = useAppSelector(state => state.app.parent);
 
   const deletName = index => {
     let itemsCopy = [...nameItem];
@@ -21,21 +17,31 @@ const ParentHomeScreen = ({navigation}) => {
     setNameItem(itemsCopy);
   };
 
+  useEffect(() => {
+    requester
+      .get('parent/student')
+      .then(res => {
+        console.log(res);
+        setNameItem(res.payload);
+      })
+      .catch(err => {});
+  }, []);
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.tasksWrapper}>
         <View style={styles.Sumcontainer}>
           <Text style={styles.addSum}>
-            9999
+            {parent.balance + ' '}
             <Text
               style={{
-                fontSize: 14,
+                fontSize: 22,
                 fontWeight: '500',
                 textDecorationLine: 'underline',
                 textDecorationStyle: 'solid',
                 textDecorationColor: '#000',
               }}>
-              С
+              с
             </Text>
           </Text>
           <MaterialCommunityIcons
@@ -45,7 +51,6 @@ const ParentHomeScreen = ({navigation}) => {
             size={35}
           />
         </View>
-
         <View style={styles.itemAdd}>
           <View style={styles.itemLeft}>
             <Image

@@ -1,22 +1,25 @@
 import React, {useState} from 'react';
-import {FlatList, Image, StyleSheet, Text, View} from 'react-native';
-import {Button, TextInput, List} from 'react-native-paper';
+import {Image, StyleSheet, View} from 'react-native';
+import {Button, TextInput} from 'react-native-paper';
 import {grey, teal} from 'material-ui-colors';
+import requester from '../utils/requester';
 
-const AddStudentScreen = () => {
-  const [addNumber, setAddNumber] = useState('');
-  const [addName, setAddName] = useState();
-  const [nameItem, setNameItem] = useState([]);
-  const [visible, setVisible] = useState(false);
-
-  const [expanded, setExpanded] = useState(true);
-
-  const handlePress = () => setExpanded(!expanded);
+const AddStudentScreen = ({navigation}) => {
+  const [addName, setAddName] = useState('');
+  const [limit, setLimit] = useState('');
 
   const handleAddName = () => {
-    setNameItem([...nameItem, addName]);
-    setAddName(null);
-    setVisible(false);
+    requester
+      .post('parent/student', {
+        full_name: addName,
+        limit: limit.length === 0 ? 0 : +limit,
+      })
+      .then(res => {
+        navigation.goBack();
+      })
+      .catch(e => {
+        console.log(e);
+      });
   };
 
   return (
@@ -29,42 +32,21 @@ const AddStudentScreen = () => {
       />
       <TextInput
         label="Полное имя"
-        // value={addName}
+        value={addName}
         onChangeText={text => setAddName(text)}
         style={styles.input}
       />
-
       <TextInput
-        label="Номер телефона"
+        label="Веедите лимит за день"
+        onChangeText={l => setLimit(l)}
         style={styles.input}
-        // value={addNumber}
-        keyboardType={'phone-pad'}
-        onChangeText={text => setAddNumber(text)}
+        value={limit}
+        keyboardType={'numeric'}
       />
-      <List.Section title="Выберите регион">
-        <List.Accordion title="Ош" onPress={handlePress} expanded={expanded}>
-          <FlatList
-            data={[
-              {key: 'Бишкек'},
-              {key: 'Ош'},
-              {key: 'Жалал-Абад'},
-              {key: 'Нарын'},
-              {key: 'Талас'},
-              {key: 'Баткен'},
-              {key: 'Ыссык-кол'},
-            ]}
-            keyExtractor={({item, i}) => i}
-            renderItem={({item}) => {
-              return <List.Item title={`${item.key}`} />;
-            }}
-          />
-        </List.Accordion>
-      </List.Section>
-
       <Button
         onPress={() => handleAddName()}
         style={styles.inputBtn}
-        //  disabled={addInput}
+        disabled={addName.length < 3 || limit.length < 1}
         color={grey[100]}>
         Сохранить
       </Button>
