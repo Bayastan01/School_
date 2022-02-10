@@ -1,11 +1,10 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import ParentHomeScreen from '../screens/ParentHomeScreen';
 import {APP_TITLE} from '../utils/settings';
 import {grey, teal} from 'material-ui-colors';
-import AddStudentScreen from '../screens/AddStudentScreen';
 import TopUpYourAccount from '../screens/TopUpYourAccount';
+import AddStudentScreen from '../screens/AddStudentScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -24,26 +23,18 @@ const ParentHomeStack = () => {
           component={ParentHomeScreen}
         />
         <Stack.Screen
-          options={{title: 'Главная'}}
+          options={{title: 'Добавить ученика'}}
           name={'AddStudentScreen'}
           component={AddStudentScreen}
-          style={styles.tabStyles}
         />
         <Stack.Screen
-          options={{title: 'Главная'}}
+          options={{title: 'Пополнение счета'}}
           name={'TopUpYourAccount'}
           component={TopUpYourAccount}
-          style={styles.tabStyles}
         />
       </Stack.Navigator>
     </>
   );
 };
-
-const styles = StyleSheet.create({
-  tabStyles: {
-    backgroundColor: teal[900],
-  },
-});
 
 export default ParentHomeStack;

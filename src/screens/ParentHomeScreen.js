@@ -1,66 +1,114 @@
 import React, {useState} from 'react';
 import {
+  FlatList,
   Image,
   SafeAreaView,
   StyleSheet,
   Text,
-  TouchableOpacity,
   View,
 } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {grey, teal} from 'material-ui-colors';
 import {FAB} from 'react-native-paper';
 import TopUpYourAccount from './TopUpYourAccount';
-
+import {img} from 'react-native/Libraries/Animated/AnimatedWeb';
+import AddStudentScreen from './AddStudentScreen';
 const ParentHomeScreen = ({navigation}) => {
   const [nameItem, setNameItem] = useState([]);
 
-  const deletName = index => {
-    let itemsCopy = [...nameItem];
-    itemsCopy.splice(index, 1);
-    setNameItem(itemsCopy);
-  };
+  // const deletName = index => {
+  //   let itemsCopy = [...nameItem];
+  //   itemsCopy.splice(index, 1);
+  //   setNameItem(itemsCopy);
+  // };
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.tasksWrapper}>
-        <View style={styles.Sumcontainer}>
-          <Text style={styles.addSum}>
-            9999
-            <Text
-              style={{
-                fontSize: 14,
-                fontWeight: '500',
-                textDecorationLine: 'underline',
-                textDecorationStyle: 'solid',
-                textDecorationColor: '#000',
-              }}>
-              С
-            </Text>
-          </Text>
-          <MaterialCommunityIcons
-            onPress={() => navigation.navigate('TopUpYourAccount')}
-            name="cash-plus"
-            style={{color: teal[900], position: 'absolute', top: 20, right: 15}}
-            size={35}
-          />
-        </View>
-
-        <View style={styles.itemAdd}>
-          <View style={styles.itemLeft}>
-            <Image
-              style={styles.square}
-              source={{
-                uri: 'https://icons-for-free.com/iconfiles/png/512/profile+profile+page+user+icon-1320186864367220794.png',
-              }}
-            />
-          </View>
-          <View style={styles.DataView}>
-            <Text style={styles.itemText}>Балтабаев Баястан</Text>
-            <Text style={styles.itemSchool}>Школа Макаренко</Text>
-            <Text style={styles.itemNumber}>+996777177727</Text>
-          </View>
-        </View>
+        <FlatList
+          ListHeaderComponent={
+            <View style={styles.Sumcontainer}>
+              <Text style={styles.addSum}>9999</Text>
+              <Text
+                style={{
+                  marginLeft: 5,
+                  fontSize: 14,
+                  fontWeight: '500',
+                  textDecorationLine: 'underline',
+                  textDecorationStyle: 'solid',
+                  textDecorationColor: 'black',
+                  color: '#111',
+                }}>
+                с
+              </Text>
+              <MaterialCommunityIcons
+                onPress={() => navigation.navigate('TopUpYourAccount')}
+                name="cash-plus"
+                style={{
+                  color: teal[900],
+                  position: 'absolute',
+                  top: 20,
+                  right: 25,
+                }}
+                size={35}
+              />
+            </View>
+          }
+          data={[
+            {
+              key: 'Балтабаев Баястан',
+              number: '+996771717171',
+              school: 'Макаренко',
+              img: 'https://www.csudh.edu/Assets/csudh-sites/asianpacific/images/Faculty/No%20Avatar.jpg',
+            },
+            {
+              key: 'Балтабаев Баястан',
+              number: '+996771717171',
+              school: 'Макаренко',
+              img: 'https://www.csudh.edu/Assets/csudh-sites/asianpacific/images/Faculty/No%20Avatar.jpg',
+            },
+            {
+              key: 'Балтабаев Баястан',
+              number: '+996771717171',
+              school: 'Макаренко',
+              img: 'https://www.csudh.edu/Assets/csudh-sites/asianpacific/images/Faculty/No%20Avatar.jpg',
+            },
+            {
+              key: 'Балтабаев Баястан',
+              number: '+996771717171',
+              school: 'Макаренко',
+              img: 'https://www.csudh.edu/Assets/csudh-sites/asianpacific/images/Faculty/No%20Avatar.jpg',
+            },
+            {
+              key: 'Балтабаев Баястан',
+              number: '+996771717171',
+              school: 'Макаренко',
+              img: 'https://www.csudh.edu/Assets/csudh-sites/asianpacific/images/Faculty/No%20Avatar.jpg',
+            },
+          ]}
+          keyExtractor={({item, i}) => i}
+          renderItem={({item}) => {
+            return (
+              <>
+                <View style={styles.itemAdd}>
+                  <View style={styles.itemLeft}>
+                    <Image
+                      style={styles.square}
+                      source={{
+                        uri: item.img,
+                      }}
+                    />
+                  </View>
+                  <View style={styles.DataView}>
+                    <Text style={styles.itemText}>{item.key}</Text>
+                    <Text style={styles.itemSchool}>Школа: {item.school}</Text>
+                    <Text style={styles.itemNumber}>{item.number}</Text>
+                  </View>
+                </View>
+              </>
+            );
+          }}
+        />
       </View>
 
       <FAB
@@ -78,8 +126,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#E8EAED',
   },
   tasksWrapper: {
-    paddingTop: 20,
-    paddingHorizontal: 20,
+    paddingTop: 10,
+    paddingHorizontal: 10,
   },
   fab: {
     position: 'absolute',
@@ -95,12 +143,13 @@ const styles = StyleSheet.create({
   },
   Sumcontainer: {
     backgroundColor: grey[100],
-    paddingHorizontal: 40,
+    paddingHorizontal: 30,
     paddingVertical: 20,
     borderRadius: 8,
     flexDirection: 'row',
     alignItems: 'center',
     flexWrap: 'wrap',
+    marginBottom: 10,
   },
   square: {
     width: 80,
@@ -116,7 +165,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginBottom: 20,
   },
   itemLeft: {
     flexDirection: 'row',
