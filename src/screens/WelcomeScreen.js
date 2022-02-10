@@ -18,13 +18,13 @@ import {
 import {grey, teal, common} from 'material-ui-colors';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import AuthParentComponent from '../components/AuthParentComponent';
-import AuthStudentComponent from '../components/AuthStudentComponent';
-import AuthSellerComponent from '../components/AuthSellerComponent';
+import AuthStoreComponent from '../components/AuthStoreComponent';
+
 const USER_TYPES = [
   {name: 'parent', label: 'Родитель'},
   // {name: 'head_teacher', label: 'Директор школы'},
   // {name: 'student', label: 'Школьник'},
-  {name: 'seller', label: 'Продавец или кафе'},
+  {name: 'store', label: 'Продавец или кафе'},
   // {name: 'сlassroom_teacher', label: 'Классный руководитель'},
 ];
 
@@ -79,37 +79,13 @@ const WelcomeScreen = () => {
         />
         <Title style={{color: common.white, textAlign: 'center'}}>
           {step === 0 ? (
-            <Text
-              style={{
-                color: ' white',
-              }}>
-              {' '}
-              Кем вы являетесь?{' '}
-            </Text>
+            <Text style={{color: '#fff'}}> Кем вы являетесь? </Text>
           ) : null}
           {step === 1 && who_are_you === 'parent' ? (
-            <Text
-              style={{
-                color: ' white',
-              }}>
-              Заполните !{' '}
-            </Text>
+            <Text style={{color: '#fff'}}>Заполните ! </Text>
           ) : null}
-          {step === 1 && who_are_you === 'seller' ? (
-            <Text
-              style={{
-                color: ' white',
-              }}>
-              Заполните !{' '}
-            </Text>
-          ) : null}
-          {step === 1 && who_are_you === 'student' ? (
-            <Text
-              style={{
-                color: ' white',
-              }}>
-              Заполните !{' '}
-            </Text>
+          {step === 1 && who_are_you === 'store' ? (
+            <Text style={{color: '#fff'}}>Заполните ! </Text>
           ) : null}
         </Title>
         <View style={{marginVertical: 12}}>
@@ -117,8 +93,9 @@ const WelcomeScreen = () => {
             <RadioButton.Group
               onValueChange={v => setWhoAreYou(v)}
               value={who_are_you}>
-              {USER_TYPES.map(g => (
+              {USER_TYPES.map((g, k) => (
                 <TouchableOpacity
+                  key={k}
                   onPress={() => setWhoAreYou(g.name)}
                   style={{flexDirection: 'row', alignItems: 'center'}}>
                   <RadioButton
@@ -132,75 +109,32 @@ const WelcomeScreen = () => {
             </RadioButton.Group>
           ) : null}
           {step === 1 ? (
-            <>{who_are_you === 'parent' ? <AuthParentComponent /> : null}</>
+            <>
+              {who_are_you === 'parent' ? (
+                <AuthParentComponent onBack={() => setStep(0)} />
+              ) : null}
+            </>
           ) : null}
+          {/*{step === 1 ? (*/}
+          {/*  <>{who_are_you === 'student' ? <AuthStudentComponent /> : null}</>*/}
+          {/*) : null}*/}
           {step === 1 ? (
-            <>{who_are_you === 'student' ? <AuthStudentComponent /> : null}</>
-          ) : null}
-          {step === 1 ? (
-            <>{who_are_you === 'seller' ? <AuthSellerComponent /> : null}</>
+            <>
+              {who_are_you === 'store' ? (
+                <AuthStoreComponent onBack={() => setStep(0)} />
+              ) : null}
+            </>
           ) : null}
         </View>
         {step === 0 ? (
           <Button
             onPress={() => setStep(s => s + 1)}
             mode={'contained'}
+            disabled={!who_are_you}
             contentStyle={{backgroundColor: 'white'}}
             labelStyle={{color: teal[900]}}>
             Далее
           </Button>
-        ) : null}
-        {step === 1 ? (
-          <>
-            {who_are_you === 'seller' ? (
-              <>
-                <Button
-                  onPress={() => setStep(s => s + 1)}
-                  mode={'contained'}
-                  // disabled={sellertNumber === 13}
-                  contentStyle={{backgroundColor: 'white'}}
-                  labelStyle={{color: teal[900]}}>
-                  Отправить код
-                </Button>
-              </>
-            ) : null}
-
-            {who_are_you === 'parent' ? (
-              <>
-                <Button
-                  onPress={() => setStep(s => s + 1)}
-                  mode={'contained'}
-                  // disabled={sellertNumber.length === 9}
-                  contentStyle={{backgroundColor: 'white'}}
-                  labelStyle={{color: teal[900]}}>
-                  Отправить код
-                </Button>
-              </>
-            ) : null}
-
-            {who_are_you === 'student' ? (
-              <>
-                <Button
-                  onPress={() => setStep(s => s + 1)}
-                  mode={'contained'}
-                  // disabled={who_are_you === null}
-                  contentStyle={{backgroundColor: 'white'}}
-                  labelStyle={{color: teal[900]}}>
-                  Отправить код
-                </Button>
-              </>
-            ) : null}
-            <>
-              <Button
-                style={{marginTop: 10}}
-                onPress={() => setStep(0)}
-                mode={'contained'}
-                contentStyle={{backgroundColor: 'white'}}
-                labelStyle={{color: teal[900]}}>
-                Назад
-              </Button>
-            </>
-          </>
         ) : null}
       </View>
     </KeyboardAvoidingView>

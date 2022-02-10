@@ -4,28 +4,27 @@ import {Button, TextInput} from 'react-native-paper';
 import SmoothPinCodeInput from 'react-native-smooth-pincode-input';
 import {teal} from 'material-ui-colors';
 import {phoneNumberValidator, useAppDispatch} from '../utils';
-import {VERIFICATION_CODE_LENGTH} from '../utils/settings';
 import requester from '../utils/requester';
+import {VERIFICATION_CODE_LENGTH} from '../utils/settings';
 import {makeAuth} from '../stores/appStore';
 
-const AuthParentComponent = ({onBack}) => {
+const AuthStoreComponent = ({onBack}) => {
   const dispatch = useAppDispatch();
 
-  const [full_name, setFullName] = useState('');
   const [phone_number, setPhoneNumber] = useState('+996');
   const [verification_code, setVerificationCode] = useState('');
-  const [user_exists, setUser_exists] = useState(false);
   const [step, setStep] = useState(0);
+  // 0 init
+  // 1 code is sending
+  // 2 code is sent
+  // 3 code is checking
 
   const canNext = () => {
     if (step === 0) {
       return phoneNumberValidator(phone_number);
     }
     if (step === 2) {
-      return (
-        verification_code.length === VERIFICATION_CODE_LENGTH &&
-        (user_exists || full_name.length >= 3)
-      );
+      return verification_code.length === VERIFICATION_CODE_LENGTH;
     }
     return false;
   };
@@ -36,10 +35,9 @@ const AuthParentComponent = ({onBack}) => {
     }
     setStep(3);
     requester
-      .post('auth/parent/' + (user_exists ? 'login' : 'register'), {
+      .post('auth/store/login', {
         phone_number: phone_number.slice(1),
         verification_code,
-        full_name,
       })
       .then(res => {
         dispatch(
@@ -61,13 +59,12 @@ const AuthParentComponent = ({onBack}) => {
     }
     setStep(1);
     requester
-      .post('auth/parent/check', {
+      .post('auth/store/check', {
         phone_number: phone_number.slice(1),
       })
       .then(res => {
         console.log(res);
         setStep(2);
-        setUser_exists(res.payload.user_exists);
       })
       .catch(e => {
         setStep(0);
@@ -79,8 +76,8 @@ const AuthParentComponent = ({onBack}) => {
       <TextInput
         label="Номер мобильного телефона"
         value={phone_number}
-        keyboardType={'phone-pad'}
         disabled={step > 0}
+        keyboardType={'phone-pad'}
         onChangeText={t => setPhoneNumber(t)}
         style={styles.myInput}
       />
@@ -111,14 +108,6 @@ const AuthParentComponent = ({onBack}) => {
           Отправить код
         </Button>
       ) : null}
-      {step === 2 && !user_exists ? (
-        <TextInput
-          label="Полное имя"
-          value={full_name}
-          onChangeText={t => setFullName(t)}
-          style={styles.myInput}
-        />
-      ) : null}
       {[2, 3].includes(step) ? (
         <Button
           onPress={() => confirmCode()}
@@ -146,13 +135,13 @@ const AuthParentComponent = ({onBack}) => {
 const styles = StyleSheet.create({
   myInput: {
     height: 60,
-    marginVertical: 8,
   },
   codeStyle: {
     justifyContent: 'center',
     alignItems: 'center',
-    marginVertical: 12,
+    marginBottom: 12,
+    marginTop: 22,
   },
 });
 
-export default AuthParentComponent;
+export default AuthStoreComponent;

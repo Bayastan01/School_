@@ -8,11 +8,11 @@ import {grey, teal} from 'material-ui-colors';
 
 const Tab = createMaterialBottomTabNavigator();
 
-const SellerStack = () => {
+const StoreStack = () => {
   return (
     <>
       <Tab.Navigator
-        initialRouteName="Feed"
+        initialRouteName="Home"
         activeColor={grey[100]}
         barStyle={{backgroundColor: teal[900]}}>
         <Tab.Screen
@@ -59,4 +59,4 @@ const SellerStack = () => {
   );
 };
 
-export default SellerStack;
+export default StoreStack;

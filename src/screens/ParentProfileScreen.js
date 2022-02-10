@@ -8,10 +8,14 @@ import {
 } from 'react-native';
 import {Avatar, Button, TextInput, Title} from 'react-native-paper';
 import {teal} from 'material-ui-colors';
+import {useAppDispatch} from "../utils";
+import {clearSession} from "../stores/appStore";
 
 const screenSize = Dimensions.get('window');
 
 const ParentProfileScreen = () => {
+  const dispatch = useAppDispatch();
+
   const [name, onChangeName] = useState('Асан');
   const [surname, onChangeSurname] = useState('Асанов');
   const [disabled, setDisabled] = useState(false);
@@ -62,6 +66,13 @@ const ParentProfileScreen = () => {
           style={{marginTop: 10}}
           onPress={() => setDisabled(false)}>
           Сохранить
+        </Button>
+        <Button
+          color={teal[900]}
+          mode="contained"
+          style={{marginTop: 10}}
+          onPress={() => dispatch(clearSession())}>
+          Выйти из аккунта
         </Button>
       </KeyboardAvoidingView>
     </View>
