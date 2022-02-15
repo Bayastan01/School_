@@ -1,7 +1,6 @@
-import React, {useRef, useState} from 'react';
-import {View, TouchableOpacity, StyleSheet, Text} from 'react-native';
+import React, {useState} from 'react';
+import {View, StyleSheet, Text, Alert} from 'react-native';
 import {RNCamera} from 'react-native-camera';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useAppSelector} from '../utils';
 
 const styles = StyleSheet.create({
@@ -11,12 +10,8 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
   },
   preview: {
-    flex: 1,
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-    width: 300,
+    width: 320,
     height: 320,
-    margin: 66,
   },
   topButtons: {
     flex: 1,
@@ -52,35 +47,54 @@ const styles = StyleSheet.create({
   },
 });
 
-function SellerMainScreen(props) {
+function SellerMainScreen() {
   const store = useAppSelector(state => state.app.store);
 
-  const [type, setType] = useState(RNCamera.Constants.Type.back);
-  const camera = useRef();
+  const [busy, setBusy] = useState(false);
 
-  const flipCamera = () =>
-    setType(
-      type === RNCamera.Constants.Type.back
-        ? RNCamera.Constants.Type.front
-        : RNCamera.Constants.Type.back,
-    );
+  const readQRCode = data => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (data.startsWith('BS')) {
+          console.log(data);
+          Alert.alert('QR', data);
+          resolve();
+        } else {
+          Alert.alert('QR', 'Error!');
+          reject();
+        }
+      }, 1000);
+    });
+  };
 
-  const takePhoto = async () => {
-    const {onTakePhoto} = props;
-    const options = {
-      quality: 0.5,
-      base64: true,
-      width: 300,
-      height: 300,
-    };
-    const data = await camera.takePictureAsync(options);
-    onTakePhoto(data.base64);
+  const onBarCodeRead = async ({type, data}) => {
+    if (type !== 'org.iso.QRCode' || busy) {
+      return;
+    }
+    setBusy(true);
+    try {
+      await readQRCode(data);
+    } finally {
+      setBusy(false);
+    }
   };
 
   return (
     <View style={styles.container}>
       <Text style={styles.text}>{store.balance} c</Text>
-      <RNCamera ref={camera} type={type} style={styles.preview} />
+
+      <View flex={1} justifyContent={'center'} alignItems={'center'}>
+        {busy ? (
+          <Text>Loading</Text>
+        ) : (
+          <RNCamera
+            onBarCodeRead={onBarCodeRead}
+            barCodeTypes={[RNCamera.Constants.BarCodeType.qr]}
+            type={RNCamera.Constants.Type.back}
+            style={styles.preview}
+          />
+        )}
+      </View>
 
       {/* <View style={styles.topButtons}>
           <TouchableOpacity onPress={this.flipCamera} style={styles.flipButton}>
@@ -88,16 +102,6 @@ function SellerMainScreen(props) {
           <MaterialCommunityIcons name="camera" color={''} size={66} style={styles.bottomButtonsCamera}/>
           </TouchableOpacity>
         </View> */}
-
-      <View style={styles.bottomButtons}>
-        <TouchableOpacity onPress={takePhoto} style={styles.recordingButton}>
-          <MaterialCommunityIcons
-            name="camera"
-            size={66}
-            style={styles.bottomButtonsCamera}
-          />
-        </TouchableOpacity>
-      </View>
     </View>
   );
 }

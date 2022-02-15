@@ -9,6 +9,7 @@ const request = async (cmd, method, data, silence = false) => {
 
     const res = await axios.request({
       url: `/v${API_VERSION}/${cmd}`,
+      //timeout: 3000,
       baseURL: API_URL,
       method,
       [method === 'post' ? 'data' : 'params']: data,
