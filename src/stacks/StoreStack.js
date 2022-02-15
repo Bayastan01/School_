@@ -1,10 +1,10 @@
 import React from 'react';
 import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
-import SellerMainScreen from '../screens/SellerMainScreen';
 import SellerPersonScreen from '../screens/SellerPersonScreen';
 import SellerIntroScreen from '../screens/SelllerIntroScreen';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {grey, teal} from 'material-ui-colors';
+import StoreHomeStack from './StoreHomeStack';
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -17,7 +17,7 @@ const StoreStack = () => {
         barStyle={{backgroundColor: teal[900]}}>
         <Tab.Screen
           name="Home"
-          component={SellerMainScreen}
+          component={StoreHomeStack}
           options={{
             tabBarLabel: 'Главная',
             tabBarIcon: ({color}) => (
@@ -39,7 +39,6 @@ const StoreStack = () => {
             ),
           }}
         />
-
         <Tab.Screen
           name="Dom"
           component={SellerPersonScreen}

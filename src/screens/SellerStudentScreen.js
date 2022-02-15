@@ -1,46 +1,47 @@
-import React from 'react';
-import {Image, View, Dimensions} from 'react-native';
-import {Avatar, Text, Headline} from 'react-native-paper';
+import React, {useEffect, useState} from 'react';
+import {StyleSheet, Text, View, StatusBar, Dimensions} from 'react-native';
+import Row from './Calculator/Row';
+import Button from './Calculator/Button';
+import {Avatar, Headline} from 'react-native-paper';
 import {teal} from 'material-ui-colors';
+import {useNavigation} from '@react-navigation/native';
+import requester from '../utils/requester';
 
-const screenSize = Dimensions.get('window');
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: 'white',
+    color: 'black',
+    justifyContent: 'flex-end',
+  },
+  value: {
+    color: 'black',
+    fontSize: 30,
+    textAlign: 'center',
+    marginRight: 20,
+    marginBottom: 10,
+  },
+});
 
-const SellerStudentScreen = ({data}) => {
+function SellerStudentScreen({route}) {
+  const navigation = useNavigation();
+  const [state, setState] = useState('');
+  const screenSize = Dimensions.get('window');
+  const {data} = route.params;
+
   return (
-    <View
-      style={{
-        flex: 1,
-        paddingVertical: 18,
-        justifyContent: 'space-around',
-        alignItems: 'center',
-      }}>
-      <View style={{alignItems: 'center'}}>
+    <>
+      <View style={{alignItems: 'center', margin: 5}}>
         <Avatar.Image
-          size={(screenSize.height / 100) * 20}
+          size={(screenSize.height / 100) * 15}
           source={{
             uri: 'https://www.gannett-cdn.com/presto/2018/08/14/PTAL/6e4fff76-595d-4069-9112-cfe15dbfaa43-IMG_Stadium.jpeg?width=660&height=319&fit=crop&format=pjpg&auto=webp',
           }}
         />
       </View>
-      <View
-        style={{
-          alignSelf: 'stretch',
-          flexGrow: 1,
-          marginTop: 18,
-        }}>
-        <Image
-          style={{
-            flexGrow: 1,
-          }}
-          resizeMode={'contain'}
-          source={{
-            uri: 'https://www.kaspersky.ru/content/ru-ru/images/repository/isc/2020/9910/a-guide-to-qr-codes-and-how-to-scan-qr-codes-2.png',
-          }}
-        />
-      </View>
       <View style={{alignItems: 'center'}}>
         <Headline style={{fontSize: 28, marginTop: 18, color: '#7d7d7d'}}>
-          Асан Асанович
+          {data.full_name}
         </Headline>
       </View>
       <Text
@@ -52,8 +53,51 @@ const SellerStudentScreen = ({data}) => {
         }}>
         200 с
       </Text>
-    </View>
+      <View style={styles.container}>
+        <StatusBar barStyle="light-content" />
+        <View
+          style={{
+            alignItems: 'center',
+            width: '100%',
+            height: 330,
+          }}>
+          <Text style={styles.value}>{state ? ` ${state} сом` : ''}</Text>
+          <Row>
+            <Button text="7" onPress={() => setState(s => s + '7')} />
+            <Button text="8" onPress={() => setState(s => s + '8'} />
+            <Button text="9" onPress={() => setState(s => s + '9')} />
+          </Row>
+          <Row>
+            <Button text="4" onPress={() => setState(s => s + '4')} />
+            <Button text="5" onPress={() => setState(s => s + '5')} />
+            <Button text="6" onPress={() => setState(s => s + '6')} />
+          </Row>
+          <Row>
+            <Button text="1" onPress={() => setState(s => s + '1')} />
+            <Button text="2" onPress={() => setState(s => s + '2')} />
+            <Button text="3" onPress={() => setState(s => s + '3')} />
+          </Row>
+          <Row>
+            <Button
+              text="0"
+              size="double"
+              onPress={() => setState(s => s + '0')}
+            />
+            <Button text="C" theme="secondary" onPress={() => setState('')} />
+          </Row>
+          <Row>
+            <Button
+              text="Забрать"
+              theme="accent"
+              onPress={() => {
+                navigation.goBack();
+              }}
+            />
+          </Row>
+        </View>
+      </View>
+    </>
   );
-};
+}
 
 export default SellerStudentScreen;
