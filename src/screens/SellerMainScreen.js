@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {View, StyleSheet, Text, Alert} from 'react-native';
 import {RNCamera} from 'react-native-camera';
 import {useAppSelector} from '../utils';
+import SellerStudentScreen from './SellerStudentScreen';
 
 const styles = StyleSheet.create({
   container: {
@@ -57,7 +58,7 @@ function SellerMainScreen() {
       setTimeout(() => {
         if (data.startsWith('BS')) {
           console.log(data);
-          Alert.alert('QR', data);
+          <SellerStudentScreen data={data} />;
           resolve();
         } else {
           Alert.alert('QR', 'Error!');
