@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {Platform, StyleSheet, View} from 'react-native';
 import {Button, TextInput} from 'react-native-paper';
 import SmoothPinCodeInput from 'react-native-smooth-pincode-input';
 import {teal} from 'material-ui-colors';
@@ -8,7 +8,7 @@ import requester from '../utils/requester';
 import {VERIFICATION_CODE_LENGTH} from '../utils/settings';
 import {makeAuth} from '../stores/appStore';
 
-const AuthStoreComponent = () => {
+const AuthStoreComponent = ({onBack}) => {
   const dispatch = useAppDispatch();
 
   const [phone_number, setPhoneNumber] = useState('+996');
@@ -117,15 +117,27 @@ const AuthStoreComponent = () => {
         </Button>
       ) : null}
       {[2, 3].includes(step) ? (
-        <Button
-          onPress={() => confirmCode()}
-          mode={'contained'}
-          disabled={!canNext()}
-          style={{marginTop: 8}}
-          contentStyle={{backgroundColor: 'white'}}
-          labelStyle={{color: teal[900]}}>
-          Подтвердить код
-        </Button>
+        <>
+          <Button
+            onPress={() => confirmCode()}
+            mode={'contained'}
+            disabled={!canNext()}
+            style={{marginTop: 8}}
+            contentStyle={{backgroundColor: 'white'}}
+            labelStyle={{color: teal[900]}}>
+            Подтвердить код
+          </Button>
+          {Platform.OS === 'ios' ? (
+            <Button
+              onPress={() => onBack()}
+              mode={'contained'}
+              style={{marginTop: 8}}
+              contentStyle={{backgroundColor: 'white'}}
+              labelStyle={{color: teal[900]}}>
+              Назад
+            </Button>
+          ) : null}
+        </>
       ) : null}
     </View>
   );

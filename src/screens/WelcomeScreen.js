@@ -129,7 +129,7 @@ const WelcomeScreen = () => {
           {step === 1 ? (
             <>
               {who_are_you === 'parent' ? (
-                <AuthParentComponent />
+                <AuthParentComponent onBack={setStep(0)} />
               ) : null}
             </>
           ) : null}
@@ -139,7 +139,7 @@ const WelcomeScreen = () => {
           {step === 1 ? (
             <>
               {who_are_you === 'store' ? (
-                <AuthStoreComponent />
+                <AuthStoreComponent onBack={setStep(0)} />
               ) : null}
             </>
           ) : null}
