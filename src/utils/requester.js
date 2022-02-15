@@ -46,6 +46,13 @@ export default {
       throw e;
     }
   },
+  delete: (cmd, data, silence = false) => {
+    try {
+      return request(cmd, 'delete', data, silence);
+    } catch (e) {
+      throw e;
+    }
+  },
   post: (cmd, data, silence = false) => {
     try {
       return request(cmd, 'post', data, silence);

@@ -1,10 +1,11 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   StyleSheet,
   TouchableOpacity,
   View,
   KeyboardAvoidingView,
   Platform,
+  BackHandler,
 } from 'react-native';
 import {APP_TITLE} from '../utils/settings';
 import {
@@ -31,6 +32,23 @@ const USER_TYPES = [
 const WelcomeScreen = () => {
   const [step, setStep] = useState(0);
   const [who_are_you, setWhoAreYou] = useState(null);
+
+  useEffect(() => {
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      () => {
+        if (step > 0) {
+          setStep(0);
+          return true;
+        }
+        return false;
+      },
+    );
+
+    return () => {
+      backHandler.remove();
+    };
+  }, [step]);
 
   return (
     <KeyboardAvoidingView
@@ -111,7 +129,7 @@ const WelcomeScreen = () => {
           {step === 1 ? (
             <>
               {who_are_you === 'parent' ? (
-                <AuthParentComponent onBack={() => setStep(0)} />
+                <AuthParentComponent onBack={setStep(0)} />
               ) : null}
             </>
           ) : null}
@@ -121,7 +139,7 @@ const WelcomeScreen = () => {
           {step === 1 ? (
             <>
               {who_are_you === 'store' ? (
-                <AuthStoreComponent onBack={() => setStep(0)} />
+                <AuthStoreComponent onBack={setStep(0)} />
               ) : null}
             </>
           ) : null}
