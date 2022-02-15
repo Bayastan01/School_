@@ -14,8 +14,8 @@ import {FAB} from 'react-native-paper';
 import TopUpYourAccount from './TopUpYourAccount';
 import requester from '../utils/requester';
 import {useAppSelector} from '../utils';
-import {img} from 'react-native/Libraries/Animated/AnimatedWeb';
 import AddStudentScreen from './AddStudentScreen';
+import ParentStudent from './ParentStudent';
 
 const ParentHomeScreen = ({navigation}) => {
   const [nameItem, setNameItem] = useState([]);
@@ -68,63 +68,33 @@ const ParentHomeScreen = ({navigation}) => {
               />
             </View>
           }
-          data={[
-            {
-              key: 'Балтабаев Баястан',
-              number: '+996771717171',
-              school: 'Макаренко',
-              img: 'https://www.csudh.edu/Assets/csudh-sites/asianpacific/images/Faculty/No%20Avatar.jpg',
-            },
-            {
-              key: 'Балтабаев Баястан',
-              number: '+996771717171',
-              school: 'Макаренко',
-              img: 'https://www.csudh.edu/Assets/csudh-sites/asianpacific/images/Faculty/No%20Avatar.jpg',
-            },
-            {
-              key: 'Балтабаев Баястан',
-              number: '+996771717171',
-              school: 'Макаренко',
-              img: 'https://www.csudh.edu/Assets/csudh-sites/asianpacific/images/Faculty/No%20Avatar.jpg',
-            },
-            {
-              key: 'Балтабаев Баястан',
-              number: '+996771717171',
-              school: 'Макаренко',
-              img: 'https://www.csudh.edu/Assets/csudh-sites/asianpacific/images/Faculty/No%20Avatar.jpg',
-            },
-            {
-              key: 'Балтабаев Баястан',
-              number: '+996771717171',
-              school: 'Макаренко',
-              img: 'https://www.csudh.edu/Assets/csudh-sites/asianpacific/images/Faculty/No%20Avatar.jpg',
-            },
-          ]}
+          data={nameItem}
           keyExtractor={({item, i}) => i}
           renderItem={({item}) => {
             return (
-              <>
+              <TouchableOpacity
+                onPress={() =>
+                  navigation.navigate('ParentStudent', {id: item.id})
+                }>
                 <View style={styles.itemAdd}>
                   <View style={styles.itemLeft}>
                     <Image
                       style={styles.square}
                       source={{
-                        uri: item.img,
+                        uri: 'https://www.csudh.edu/Assets/csudh-sites/asianpacific/images/Faculty/No%20Avatar.jpg',
                       }}
                     />
                   </View>
                   <View style={styles.DataView}>
-                    <Text style={styles.itemText}>{item.key}</Text>
-                    <Text style={styles.itemSchool}>Школа: {item.school}</Text>
-                    <Text style={styles.itemNumber}>{item.number}</Text>
+                    <Text style={styles.itemText}>{item.full_name}</Text>
+                    <Text style={styles.itemSchool}>Лимит : {item.limit}</Text>
                   </View>
                 </View>
-              </>
+              </TouchableOpacity>
             );
           }}
         />
       </View>
-
       <FAB
         style={styles.fab}
         icon="account-plus-outline"

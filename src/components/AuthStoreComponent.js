@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {Button, TextInput} from 'react-native-paper';
 import SmoothPinCodeInput from 'react-native-smooth-pincode-input';
@@ -8,7 +8,7 @@ import requester from '../utils/requester';
 import {VERIFICATION_CODE_LENGTH} from '../utils/settings';
 import {makeAuth} from '../stores/appStore';
 
-const AuthStoreComponent = ({onBack}) => {
+const AuthStoreComponent = () => {
   const dispatch = useAppDispatch();
 
   const [phone_number, setPhoneNumber] = useState('+996');
@@ -18,6 +18,12 @@ const AuthStoreComponent = ({onBack}) => {
   // 1 code is sending
   // 2 code is sent
   // 3 code is checking
+
+  useEffect(() => {
+    if (verification_code.length === VERIFICATION_CODE_LENGTH && canNext()) {
+      confirmCode();
+    }
+  }, [verification_code]);
 
   const canNext = () => {
     if (step === 0) {
@@ -80,6 +86,7 @@ const AuthStoreComponent = ({onBack}) => {
         keyboardType={'phone-pad'}
         onChangeText={t => setPhoneNumber(t)}
         style={styles.myInput}
+        autoFocus
       />
       {step > 1 ? (
         <View style={styles.codeStyle}>
@@ -89,6 +96,7 @@ const AuthStoreComponent = ({onBack}) => {
               borderColor: 'gray',
               backgroundColor: 'white',
             }}
+            autoFocus
             cellStyleFocused={{
               borderColor: 'black',
             }}
@@ -119,15 +127,6 @@ const AuthStoreComponent = ({onBack}) => {
           Подтвердить код
         </Button>
       ) : null}
-      <Button
-        style={{marginTop: 8}}
-        onPress={() => onBack()}
-        mode={'contained'}
-        disabled={step % 2 === 1}
-        contentStyle={{backgroundColor: 'white'}}
-        labelStyle={{color: teal[900]}}>
-        Назад
-      </Button>
     </View>
   );
 };
