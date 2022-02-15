@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {StyleSheet, View} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {Platform, StyleSheet, View} from 'react-native';
 import {Button, TextInput} from 'react-native-paper';
 import SmoothPinCodeInput from 'react-native-smooth-pincode-input';
 import {teal} from 'material-ui-colors';
@@ -18,6 +18,12 @@ const AuthStoreComponent = ({onBack}) => {
   // 1 code is sending
   // 2 code is sent
   // 3 code is checking
+
+  useEffect(() => {
+    if (verification_code.length === VERIFICATION_CODE_LENGTH && canNext()) {
+      confirmCode();
+    }
+  }, [verification_code]);
 
   const canNext = () => {
     if (step === 0) {
@@ -80,6 +86,7 @@ const AuthStoreComponent = ({onBack}) => {
         keyboardType={'phone-pad'}
         onChangeText={t => setPhoneNumber(t)}
         style={styles.myInput}
+        autoFocus
       />
       {step > 1 ? (
         <View style={styles.codeStyle}>
@@ -89,6 +96,7 @@ const AuthStoreComponent = ({onBack}) => {
               borderColor: 'gray',
               backgroundColor: 'white',
             }}
+            autoFocus
             cellStyleFocused={{
               borderColor: 'black',
             }}
@@ -109,25 +117,28 @@ const AuthStoreComponent = ({onBack}) => {
         </Button>
       ) : null}
       {[2, 3].includes(step) ? (
-        <Button
-          onPress={() => confirmCode()}
-          mode={'contained'}
-          disabled={!canNext()}
-          style={{marginTop: 8}}
-          contentStyle={{backgroundColor: 'white'}}
-          labelStyle={{color: teal[900]}}>
-          Подтвердить код
-        </Button>
+        <>
+          <Button
+            onPress={() => confirmCode()}
+            mode={'contained'}
+            disabled={!canNext()}
+            style={{marginTop: 8}}
+            contentStyle={{backgroundColor: 'white'}}
+            labelStyle={{color: teal[900]}}>
+            Подтвердить код
+          </Button>
+          {Platform.OS === 'ios' ? (
+            <Button
+              onPress={() => onBack()}
+              mode={'contained'}
+              style={{marginTop: 8}}
+              contentStyle={{backgroundColor: 'white'}}
+              labelStyle={{color: teal[900]}}>
+              Назад
+            </Button>
+          ) : null}
+        </>
       ) : null}
-      <Button
-        style={{marginTop: 8}}
-        onPress={() => onBack()}
-        mode={'contained'}
-        disabled={step % 2 === 1}
-        contentStyle={{backgroundColor: 'white'}}
-        labelStyle={{color: teal[900]}}>
-        Назад
-      </Button>
     </View>
   );
 };

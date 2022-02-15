@@ -5,6 +5,7 @@ import {APP_TITLE} from '../utils/settings';
 import {grey, teal} from 'material-ui-colors';
 import TopUpYourAccount from '../screens/TopUpYourAccount';
 import AddStudentScreen from '../screens/AddStudentScreen';
+import ParentStudent from '../screens/ParentStudent';
 
 const Stack = createNativeStackNavigator();
 
@@ -26,6 +27,11 @@ const ParentHomeStack = () => {
           options={{title: 'Добавить ученика'}}
           name={'AddStudentScreen'}
           component={AddStudentScreen}
+        />
+        <Stack.Screen
+          name={'ParentStudent'}
+          component={ParentStudent}
+          options={{title: 'Изменить данные'}}
         />
         <Stack.Screen
           options={{title: 'Пополнение счета'}}
