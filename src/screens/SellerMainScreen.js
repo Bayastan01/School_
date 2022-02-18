@@ -90,7 +90,7 @@ function SellerMainScreen({navigation}) {
     <View style={styles.container}>
       <Text style={styles.text}>{store.balance} c</Text>
 
-      <View flex={1} justifyContent={'center'} alignItems={'center'}>
+      <View flex={1} justifyContent={'center'} alignItems={'center'} >
         {busy ? (
           <Text>Loading</Text>
         ) : (

@@ -11,7 +11,7 @@ const SellerFinance = () => {
       </View>
       <View style={styles.ListStyle}>
         <Text style={styles.TextStyle}>19:45</Text>
-        <View style={styles.view}/>
+        <View style={styles.view} />
         <Text style={styles.TextStyle}>300 c</Text>
       </View>
     </View>

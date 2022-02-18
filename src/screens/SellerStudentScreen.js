@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {StyleSheet, Text, View, StatusBar, Dimensions} from 'react-native';
 import Row from './Calculator/Row';
 import Button from './Calculator/Button';
@@ -28,6 +28,22 @@ function SellerStudentScreen({route}) {
   const [state, setState] = useState('');
   const screenSize = Dimensions.get('window');
   const {data} = route.params;
+  console.log(data);
+
+  const take = () => {
+    requester
+      .post('store/student', {
+        code: `BS${data.qr_code}`,
+        sum: +state,
+      })
+      .then(res => {
+        console.log(res);
+        navigation.goBack();
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  };
 
   return (
     <>
@@ -51,7 +67,7 @@ function SellerStudentScreen({route}) {
           fontWeight: 'bold',
           color: teal[900],
         }}>
-        200 с
+        {data.balance} с
       </Text>
       <View style={styles.container}>
         <StatusBar barStyle="light-content" />
@@ -64,7 +80,7 @@ function SellerStudentScreen({route}) {
           <Text style={styles.value}>{state ? ` ${state} сом` : ''}</Text>
           <Row>
             <Button text="7" onPress={() => setState(s => s + '7')} />
-            <Button text="8" onPress={() => setState(s => s + '8'} />
+            <Button text="8" onPress={() => setState(s => s + '8')} />
             <Button text="9" onPress={() => setState(s => s + '9')} />
           </Row>
           <Row>
@@ -86,13 +102,7 @@ function SellerStudentScreen({route}) {
             <Button text="C" theme="secondary" onPress={() => setState('')} />
           </Row>
           <Row>
-            <Button
-              text="Забрать"
-              theme="accent"
-              onPress={() => {
-                navigation.goBack();
-              }}
-            />
+            <Button text="Забрать" theme="accent" onPress={take} />
           </Row>
         </View>
       </View>

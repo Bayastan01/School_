@@ -1,38 +1,59 @@
-import React from 'react';
-import {FlatList, StyleSheet, View} from 'react-native';
-import {Button, List} from 'react-native-paper';
+import React, {useEffect, useState} from 'react';
+import {FlatList, StyleSheet, Text, View} from 'react-native';
+import {Avatar, Button, Divider} from 'react-native-paper';
 import {teal} from 'material-ui-colors';
+import requester from '../utils/requester';
+import moment from "moment";
 
 const ParentPaymentScreen = () => {
+  const [paymont, setPaymont] = useState([]);
+  useEffect(() => {
+    requester
+      .get('parent/transaction/payment')
+      .then(res => {
+        console.log(res);
+        setPaymont(res.payload);
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  }, []);
   return (
     <View style={styles.container}>
       <Button icon="plus" mode="contained" color={teal[700]}>
         Пополнения счета
       </Button>
       <FlatList
-        data={[
-          {key: 'Devin', price: 100},
-          {key: 'Dan', price: 100},
-          {key: 'Dominic', price: 100},
-          {key: 'Jackson', price: 100},
-          {key: 'James', price: 100},
-          {key: 'Joel', price: 100},
-          {key: 'John', price: 100},
-          {key: 'Jillian', price: 100},
-          {key: 'Jimmy', price: 100},
-          {key: 'Julie', price: 100},
-        ]}
         keyExtractor={({item, i}) => i}
+        data={paymont}
+        ItemSeparatorComponent={() => <Divider />}
         renderItem={({item}) => {
           return (
-            <>
-              <List.Section>
-                <List.Item
-                  title={`дата: кафе ${item.key}: покупал: ${item.price}с`}
-                  left={() => <List.Icon icon="coffee" />}
-                />
-              </List.Section>
-            </>
+            <View>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  paddingVertical: 8,
+                  marginHorizontal: 16,
+                }}>
+                <View
+                  style={{
+                    flexGrow: 1,
+                    marginLeft: 12,
+                    alignItems: 'flex-start',
+                  }}>
+                  <Text>
+                    {moment(item.created_at).format('MMMM Do YYYY, h:mm:ss ')}
+                  </Text>
+                </View>
+                <View style={{alignItems: 'center', justifyContent: 'center'}}>
+                  <Text style={styles.amount}>
+                    +{item.amount}{' '}
+                    <Text style={{textDecorationLine: 'underline'}}>с</Text>
+                  </Text>
+                </View>
+              </View>
+            </View>
           );
         }}
       />

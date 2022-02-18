@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Dimensions,
   View,
@@ -8,17 +8,22 @@ import {
 } from 'react-native';
 import {Avatar, Button, TextInput} from 'react-native-paper';
 import {teal} from 'material-ui-colors';
-import {useAppDispatch} from '../utils';
+import {useAppDispatch, useAppSelector} from '../utils';
 import {clearSession} from '../stores/appStore';
 
 const screenSize = Dimensions.get('window');
 
 const ParentProfileScreen = () => {
   const dispatch = useAppDispatch();
-
-  const [name, onChangeName] = useState('');
-  const [surname, onChangeSurname] = useState('');
+  const user = useAppSelector(state => state.app.user);
   const [disabled, setDisabled] = useState(false);
+  const [fullName, setFullName] = useState('');
+  const [phone_number, setPhone_number] = useState('');
+
+  useEffect(() => {
+    setFullName(user.full_name);
+    setPhone_number(user.phone_number);
+  }, []);
 
   return (
     <View
@@ -43,16 +48,16 @@ const ParentProfileScreen = () => {
           alignItems={'center'}
           label="Полное имя"
           style={styles.input}
-          onChangeText={onChangeName}
-          value={name}
+          onChangeText={setFullName}
+          value={fullName}
           disabled={!disabled}
         />
         <TextInput
-          label="Фамилия"
+          label="Телефон номер"
           style={styles.input}
-          onChangeText={onChangeSurname}
-          value={surname}
-          disabled={!disabled}
+          onChangeText={setPhone_number}
+          value={phone_number}
+          disabled
         />
         <Button
           mode="contained"
@@ -65,7 +70,6 @@ const ParentProfileScreen = () => {
           color={teal[900]}
           style={styles.EditBtn}
           mode="contained"
-          style={{marginTop: 10}}
           onPress={() => setDisabled(false)}>
           Сохранить
         </Button>

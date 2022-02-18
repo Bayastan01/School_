@@ -3,7 +3,6 @@ import {createMaterialBottomTabNavigator} from '@react-navigation/material-botto
 import ParentProfileScreen from '../screens/ParentProfileScreen';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {grey, teal} from 'material-ui-colors';
-import ParentHomeScreen from '../screens/ParentHomeScreen';
 import ParentFinanceScreen from '../screens/ParentFinanceScreen';
 import ParentHomeStack from './ParentHomeStack';
 
@@ -12,11 +11,11 @@ const Tab = createMaterialBottomTabNavigator();
 const ParentStack = () => {
   return (
     <Tab.Navigator
-      initialRouteName="ParentHomeScreen"
+      initialRouteName="ParentHomeStack"
       activeColor={grey[100]}
       barStyle={{backgroundColor: teal[900]}}>
       <Tab.Screen
-        name="ParentHomeScreen"
+        name="ParentHomeStack"
         component={ParentHomeStack}
         options={{
           tabBarLabel: 'Главная',
