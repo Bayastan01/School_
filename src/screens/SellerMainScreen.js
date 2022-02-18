@@ -1,7 +1,9 @@
 import React, {useState} from 'react';
-import {View, StyleSheet, Text, Alert} from 'react-native';
+import {View, StyleSheet, Text, Alert, Platform} from 'react-native';
 import {RNCamera} from 'react-native-camera';
 import {useAppSelector} from '../utils';
+import SellerStudentScreen from './SellerStudentScreen';
+import requester from '../utils/requester';
 
 const styles = StyleSheet.create({
   container: {
@@ -47,28 +49,33 @@ const styles = StyleSheet.create({
   },
 });
 
-function SellerMainScreen() {
+function SellerMainScreen({navigation}) {
   const store = useAppSelector(state => state.app.store);
+  const [todos, setTodos] = useState([]);
 
   const [busy, setBusy] = useState(false);
 
-  const readQRCode = data => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (data.startsWith('BS')) {
-          console.log(data);
-          Alert.alert('QR', data);
-          resolve();
-        } else {
-          Alert.alert('QR', 'Error!');
-          reject();
-        }
-      }, 1000);
-    });
+  const readQRCode = async data => {
+    if (data.startsWith('BS') && data.length === 34) {
+      console.log(data);
+      try {
+        const res = await requester.get('store/student', {
+          code: data,
+        });
+        navigation.navigate('SellerStudentScreen', {
+          data: res.payload,
+        });
+      } catch (e) {
+        console.log(e);
+      }
+    }
   };
 
   const onBarCodeRead = async ({type, data}) => {
-    if (type !== 'org.iso.QRCode' || busy) {
+    if (
+      type !== Platform.select({android: 'QR_CODE', ios: 'org.iso.QRCode'}) ||
+      busy
+    ) {
       return;
     }
     setBusy(true);
@@ -83,7 +90,7 @@ function SellerMainScreen() {
     <View style={styles.container}>
       <Text style={styles.text}>{store.balance} c</Text>
 
-      <View flex={1} justifyContent={'center'} alignItems={'center'}>
+      <View flex={1} justifyContent={'center'} alignItems={'center'} >
         {busy ? (
           <Text>Loading</Text>
         ) : (

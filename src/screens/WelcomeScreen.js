@@ -129,7 +129,7 @@ const WelcomeScreen = () => {
           {step === 1 ? (
             <>
               {who_are_you === 'parent' ? (
-                <AuthParentComponent onBack={setStep(0)} />
+                <AuthParentComponent onBack={() => setStep(0)} />
               ) : null}
             </>
           ) : null}
@@ -139,14 +139,14 @@ const WelcomeScreen = () => {
           {step === 1 ? (
             <>
               {who_are_you === 'store' ? (
-                <AuthStoreComponent onBack={setStep(0)} />
+                <AuthStoreComponent onBack={() => setStep(0)} />
               ) : null}
             </>
           ) : null}
         </View>
         {step === 0 ? (
           <Button
-            onPress={() => setStep(s => s + 1)}
+            onPress={() => setStep(1)}
             mode={'contained'}
             disabled={!who_are_you}
             contentStyle={{backgroundColor: 'white'}}

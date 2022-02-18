@@ -20,7 +20,6 @@ const SellerIntroScreen = () => {
         component={SellerFinance}
         options={{tabBarLabel: 'Обналичи'}}
       />
-
       <Tab.Screen
         name="Otchet"
         component={SellerFinanceOtchet}
