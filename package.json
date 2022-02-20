@@ -19,6 +19,7 @@
     "axios": "^0.25.0",
     "material-ui-colors": "^1.0.0",
     "moment": "^2.29.1",
+    "number-separator": "^2.0.0",
     "react": "^17.0.2",
     "react-native": "0.67.0",
     "react-native-actions-sheet": "^0.6.0",

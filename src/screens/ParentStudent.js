@@ -2,6 +2,7 @@ import React, {createRef, useEffect, useState} from 'react';
 import {
   Alert,
   Image,
+  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -24,55 +25,53 @@ const ParentStudent = ({navigation, route}) => {
   const [addName, setAddName] = useState('');
   const [limit, setLimit] = useState('');
   const actionSheetRef = createRef();
+  const [busy, setBusy] = useState(false);
+  const {item} = route.params;
 
   useEffect(() => {
-    requester
-      .get('parent/student', {
-        id: route.params.id,
-      })
-      .then(res => {
-        setAddName(res.payload.full_name);
-        setLimit(res.payload.limit.toString());
-      })
-      .catch(e => {
-        console.log(e);
-      });
+    setAddName(item.full_name);
+    setLimit(item.limit.toString());
   }, []);
 
-  const handleAddName = () => {
+  const save = () => {
+    if (busy) {
+      return;
+    }
+    setBusy(true);
     requester
       .post('parent/student', {
         full_name: addName,
-        id: route.params.id,
+        id: item.id,
         limit: limit.length === 0 ? 0 : +limit,
       })
-      .then(res => {
-        console.log(res);
+      .then(() => {
         navigation.goBack();
       })
-      .catch(e => {
-        console.log(e);
-      });
+      .catch(() => {});
   };
 
-  const handleDelete = () => {
-    Alert.alert('Подтвердите', 'Вы уверены ?', [
+  const _delete = () => {
+    Alert.alert('Подтвердите', 'Вы уверены?', [
       {
         text: 'Нет',
-        style: 'Нет',
+        style: 'cancel',
       },
       {
         text: 'Да',
         onPress: () => {
+          if (busy) {
+            return;
+          }
+          setBusy(true);
           requester
             .delete('parent/student', {
-              id: route.params.id,
+              id: item.id,
             })
-            .then(res => {
+            .then(() => {
               navigation.goBack();
             })
-            .catch(e => {
-              console.log(e);
+            .finally(() => {
+              setBusy(false);
             });
         },
       },
@@ -80,16 +79,16 @@ const ParentStudent = ({navigation, route}) => {
   };
 
   const appendImage = img => {
-    const image = {
-      name: img.fileName,
-      type: img.type,
-      uri: img.uri,
-    };
+    // const image = {
+    //   name: img.fileName,
+    //   type: img.type,
+    //   uri: img.uri,
+    // };
     //setDataValue('images', o => [...o, image]);
   };
 
   return (
-    <View style={styles.container}>
+    <>
       <ActionSheet ref={actionSheetRef}>
         <View
           style={{
@@ -152,64 +151,61 @@ const ParentStudent = ({navigation, route}) => {
         </View>
       </ActionSheet>
 
-      <View>
-        <Image
-          style={styles.imgProfile}
-          source={require('../assets/no_avatar.jpg')}
-        />
-        <View style={styles.iconBtn}>
-          <IconButton
-            icon="camera"
-            color={grey[100]}
-            size={20}
-            onPress={() => actionSheetRef.current.setModalVisible(true)}
+      <ScrollView contentContainerStyle={{alignItems: 'center'}}>
+        <View>
+          <Image
+            style={styles.imgProfile}
+            source={require('../assets/no_avatar.jpg')}
           />
+          <View style={styles.iconBtn}>
+            <IconButton
+              icon="camera"
+              color={grey[100]}
+              size={20}
+              onPress={() => actionSheetRef.current.setModalVisible(true)}
+            />
+          </View>
         </View>
-      </View>
 
-      <TextInput
-        label="Имя"
-        value={addName}
-        onChangeText={text => setAddName(text)}
-        style={styles.input}
-      />
-      <TextInput
-        label="Лимит"
-        onChangeText={l => setLimit(l)}
-        style={styles.input}
-        value={limit}
-        keyboardType={'numeric'}
-      />
-      <Button
-        onPress={() => handleAddName()}
-        style={styles.inputBtn}
-        disabled={addName.length < 3 || limit.length < 1}
-        color={grey[100]}>
-        Изменить
-      </Button>
-      <Button
-        onPress={() => handleDelete()}
-        style={styles.inputBtn}
-        color={grey[100]}>
-        Удалить
-      </Button>
-    </View>
+        <View alignSelf={'stretch'} style={{padding: 8}}>
+          <TextInput
+            label="Полное имя"
+            value={addName}
+            onChangeText={text => setAddName(text)}
+            style={styles.input}
+          />
+          <TextInput
+            label="Лимит за день"
+            onChangeText={l => setLimit(l)}
+            style={styles.input}
+            value={limit}
+            keyboardType={'numeric'}
+          />
+          <Button
+            onPress={() => save()}
+            style={styles.inputBtn}
+            mode={'contained'}
+            loading={busy}
+            disabled={addName.length < 3 || limit.length < 1 || busy}>
+            Изменить
+          </Button>
+          <Button
+            mode={'outlined'}
+            disabled={busy}
+            loading={busy}
+            onPress={() => _delete()}
+            style={styles.inputBtn}>
+            Удалить
+          </Button>
+        </View>
+      </ScrollView>
+    </>
   );
 };
 
 const styles = StyleSheet.create({
-  input: {
-    width: 300,
-    height: 55,
-  },
-  container: {
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
   inputBtn: {
-    backgroundColor: teal[800],
-    paddingHorizontal: 90,
-    marginTop: 20,
+    marginTop: 8,
   },
   imgProfile: {
     position: 'relative',

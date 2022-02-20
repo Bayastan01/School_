@@ -1,6 +1,13 @@
 import React, {createRef, useState} from 'react';
-import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import {Button, TextInput, IconButton} from 'react-native-paper';
+import {
+  Alert,
+  Image,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import {Button, TextInput, IconButton, Text} from 'react-native-paper';
 import {grey, teal} from 'material-ui-colors';
 import requester from '../utils/requester';
 import ActionSheet from 'react-native-actions-sheet';
@@ -25,7 +32,7 @@ const AddStudentScreen = ({navigation}) => {
         full_name: addName,
         limit: limit.length === 0 ? 0 : +limit,
       })
-      .then(res => {
+      .then(() => {
         navigation.goBack();
       })
       .catch(e => {
@@ -34,17 +41,16 @@ const AddStudentScreen = ({navigation}) => {
   };
 
   const appendImage = img => {
-    const image = {
-      name: img.fileName,
-      type: img.type,
-      uri: img.uri,
-    };
+    // const image = {
+    //   name: img.fileName,
+    //   type: img.type,
+    //   uri: img.uri,
+    // };
     //setDataValue('images', o => [...o, image]);
   };
 
   return (
-    <View style={styles.container}>
-
+    <>
       <ActionSheet ref={actionSheetRef}>
         <View
           style={{
@@ -71,11 +77,11 @@ const AddStudentScreen = ({navigation}) => {
               }}>
               <MaterialCommunityIcons
                 name={'image'}
-                color={'#0079C2FF'}
+                color={teal[900]}
                 size={30}
               />
-              <View>
-                <Text style={{fontSize: 15}}>Галерея</Text>
+              <View style={{marginTop: 3}}>
+                <Text style={{fontSize: 15, color: teal[900]}}>Галерея</Text>
               </View>
             </View>
           </TouchableOpacity>
@@ -83,6 +89,10 @@ const AddStudentScreen = ({navigation}) => {
             onPress={() => {
               launchCamera(IMAGE_PICKER_OPTIONS).then(b => {
                 if (b.didCancel) {
+                  return;
+                }
+                if (b.errorCode === 'camera_unavailable') {
+                  Alert.alert('Ошибка!', 'Камера недоступна!');
                   return;
                 }
                 appendImage(b.assets[0]);
@@ -96,78 +106,64 @@ const AddStudentScreen = ({navigation}) => {
               }}>
               <MaterialCommunityIcons
                 name={'camera'}
-                color={'#0079C2FF'}
+                color={teal[900]}
                 size={30}
               />
-              <View>
-                <Text style={{fontSize: 15}}>Камера</Text>
+              <View style={{marginTop: 3}}>
+                <Text style={{fontSize: 15, color: teal[900]}}>Камера</Text>
               </View>
             </View>
           </TouchableOpacity>
         </View>
       </ActionSheet>
-
-      <View>
-        <Image
-          style={styles.imgProfile}
-          source={{
-            uri: 'https://www.csudh.edu/Assets/csudh-sites/asianpacific/images/Faculty/No%20Avatar.jpg',
-          }}
-        />
-        <View style={styles.iconBtn}>
-          <IconButton
-            icon="camera"
-            color={grey[100]}
-            size={20}
-            onPress={() => actionSheetRef.current.setModalVisible(true)}
+      <ScrollView contentContainerStyle={{alignItems: 'center'}}>
+        <View style={{position: 'relative'}}>
+          <Image
+            style={styles.imgProfile}
+            source={require('../assets/no_avatar.jpg')}
           />
+          <View style={styles.iconBtn}>
+            <IconButton
+              icon="camera"
+              color={grey[100]}
+              size={20}
+              onPress={() => actionSheetRef.current.setModalVisible(true)}
+            />
+          </View>
         </View>
-      </View>
 
-      <TextInput
-        label="Полное имя"
-        value={addName}
-        onChangeText={text => setAddName(text)}
-        style={styles.input}
-      />
-      <TextInput
-        label="Веедите лимит за день"
-        onChangeText={l => setLimit(l)}
-        style={styles.input}
-        value={limit}
-        keyboardType={'numeric'}
-      />
-      <Button
-        onPress={() => handleAddName()}
-        style={styles.inputBtn}
-        disabled={addName.length < 3 || limit.length < 1}
-        color={grey[100]}>
-        Сохранить
-      </Button>
-    </View>
+        <View alignSelf={'stretch'} style={{padding: 8}}>
+          <TextInput
+            label="Полное имя"
+            value={addName}
+            style={{marginBottom: 8}}
+            onChangeText={text => setAddName(text)}
+          />
+          <TextInput
+            label="Веедите лимит за день"
+            onChangeText={l => setLimit(l)}
+            style={{marginBottom: 8}}
+            value={limit}
+            keyboardType={'numeric'}
+          />
+          <Button
+            mode={'contained'}
+            onPress={() => handleAddName()}
+            disabled={addName.length < 3 || limit.length < 1}>
+            Сохранить
+          </Button>
+        </View>
+      </ScrollView>
+    </>
   );
 };
 
 const styles = StyleSheet.create({
-  input: {
-    width: 300,
-    height: 55,
-  },
-  container: {
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  inputBtn: {
-    backgroundColor: teal[800],
-    paddingHorizontal: 90,
-    marginTop: 20,
-  },
   imgProfile: {
-    position: 'relative',
     marginVertical: 20,
     width: 120,
     height: 120,
-    borderRadius: 100,
+    borderRadius: 60,
   },
   iconBtn: {
     position: 'absolute',
@@ -175,7 +171,7 @@ const styles = StyleSheet.create({
     bottom: 15,
     width: 40,
     height: 40,
-    borderRadius: 100,
+    borderRadius: 20,
     backgroundColor: teal[900],
     zIndex: 1,
   },

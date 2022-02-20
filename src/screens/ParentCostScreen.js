@@ -4,19 +4,29 @@ import {Avatar, Divider} from 'react-native-paper';
 import requester from '../utils/requester';
 import moment from 'moment';
 import {grey, red} from 'material-ui-colors';
+import numberSeparator from 'number-separator';
 
 const ParentCostScreen = () => {
   const [items, setItems] = useState([]);
+  const [busy, setBusy] = useState(false);
 
-  useEffect(() => {
+  const fetchItems = () => {
+    if (busy) {
+      return;
+    }
+    setBusy(true);
     requester
       .get('parent/transaction/consumption')
       .then(res => {
         setItems(res.payload);
       })
-      .catch(e => {
-        console.log(e);
+      .finally(() => {
+        setBusy(false);
       });
+  };
+
+  useEffect(() => {
+    fetchItems();
   }, []);
 
   return (
@@ -24,6 +34,8 @@ const ParentCostScreen = () => {
       style={{padding: 8}}
       keyExtractor={item => item.id}
       data={items}
+      onRefresh={() => fetchItems()}
+      refreshing={busy}
       ItemSeparatorComponent={() => <Divider />}
       renderItem={({item}) => {
         return (
@@ -52,7 +64,7 @@ const ParentCostScreen = () => {
             </View>
             <View style={{alignItems: 'center', justifyContent: 'center'}}>
               <Text style={styles.amount}>
-                -{item.amount}{' '}
+                -{numberSeparator(item.amount)}{' '}
                 <Text style={{textDecorationLine: 'underline'}}>с</Text>
               </Text>
             </View>

@@ -4,23 +4,35 @@ import {Button, Divider} from 'react-native-paper';
 import {green, teal} from 'material-ui-colors';
 import requester from '../utils/requester';
 import moment from 'moment';
+import numberSeparator from 'number-separator';
 
 const ParentPaymentScreen = () => {
   const [payments, setItems] = useState([]);
+  const [busy, setBusy] = useState(false);
 
-  useEffect(() => {
+  const fetchItems = () => {
+    if (busy) {
+      return;
+    }
+    setBusy(true);
     requester
       .get('parent/transaction/payment')
       .then(res => {
         setItems(res.payload);
       })
-      .catch(e => {
-        console.log(e);
+      .finally(() => {
+        setBusy(false);
       });
+  };
+
+  useEffect(() => {
+    fetchItems();
   }, []);
 
   return (
     <FlatList
+      onRefresh={() => fetchItems()}
+      refreshing={busy}
       style={{padding: 8}}
       keyExtractor={item => item.id}
       data={payments}
@@ -50,7 +62,7 @@ const ParentPaymentScreen = () => {
               color: green[900],
               fontWeight: 'bold',
             }}>
-            +{item.amount}{' '}
+            +{numberSeparator(item.amount)}{' '}
             <Text style={{textDecorationLine: 'underline'}}>с</Text>
           </Text>
         </View>
