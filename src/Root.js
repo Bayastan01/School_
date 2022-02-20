@@ -7,21 +7,29 @@
  */
 
 import React from 'react';
-import {StatusBar, useColorScheme} from 'react-native';
-import {Provider as PaperProvider} from 'react-native-paper';
+import {StatusBar} from 'react-native';
+import {DefaultTheme, Provider as PaperProvider} from 'react-native-paper';
 import {NavigationContainer} from '@react-navigation/native';
 import App from './App';
 import {Provider} from 'react-redux';
 import stores from './stores';
+import {teal} from 'material-ui-colors';
+
+const theme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    primary: teal[900],
+    accent: '#f1c40f',
+  },
+};
 
 const Root = () => {
-  const isDarkMode = useColorScheme() === 'dark';
-
   return (
     <Provider store={stores}>
       <NavigationContainer>
-        <PaperProvider>
-          <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
+        <PaperProvider theme={theme}>
+          <StatusBar barStyle={'light-content'} />
           <App />
         </PaperProvider>
       </NavigationContainer>

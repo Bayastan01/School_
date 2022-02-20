@@ -1,14 +1,14 @@
 import React from 'react';
-import {View, Button} from 'react-native';
+import {Button, SafeAreaView} from 'react-native';
 import {useAppDispatch} from '../utils';
 import {clearSession} from '../stores/appStore';
 
 const SellerPersonScreen = () => {
-  const dispath = useAppDispatch();
+  const dispatch = useAppDispatch();
   return (
-    <View>
-      <Button title={'Выйти'} onPress={() => dispath(clearSession())} />
-    </View>
+    <SafeAreaView>
+      <Button title={'Выйти'} onPress={() => dispatch(clearSession())} />
+    </SafeAreaView>
   );
 };
 

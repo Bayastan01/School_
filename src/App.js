@@ -8,7 +8,11 @@ import {useAppDispatch, useAppSelector} from './utils';
 import storage from './utils/storage';
 import requester from './utils/requester';
 import {clearSession, makeAuth} from './stores/appStore';
-import {Text} from 'react-native-paper';
+import {ActivityIndicator} from 'react-native-paper';
+import moment from 'moment';
+import 'moment/locale/ru';
+
+moment.locale('ru-RU');
 
 const App = () => {
   const dispatch = useAppDispatch();
@@ -33,8 +37,11 @@ const App = () => {
           .then(res => {
             dispatch(
               makeAuth({
-                data: res.payload,
-                from_storage: true,
+                data: {
+                  ...res.payload,
+                  token: ret.token,
+                },
+                from_storage: false,
               }),
             );
           })
@@ -64,8 +71,8 @@ const App = () => {
 
   if (checking) {
     return (
-      <View>
-        <Text>Loading...</Text>
+      <View flex={1} justifyContent={'center'} alignItems={'center'}>
+        <ActivityIndicator />
       </View>
     );
   }

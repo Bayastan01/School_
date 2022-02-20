@@ -18,58 +18,85 @@ import AddStudentScreen from './AddStudentScreen';
 import ParentStudent from './ParentStudent';
 
 const ParentHomeScreen = ({navigation}) => {
-  const [nameItem, setNameItem] = useState([]);
+  const [items, setItems] = useState([]);
   const parent = useAppSelector(state => state.app.parent);
+  const [busy, setBusy] = useState(false);
 
-  // const deletName = index => {
+  // const deleteName = index => {
   //   let itemsCopy = [...nameItem];
   //   itemsCopy.splice(index, 1);
   //   setNameItem(itemsCopy);
   // };
 
-  useEffect(() => {
+  const fetchStudents = () => {
+    if (busy) {
+      return;
+    }
+    setBusy(true);
     requester
       .get('parent/student')
       .then(res => {
-        console.log(res);
-        setNameItem(res.payload);
+        setItems(res.payload);
       })
-      .catch(err => {});
+      .finally(() => {
+        setBusy(false);
+      });
+  };
+
+  useEffect(() => {
+    fetchStudents();
   }, []);
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.tasksWrapper}>
+      <View style={{flex: 1}}>
         <FlatList
+          style={{padding: 8}}
+          refreshing={busy}
+          onRefresh={() => fetchStudents()}
           ListHeaderComponent={
-            <View style={styles.Sumcontainer}>
-              <Text style={styles.addSum}>{parent.balance + ' '}</Text>
-              <Text
-                style={{
-                  fontSize: 22,
-                  fontWeight: '500',
-                  textDecorationLine: 'underline',
-                  textDecorationStyle: 'solid',
-                  textDecorationColor: '#000',
-                  color: '#111',
-                }}>
-                с
-              </Text>
+            <View
+              style={{
+                backgroundColor: grey[100],
+                padding: 20,
+                borderRadius: 8,
+                flexDirection: 'row',
+                alignItems: 'center',
+                flexWrap: 'wrap',
+                flex: 1,
+                marginBottom: 10,
+              }}>
+              <View flexGrow={1} flexDirection={'row'}>
+                <Text
+                  style={{
+                    color: 'black',
+                    fontSize: 22,
+                    fontWeight: '500',
+                  }}>
+                  {parent.balance + ' '}
+                </Text>
+                <Text
+                  style={{
+                    fontSize: 22,
+                    fontWeight: '500',
+                    textDecorationLine: 'underline',
+                    textDecorationStyle: 'solid',
+                    textDecorationColor: '#000',
+                    color: '#111',
+                  }}>
+                  с
+                </Text>
+              </View>
               <MaterialCommunityIcons
                 onPress={() => navigation.navigate('TopUpYourAccount')}
                 name="cash-plus"
-                style={{
-                  color: teal[900],
-                  position: 'absolute',
-                  top: 20,
-                  right: 25,
-                }}
+                style={{color: teal[900]}}
                 size={35}
               />
             </View>
           }
-          data={nameItem}
-          keyExtractor={({item, i}) => i}
+          data={items}
+          keyExtractor={item => item.id}
           renderItem={({item}) => {
             return (
               <TouchableOpacity
@@ -77,17 +104,17 @@ const ParentHomeScreen = ({navigation}) => {
                   navigation.navigate('ParentStudent', {id: item.id})
                 }>
                 <View style={styles.itemAdd}>
-                  <View style={styles.itemLeft}>
+                  <View style={{marginRight: 8}}>
                     <Image
                       style={styles.square}
-                      source={{
-                        uri: 'https://www.csudh.edu/Assets/csudh-sites/asianpacific/images/Faculty/No%20Avatar.jpg',
-                      }}
+                      source={require('../assets/no_avatar.jpg')}
                     />
                   </View>
-                  <View style={styles.DataView}>
+                  <View>
                     <Text style={styles.itemText}>{item.full_name}</Text>
-                    <Text style={styles.itemSchool}>Лимит : {item.limit}</Text>
+                    <Text style={styles.itemSchool}>
+                      Лимит: {item.limit} сом
+                    </Text>
                   </View>
                 </View>
               </TouchableOpacity>
@@ -109,68 +136,34 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#E8EAED',
   },
-  tasksWrapper: {
-    paddingTop: 10,
-    paddingHorizontal: 10,
-  },
   fab: {
     position: 'absolute',
-    margin: 16,
-    right: 0,
-    bottom: 0,
+    right: 15,
+    bottom: 15,
     backgroundColor: teal[900],
   },
-  addSum: {
-    color: 'black',
-    fontSize: 22,
-    fontWeight: '500',
-  },
-  Sumcontainer: {
-    backgroundColor: grey[100],
-    paddingHorizontal: 30,
-    paddingVertical: 20,
-    borderRadius: 8,
-    flexDirection: 'row',
-    alignItems: 'center',
-    flexWrap: 'wrap',
-    marginBottom: 10,
-  },
   square: {
-    width: 80,
-    height: 80,
-    borderRadius: 100,
-    marginRight: 15,
+    width: 70,
+    height: 70,
+    borderRadius: 35,
   },
   itemAdd: {
-    marginVertical: 10,
+    marginBottom: 8,
     backgroundColor: grey[100],
-    padding: 15,
+    padding: 8,
     borderRadius: 10,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  itemLeft: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    flexWrap: 'wrap',
+    justifyContent: 'flex-start',
   },
   itemText: {
-    maxWidth: '80%',
-    color: 'black',
-    fontSize: 13,
+    color: grey[900],
+    fontSize: 14,
   },
   itemSchool: {
-    maxWidth: '80%',
-    color: 'black',
+    color: grey[800],
     marginVertical: 5,
     fontSize: 12,
-  },
-  itemNumber: {
-    fontSize: 12,
-  },
-  DataView: {
-    flex: 1,
   },
 });
 

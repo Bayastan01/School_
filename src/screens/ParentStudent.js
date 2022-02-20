@@ -155,9 +155,7 @@ const ParentStudent = ({navigation, route}) => {
       <View>
         <Image
           style={styles.imgProfile}
-          source={{
-            uri: 'https://www.csudh.edu/Assets/csudh-sites/asianpacific/images/Faculty/No%20Avatar.jpg',
-          }}
+          source={require('../assets/no_avatar.jpg')}
         />
         <View style={styles.iconBtn}>
           <IconButton

@@ -1,7 +1,7 @@
 import React from 'react';
 import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
 import SellerPersonScreen from '../screens/SellerPersonScreen';
-import SellerIntroScreen from '../screens/SelllerIntroScreen';
+import StoreFinanceStack from '../screens/StoreFinanceStack';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {grey, teal} from 'material-ui-colors';
 import StoreHomeStack from './StoreHomeStack';
@@ -12,11 +12,11 @@ const StoreStack = () => {
   return (
     <>
       <Tab.Navigator
-        initialRouteName="Home"
+        initialRouteName="HomeStack"
         activeColor={grey[100]}
         barStyle={{backgroundColor: teal[900]}}>
         <Tab.Screen
-          name="Home"
+          name="HomeStack"
           component={StoreHomeStack}
           options={{
             tabBarLabel: 'Главная',
@@ -26,10 +26,10 @@ const StoreStack = () => {
           }}
         />
         <Tab.Screen
-          name="Finas"
-          component={SellerIntroScreen}
+          name="FinanceStack"
+          component={StoreFinanceStack}
           options={{
-            tabBarLabel: 'Финас',
+            tabBarLabel: 'Финанс',
             tabBarIcon: ({color}) => (
               <MaterialCommunityIcons
                 name="currency-usd"
@@ -40,10 +40,10 @@ const StoreStack = () => {
           }}
         />
         <Tab.Screen
-          name="Dom"
+          name="ProfileScreen"
           component={SellerPersonScreen}
           options={{
-            tabBarLabel: 'Дом',
+            tabBarLabel: 'Профиль',
             tabBarIcon: ({color}) => (
               <MaterialCommunityIcons
                 name="account-multiple"

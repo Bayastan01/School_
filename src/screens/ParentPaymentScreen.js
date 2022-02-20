@@ -1,76 +1,62 @@
 import React, {useEffect, useState} from 'react';
-import {FlatList, StyleSheet, Text, View} from 'react-native';
-import {Avatar, Button, Divider} from 'react-native-paper';
-import {teal} from 'material-ui-colors';
+import {FlatList, Text, View} from 'react-native';
+import {Button, Divider} from 'react-native-paper';
+import {green, teal} from 'material-ui-colors';
 import requester from '../utils/requester';
-import moment from "moment";
+import moment from 'moment';
 
 const ParentPaymentScreen = () => {
-  const [paymont, setPaymont] = useState([]);
+  const [payments, setItems] = useState([]);
+
   useEffect(() => {
     requester
       .get('parent/transaction/payment')
       .then(res => {
-        console.log(res);
-        setPaymont(res.payload);
+        setItems(res.payload);
       })
       .catch(e => {
         console.log(e);
       });
   }, []);
+
   return (
-    <View style={styles.container}>
-      <Button icon="plus" mode="contained" color={teal[700]}>
-        Пополнения счета
-      </Button>
-      <FlatList
-        keyExtractor={({item, i}) => i}
-        data={paymont}
-        ItemSeparatorComponent={() => <Divider />}
-        renderItem={({item}) => {
-          return (
-            <View>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  paddingVertical: 8,
-                  marginHorizontal: 16,
-                }}>
-                <View
-                  style={{
-                    flexGrow: 1,
-                    marginLeft: 12,
-                    alignItems: 'flex-start',
-                  }}>
-                  <Text>
-                    {moment(item.created_at).format('MMMM Do YYYY, h:mm:ss ')}
-                  </Text>
-                </View>
-                <View style={{alignItems: 'center', justifyContent: 'center'}}>
-                  <Text style={styles.amount}>
-                    +{item.amount}{' '}
-                    <Text style={{textDecorationLine: 'underline'}}>с</Text>
-                  </Text>
-                </View>
-              </View>
-            </View>
-          );
-        }}
-      />
-    </View>
+    <FlatList
+      style={{padding: 8}}
+      keyExtractor={item => item.id}
+      data={payments}
+      ItemSeparatorComponent={() => <Divider />}
+      ListHeaderComponent={
+        <Button
+          icon="plus"
+          style={{marginBottom: 8}}
+          mode="contained"
+          color={teal[700]}>
+          Пополнить счет
+        </Button>
+      }
+      renderItem={({item}) => (
+        <View
+          style={{
+            flexDirection: 'row',
+            paddingBottom: 8,
+            alignItems: 'center',
+          }}>
+          <View style={{flexGrow: 1}}>
+            <Text>{moment(item.created_at).calendar()}</Text>
+          </View>
+          <Text
+            style={{
+              fontSize: 20,
+              color: green[900],
+              fontWeight: 'bold',
+            }}>
+            +{item.amount}{' '}
+            <Text style={{textDecorationLine: 'underline'}}>с</Text>
+          </Text>
+        </View>
+      )}
+    />
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingTop: 22,
-  },
-  item: {
-    padding: 10,
-    fontSize: 18,
-    height: 44,
-  },
-});
 
 export default ParentPaymentScreen;

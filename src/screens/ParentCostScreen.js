@@ -3,6 +3,7 @@ import {FlatList, StyleSheet, Text, View} from 'react-native';
 import {Avatar, Divider} from 'react-native-paper';
 import requester from '../utils/requester';
 import moment from 'moment';
+import {grey, red} from 'material-ui-colors';
 
 const ParentCostScreen = () => {
   const [items, setItems] = useState([]);
@@ -11,7 +12,6 @@ const ParentCostScreen = () => {
     requester
       .get('parent/transaction/consumption')
       .then(res => {
-        console.log(res);
         setItems(res.payload);
       })
       .catch(e => {
@@ -20,66 +20,60 @@ const ParentCostScreen = () => {
   }, []);
 
   return (
-    <View style={styles.container}>
-      <FlatList
-        keyExtractor={({item, i}) => i}
-        data={items}
-        ItemSeparatorComponent={() => <Divider />}
-        renderItem={({item}) => {
-          return (
+    <FlatList
+      style={{padding: 8}}
+      keyExtractor={item => item.id}
+      data={items}
+      ItemSeparatorComponent={() => <Divider />}
+      renderItem={({item}) => {
+        return (
+          <View
+            style={{
+              flexDirection: 'row',
+              paddingVertical: 8,
+              marginHorizontal: 16,
+              alignItems: 'center',
+            }}>
+            <Avatar.Image
+              size={50}
+              source={require('../assets/no_avatar.jpg')}
+            />
             <View
               style={{
-                flexDirection: 'row',
-                paddingVertical: 8,
-                marginHorizontal: 16,
+                flexGrow: 1,
+                marginLeft: 12,
+                alignItems: 'flex-start',
               }}>
-              <Avatar.Image
-                size={80}
-                source={{
-                  uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQTHxHKq92yNEVYlgiRzFFKoG-h0_kYI9ouhtE3oGoh0OFlMf75alT_YvYzQOR1qVXB1s0&usqp=CAU',
-                }}
-              />
-              <View
-                style={{
-                  flexGrow: 1,
-                  marginLeft: 12,
-                  alignItems: 'flex-start',
-                }}>
-                <Text style={styles.title}>{item.store.title}</Text>
-                <Text>{item.student.full_name}</Text>
-                <Text>
-                  {moment(item.created_at).format('MMMM Do YYYY, h:mm:ss ')}
-                </Text>
-              </View>
-              <View style={{alignItems: 'center', justifyContent: 'center'}}>
-                <Text style={styles.amount}>
-                  +{item.amount}{' '}
-                  <Text style={{textDecorationLine: 'underline'}}>с</Text>
-                </Text>
-              </View>
+              <Text style={styles.title}>{item.store.title}</Text>
+              <Text style={{color: grey[900]}}>{item.student.full_name}</Text>
+              <Text style={{color: grey[700]}}>
+                {moment(item.created_at).calendar()}
+              </Text>
             </View>
-          );
-        }}
-      />
-    </View>
+            <View style={{alignItems: 'center', justifyContent: 'center'}}>
+              <Text style={styles.amount}>
+                -{item.amount}{' '}
+                <Text style={{textDecorationLine: 'underline'}}>с</Text>
+              </Text>
+            </View>
+          </View>
+        );
+      }}
+    />
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    paddingTop: 22,
-    flex: 1,
-  },
   title: {
-    fontSize: 20,
-    color: 'black',
+    fontSize: 17,
+    color: grey[900],
     fontWeight: '500',
   },
   amount: {
     alignItems: 'flex-end',
     fontSize: 20,
     fontWeight: 'bold',
-    color: 'red',
+    color: red[900],
   },
 });
 

@@ -80,9 +80,6 @@ const WelcomeScreen = () => {
       </View>
       <View
         style={{
-          shadowColor: '#000000',
-          shadowOffset: 1,
-          shadowRadius: 10,
           elevation: 1,
           padding: 18,
           borderTopRightRadius: 30,
