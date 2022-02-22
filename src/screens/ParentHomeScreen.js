@@ -12,15 +12,16 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import {grey, teal} from 'material-ui-colors';
 import {FAB} from 'react-native-paper';
 import requester from '../utils/requester';
-import {useAppSelector} from '../utils';
+import {getImageUrl, useAppSelector} from '../utils';
 import {useIsFocused} from '@react-navigation/native';
 import numberSeparator from 'number-separator';
 
 const ParentHomeScreen = ({navigation}) => {
-  const [items, setItems] = useState([]);
-  const parent = useAppSelector(state => state.app.parent);
-  const [busy, setBusy] = useState(false);
   const isFocused = useIsFocused();
+  const parent = useAppSelector(state => state.app.parent);
+
+  const [items, setItems] = useState([]);
+  const [busy, setBusy] = useState(false);
 
   // const deleteName = index => {
   //   let itemsCopy = [...nameItem];
@@ -37,6 +38,7 @@ const ParentHomeScreen = ({navigation}) => {
       .get('parent/student')
       .then(res => {
         setItems(res.payload);
+        console.log(res);
       })
       .finally(() => {
         setBusy(false);
@@ -47,7 +49,7 @@ const ParentHomeScreen = ({navigation}) => {
     if (isFocused) {
       fetchStudents();
     }
-  }, [fetchStudents, isFocused]);
+  }, [isFocused]);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -106,7 +108,7 @@ const ParentHomeScreen = ({navigation}) => {
                 <View style={{marginRight: 8}}>
                   <Image
                     style={styles.square}
-                    source={require('../assets/no_avatar.jpg')}
+                    source={{uri: getImageUrl(item.picture.path)}}
                   />
                 </View>
                 <View>

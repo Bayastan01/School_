@@ -14,6 +14,7 @@ import requester from '../utils/requester';
 import ActionSheet from 'react-native-actions-sheet';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+import {getImageUrl} from '../utils';
 
 const IMAGE_PICKER_OPTIONS = {
   maxHeight: 500,
@@ -155,7 +156,7 @@ const ParentStudent = ({navigation, route}) => {
         <View>
           <Image
             style={styles.imgProfile}
-            source={require('../assets/no_avatar.jpg')}
+            source={{uri: getImageUrl(item.picture.path)}}
           />
           <View style={styles.iconBtn}>
             <IconButton

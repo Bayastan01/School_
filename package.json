@@ -16,7 +16,7 @@
     "@react-navigation/native": "^6.0.6",
     "@react-navigation/native-stack": "^6.2.5",
     "@reduxjs/toolkit": "^1.7.2",
-    "axios": "^0.25.0",
+    "axios": "0.24.0",
     "material-ui-colors": "^1.0.0",
     "moment": "^2.29.1",
     "number-separator": "^2.0.0",

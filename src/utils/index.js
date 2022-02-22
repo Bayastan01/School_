@@ -1,5 +1,6 @@
-import {Alert} from 'react-native';
+import {Alert, Platform} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
+import {API_URL, API_VERSION} from './settings';
 
 export const phoneNumberValidator = p =>
   typeof p === 'string' && p.startsWith('+996') && p.length === 13;
@@ -58,4 +59,27 @@ export class BaseException extends Error {
         ? EXCEPTION_TITLES[this.status]
         : 'Ошибка!';
   };
+}
+
+export const getImageUrl = path => `${API_URL}/v${API_VERSION}/image/${path}`;
+
+export class NativeFile {
+  type;
+  name;
+  uri;
+
+  constructor(type, name, uri) {
+    this.type = type;
+    this.name = name || uri.split('/').slice(-1)[0];
+    this.uri = uri;
+  }
+
+  get() {
+    return {
+      type: this.type,
+      name: this.name,
+      uri:
+        Platform.OS === 'android' ? this.uri : this.uri.replace('file://', ''),
+    };
+  }
 }

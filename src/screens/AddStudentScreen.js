@@ -1,52 +1,84 @@
 import React, {createRef, useState} from 'react';
 import {
   Alert,
-  Image,
   ScrollView,
   StyleSheet,
   TouchableOpacity,
   View,
+  Image,
 } from 'react-native';
-import {Button, TextInput, IconButton, Text} from 'react-native-paper';
+import {
+  Button,
+  TextInput,
+  IconButton,
+  Text,
+  ActivityIndicator,
+} from 'react-native-paper';
 import {grey, teal} from 'material-ui-colors';
 import requester from '../utils/requester';
 import ActionSheet from 'react-native-actions-sheet';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+import {NativeFile} from '../utils';
 
 const IMAGE_PICKER_OPTIONS = {
-  maxHeight: 500,
-  maxWidth: 500,
+  maxHeight: 800,
+  maxWidth: 800,
   mediaType: 'photo',
 };
 
 const AddStudentScreen = ({navigation}) => {
-  const [addName, setAddName] = useState('');
+  const [fullName, setFullName] = useState('');
   const [limit, setLimit] = useState('');
+
+  const [pictureCode] = useState(Math.floor(Date.now() / 1000).toString());
+  const [pictureLoading, setPictureLoading] = useState(false);
+  const [picture, setPicture] = useState(null);
+  const [busy, setBusy] = useState(false);
 
   const actionSheetRef = createRef();
 
-  const handleAddName = () => {
+  const save = () => {
+    if (busy) {
+      return;
+    }
+    setBusy(true);
     requester
       .post('parent/student', {
-        full_name: addName,
+        full_name: fullName,
+        image_code: pictureCode,
         limit: limit.length === 0 ? 0 : +limit,
       })
       .then(() => {
         navigation.goBack();
       })
-      .catch(e => {
-        console.log(e);
+      .finally(() => {
+        setBusy(false);
       });
   };
 
-  const appendImage = img => {
-    // const image = {
-    //   name: img.fileName,
-    //   type: img.type,
-    //   uri: img.uri,
-    // };
-    //setDataValue('images', o => [...o, image]);
+  const onChangePicture = p => {
+    actionSheetRef.current?.setModalVisible(false);
+    if (pictureLoading) {
+      return;
+    }
+    setPictureLoading(true);
+    const file = new NativeFile(p.type, p.fileName, p.uri).get();
+    requester
+      .upload('parent/student/picture', {
+        image_code: pictureCode,
+        file,
+      })
+      .then(res => {
+        console.log(res);
+        setPicture(file);
+      })
+      .catch(e => {
+        console.log(e);
+      })
+      .finally(() => {
+        setPictureLoading(false);
+      });
   };
 
   return (
@@ -61,13 +93,11 @@ const AddStudentScreen = ({navigation}) => {
           }}>
           <TouchableOpacity
             onPress={() => {
-              launchImageLibrary(IMAGE_PICKER_OPTIONS, b => {
-                if (b.didCancel === true) {
+              launchImageLibrary(IMAGE_PICKER_OPTIONS).then(res => {
+                if (res.didCancel) {
                   return;
                 }
-                appendImage(b.assets[0]);
-              }).then(() => {
-                actionSheetRef.current?.setModalVisible(false);
+                onChangePicture(res.assets[0]);
               });
             }}>
             <View
@@ -87,16 +117,15 @@ const AddStudentScreen = ({navigation}) => {
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
-              launchCamera(IMAGE_PICKER_OPTIONS).then(b => {
-                if (b.didCancel) {
+              launchCamera(IMAGE_PICKER_OPTIONS).then(res => {
+                if (res.didCancel) {
                   return;
                 }
-                if (b.errorCode === 'camera_unavailable') {
+                if (res.errorCode === 'camera_unavailable') {
                   Alert.alert('Ошибка!', 'Камера недоступна!');
                   return;
                 }
-                appendImage(b.assets[0]);
-                actionSheetRef.current?.setModalVisible(false);
+                onChangePicture(res.assets[0]);
               });
             }}>
             <View
@@ -120,24 +149,37 @@ const AddStudentScreen = ({navigation}) => {
         <View style={{position: 'relative'}}>
           <Image
             style={styles.imgProfile}
-            source={require('../assets/no_avatar.jpg')}
+            source={
+              picture ? {uri: picture.uri} : require('../assets/no_avatar.jpg')
+            }
           />
-          <View style={styles.iconBtn}>
-            <IconButton
-              icon="camera"
-              color={grey[100]}
-              size={20}
-              onPress={() => actionSheetRef.current.setModalVisible(true)}
+          {pictureLoading ? (
+            <ActivityIndicator
+              style={{
+                position: 'absolute',
+                left: 45,
+                top: 65,
+              }}
+              size={30}
             />
-          </View>
+          ) : (
+            <View style={styles.iconBtn}>
+              <IconButton
+                icon="camera"
+                color={grey[100]}
+                size={20}
+                onPress={() => actionSheetRef.current.setModalVisible(true)}
+              />
+            </View>
+          )}
         </View>
 
         <View alignSelf={'stretch'} style={{padding: 8}}>
           <TextInput
-            label="Полное имя"
-            value={addName}
+            label={'Полное имя'}
+            value={fullName}
             style={{marginBottom: 8}}
-            onChangeText={text => setAddName(text)}
+            onChangeText={t => setFullName(t)}
           />
           <TextInput
             label="Веедите лимит за день"
@@ -148,8 +190,8 @@ const AddStudentScreen = ({navigation}) => {
           />
           <Button
             mode={'contained'}
-            onPress={() => handleAddName()}
-            disabled={addName.length < 3 || limit.length < 1}>
+            onPress={() => save()}
+            disabled={fullName.length < 3 || limit.length < 1}>
             Сохранить
           </Button>
         </View>
