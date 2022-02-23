@@ -38,9 +38,9 @@ const AddStudentScreen = ({navigation}) => {
         <ImagePicker
           picture={picture}
           pictureCode={pictureCode}
-          pictureLoading={pictureLoading}
+          pictureLoading={pictureLoading || busy}
           setPicture={setPicture}
-          setPictureLoading={setPictureLoading}
+          setPictureLoading={setPictureLoading || busy}
         />
         <View alignSelf={'stretch'} style={{padding: 8}}>
           <TextInput

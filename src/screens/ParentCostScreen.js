@@ -5,6 +5,7 @@ import requester from '../utils/requester';
 import moment from 'moment';
 import {grey, red} from 'material-ui-colors';
 import numberSeparator from 'number-separator';
+import {getImageUrl} from '../utils';
 
 const ParentCostScreen = () => {
   const [items, setItems] = useState([]);
@@ -43,18 +44,17 @@ const ParentCostScreen = () => {
             style={{
               flexDirection: 'row',
               paddingVertical: 8,
-              marginHorizontal: 16,
+              marginHorizontal: 12,
               alignItems: 'center',
             }}>
             <Avatar.Image
               size={50}
-              source={require('../assets/no_avatar.jpg')}
+              source={{uri: getImageUrl(item.student.picture.path)}}
             />
             <View
               style={{
                 flexGrow: 1,
                 marginLeft: 12,
-                alignItems: 'flex-start',
               }}>
               <Text style={styles.title}>{item.store.title}</Text>
               <Text style={{color: grey[900]}}>{item.student.full_name}</Text>
@@ -62,12 +62,10 @@ const ParentCostScreen = () => {
                 {moment(item.created_at).calendar()}
               </Text>
             </View>
-            <View style={{alignItems: 'center', justifyContent: 'center'}}>
-              <Text style={styles.amount}>
-                -{numberSeparator(item.amount)}{' '}
-                <Text style={{textDecorationLine: 'underline'}}>с</Text>
-              </Text>
-            </View>
+            <Text style={styles.amount}>
+              -{numberSeparator(item.amount)}{' '}
+              <Text style={{textDecorationLine: 'underline'}}>с</Text>
+            </Text>
           </View>
         );
       }}
@@ -82,7 +80,6 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
   amount: {
-    alignItems: 'flex-end',
     fontSize: 20,
     fontWeight: 'bold',
     color: red[900],
