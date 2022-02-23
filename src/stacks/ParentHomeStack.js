@@ -35,7 +35,7 @@ const ParentHomeStack = () => {
         />
         <Stack.Screen
           options={{title: 'Пополнение счета'}}
-          name={'TopUpYourAccount'}
+          name={'ReplenishBalance'}
           component={TopUpYourAccount}
         />
       </Stack.Navigator>

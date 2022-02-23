@@ -91,7 +91,7 @@ const ParentHomeScreen = ({navigation}) => {
               </Text>
             </View>
             <MaterialCommunityIcons
-              onPress={() => navigation.navigate('TopUpYourAccount')}
+              onPress={() => navigation.navigate('ReplenishBalance')}
               name="cash-plus"
               style={{color: teal[900]}}
               size={35}

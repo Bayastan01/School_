@@ -5,10 +5,12 @@ import {green, teal} from 'material-ui-colors';
 import requester from '../utils/requester';
 import moment from 'moment';
 import numberSeparator from 'number-separator';
+import {useNavigation} from '@react-navigation/native';
 
 const ParentPaymentScreen = () => {
   const [payments, setItems] = useState([]);
   const [busy, setBusy] = useState(false);
+  const navigation = useNavigation();
 
   const fetchItems = () => {
     if (busy) {
@@ -42,6 +44,7 @@ const ParentPaymentScreen = () => {
           icon="plus"
           style={{marginBottom: 8}}
           mode="contained"
+          onPress={() => navigation.navigate('ReplenishBalance')}
           color={teal[700]}>
           Пополнить счет
         </Button>

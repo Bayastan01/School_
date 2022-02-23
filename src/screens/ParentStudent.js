@@ -1,37 +1,25 @@
-import React, {createRef, useEffect, useState} from 'react';
-import {
-  Alert,
-  Image,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
-import {Button, TextInput, IconButton} from 'react-native-paper';
-import {grey, teal} from 'material-ui-colors';
+import React, {useEffect, useState} from 'react';
+import {Alert, ScrollView, StyleSheet, View} from 'react-native';
+import {Button, TextInput} from 'react-native-paper';
+import {teal} from 'material-ui-colors';
 import requester from '../utils/requester';
-import ActionSheet from 'react-native-actions-sheet';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
-import {getImageUrl} from '../utils';
-
-const IMAGE_PICKER_OPTIONS = {
-  maxHeight: 500,
-  maxWidth: 500,
-  mediaType: 'photo',
-};
+import ImagePicker from '../ui/ImagePicker';
 
 const ParentStudent = ({navigation, route}) => {
-  const [addName, setAddName] = useState('');
+  const [fullName, setFullName] = useState('');
   const [limit, setLimit] = useState('');
-  const actionSheetRef = createRef();
   const [busy, setBusy] = useState(false);
   const {item} = route.params;
 
+  const [pictureCode, setPictureCode] = useState(null);
+  const [pictureLoading, setPictureLoading] = useState(false);
+  const [picture, setPicture] = useState(null);
+
   useEffect(() => {
-    setAddName(item.full_name);
+    setFullName(item.full_name);
     setLimit(item.limit.toString());
+    setPictureCode(item.picture.code.slice(8));
+    setPicture(item.picture);
   }, []);
 
   const save = () => {
@@ -41,8 +29,9 @@ const ParentStudent = ({navigation, route}) => {
     setBusy(true);
     requester
       .post('parent/student', {
-        full_name: addName,
+        full_name: fullName,
         id: item.id,
+        image_code: pictureCode,
         limit: limit.length === 0 ? 0 : +limit,
       })
       .then(() => {
@@ -79,100 +68,22 @@ const ParentStudent = ({navigation, route}) => {
     ]);
   };
 
-  const appendImage = img => {
-    // const image = {
-    //   name: img.fileName,
-    //   type: img.type,
-    //   uri: img.uri,
-    // };
-    //setDataValue('images', o => [...o, image]);
-  };
-
   return (
     <>
-      <ActionSheet ref={actionSheetRef}>
-        <View
-          style={{
-            margin: 20,
-            justifyContent: 'space-around',
-            alignItems: 'center',
-            flexDirection: 'row',
-          }}>
-          <TouchableOpacity
-            onPress={() => {
-              launchImageLibrary(IMAGE_PICKER_OPTIONS, b => {
-                if (b.didCancel === true) {
-                  return;
-                }
-                appendImage(b.assets[0]);
-              }).then(() => {
-                actionSheetRef.current?.setModalVisible(false);
-              });
-            }}>
-            <View
-              style={{
-                flexDirection: 'column',
-                alignItems: 'center',
-              }}>
-              <MaterialCommunityIcons
-                name={'image'}
-                color={'#0079C2FF'}
-                size={30}
-              />
-              <View>
-                <Text style={{fontSize: 15}}>Галерея</Text>
-              </View>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => {
-              launchCamera(IMAGE_PICKER_OPTIONS).then(b => {
-                if (b.didCancel) {
-                  return;
-                }
-                appendImage(b.assets[0]);
-                actionSheetRef.current?.setModalVisible(false);
-              });
-            }}>
-            <View
-              style={{
-                flexDirection: 'column',
-                alignItems: 'center',
-              }}>
-              <MaterialCommunityIcons
-                name={'camera'}
-                color={'#0079C2FF'}
-                size={30}
-              />
-              <View>
-                <Text style={{fontSize: 15}}>Камера</Text>
-              </View>
-            </View>
-          </TouchableOpacity>
-        </View>
-      </ActionSheet>
-
       <ScrollView contentContainerStyle={{alignItems: 'center'}}>
-        <View>
-          <Image
-            style={styles.imgProfile}
-            source={{uri: getImageUrl(item.picture.path)}}
-          />
-          <View style={styles.iconBtn}>
-            <IconButton
-              icon="camera"
-              color={grey[100]}
-              size={20}
-              onPress={() => actionSheetRef.current.setModalVisible(true)}
-            />
-          </View>
-        </View>
+        <ImagePicker
+          picture={picture}
+          pictureCode={pictureCode}
+          pictureLoading={pictureLoading}
+          setPicture={setPicture}
+          setPictureLoading={setPictureLoading}
+        />
 
         <View alignSelf={'stretch'} style={{padding: 8}}>
           <TextInput
             label="Полное имя"
-            value={addName}
-            onChangeText={text => setAddName(text)}
+            value={fullName}
+            onChangeText={text => setFullName(text)}
             style={styles.input}
           />
           <TextInput
@@ -187,7 +98,9 @@ const ParentStudent = ({navigation, route}) => {
             style={styles.inputBtn}
             mode={'contained'}
             loading={busy}
-            disabled={addName.length < 3 || limit.length < 1 || busy}>
+            disabled={
+              fullName.length < 3 || busy || !picture || pictureLoading
+            }>
             Изменить
           </Button>
           <Button
