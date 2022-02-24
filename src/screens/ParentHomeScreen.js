@@ -12,9 +12,10 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import {grey, teal} from 'material-ui-colors';
 import {FAB} from 'react-native-paper';
 import requester from '../utils/requester';
-import {getImageUrl, useAppSelector} from '../utils';
+import {getImageUrl, getQrStatusLabel, useAppSelector} from '../utils';
 import {useIsFocused} from '@react-navigation/native';
 import numberSeparator from 'number-separator';
+import moment from 'moment';
 
 const ParentHomeScreen = ({navigation}) => {
   const isFocused = useIsFocused();
@@ -105,17 +106,24 @@ const ParentHomeScreen = ({navigation}) => {
             <TouchableOpacity
               onPress={() => navigation.navigate('ParentStudent', {item})}>
               <View style={styles.itemAdd}>
-                <View style={{marginRight: 8}}>
-                  <Image
-                    style={styles.square}
-                    source={{uri: getImageUrl(item.picture.path)}}
-                  />
-                </View>
+                <Image
+                  style={styles.square}
+                  source={{uri: getImageUrl(item.picture.path)}}
+                />
                 <View>
                   <Text style={styles.itemText}>{item.full_name}</Text>
                   <Text style={styles.itemSchool}>
                     Лимит: {numberSeparator(item.limit)} сом
                   </Text>
+                  {item.qr_status === 'delivered' ? (
+                    <Text style={styles.itemSchool}>
+                      Срок карты: {moment(item.qr_expires_on).calendar()}
+                    </Text>
+                  ) : (
+                    <Text style={styles.itemSchool}>
+                      Карта: {getQrStatusLabel(item.qr_status)}
+                    </Text>
+                  )}
                 </View>
               </View>
             </TouchableOpacity>
@@ -145,6 +153,7 @@ const styles = StyleSheet.create({
   square: {
     width: 70,
     height: 70,
+    marginRight: 8,
     borderRadius: 35,
   },
   itemAdd: {
@@ -162,7 +171,6 @@ const styles = StyleSheet.create({
   },
   itemSchool: {
     color: grey[800],
-    marginVertical: 5,
     fontSize: 12,
   },
 });

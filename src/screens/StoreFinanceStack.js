@@ -1,6 +1,6 @@
 import React from 'react';
 import SellerFinance from './SellerFinance';
-import SellerFinanceOtchet from './SellerFinanceOtchet';
+import StoreFinancePaymentsScreen from './StoreFinancePaymentsScreen';
 import {teal} from 'material-ui-colors';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import {SafeAreaView} from 'react-native';
@@ -13,20 +13,20 @@ const StoreFinanceStack = () => {
       forceInset={{top: 'always'}}
       style={{backgroundColor: teal[900], flex: 1}}>
       <Tab.Navigator
-        initialRouteName="FinanceScreen"
+        initialRouteName="StorePaymentsScreen"
         screenOptions={{
           tabBarActiveTintColor: 'white',
           tabBarStyle: {backgroundColor: teal[900]},
         }}>
         <Tab.Screen
+          name="StorePaymentsScreen"
+          component={StoreFinancePaymentsScreen}
+          options={{tabBarLabel: 'Оплаты'}}
+        />
+        <Tab.Screen
           name="FinanceScreen"
           component={SellerFinance}
           options={{tabBarLabel: 'Обналичи'}}
-        />
-        <Tab.Screen
-          name="Otchet"
-          component={SellerFinanceOtchet}
-          options={{tabBarLabel: 'Оплаты'}}
         />
       </Tab.Navigator>
     </SafeAreaView>

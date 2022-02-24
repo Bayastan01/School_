@@ -1,112 +1,136 @@
 import React, {useState} from 'react';
-import {StyleSheet, Text, View, StatusBar, Dimensions} from 'react-native';
+import {StyleSheet, Text, View, Dimensions} from 'react-native';
 import Row from './Calculator/Row';
 import Button from './Calculator/Button';
-import {Avatar, Headline} from 'react-native-paper';
+import {ActivityIndicator, Avatar, Headline} from 'react-native-paper';
 import {teal} from 'material-ui-colors';
 import {useNavigation} from '@react-navigation/native';
 import requester from '../utils/requester';
+import {getImageUrl, useAppDispatch} from '../utils';
+import {incStoreBalance} from '../stores/appStore';
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
+  keyboard: {
+    padding: 5,
     backgroundColor: 'white',
     color: 'black',
     justifyContent: 'flex-end',
+    alignItems: 'center',
+  },
+  info: {
+    flexGrow: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   value: {
     color: 'black',
-    fontSize: 30,
+    fontSize: 40,
     textAlign: 'center',
-    marginRight: 20,
-    marginBottom: 10,
+    marginVertical: 10,
   },
 });
 
 function SellerStudentScreen({route}) {
   const navigation = useNavigation();
+  const dispatch = useAppDispatch();
+
   const [state, setState] = useState('');
-  const screenSize = Dimensions.get('window');
+  const [busy, setBusy] = useState(false);
+
   const {data} = route.params;
-  console.log(data);
+  const screenSize = Dimensions.get('window');
 
   const take = () => {
+    if (busy) {
+      return;
+    }
+    setBusy(true);
     requester
       .post('store/student', {
         code: `BS${data.qr_code}`,
         sum: +state,
       })
       .then(res => {
-        console.log(res);
+        dispatch(incStoreBalance(res.payload.amount));
         navigation.goBack();
       })
-      .catch(e => {
-        console.log(e);
-      });
+      .finally(() => setBusy(false));
   };
 
   return (
-    <>
-      <View style={{alignItems: 'center', margin: 5}}>
+    <View style={{alignItems: 'center', flex: 1}}>
+      <View style={styles.info}>
         <Avatar.Image
-          size={(screenSize.height / 100) * 15}
-          source={{
-            uri: 'https://www.gannett-cdn.com/presto/2018/08/14/PTAL/6e4fff76-595d-4069-9112-cfe15dbfaa43-IMG_Stadium.jpeg?width=660&height=319&fit=crop&format=pjpg&auto=webp',
-          }}
+          size={(screenSize.height / 100) * 20}
+          source={{uri: getImageUrl(data.picture.path)}}
         />
-      </View>
-      <View style={{alignItems: 'center'}}>
-        <Headline style={{fontSize: 28, marginTop: 18, color: '#7d7d7d'}}>
+        <Headline
+          style={{
+            fontSize: 28,
+            textAlign: 'center',
+            marginTop: 18,
+            color: '#7d7d7d',
+          }}>
           {data.full_name}
         </Headline>
-      </View>
-      <Text
-        style={{
-          textAlign: 'center',
-          fontSize: 80,
-          fontWeight: 'bold',
-          color: teal[900],
-        }}>
-        {data.balance} с
-      </Text>
-      <View style={styles.container}>
-        <StatusBar barStyle="light-content" />
-        <View
+        <Text
           style={{
-            alignItems: 'center',
-            width: '100%',
-            height: 330,
+            textAlign: 'center',
+            fontSize: 70,
+            fontWeight: 'bold',
+            color: teal[900],
           }}>
-          <Text style={styles.value}>{state ? ` ${state} сом` : ''}</Text>
-          <Row>
-            <Button text="7" onPress={() => setState(s => s + '7')} />
-            <Button text="8" onPress={() => setState(s => s + '8')} />
-            <Button text="9" onPress={() => setState(s => s + '9')} />
-          </Row>
-          <Row>
-            <Button text="4" onPress={() => setState(s => s + '4')} />
-            <Button text="5" onPress={() => setState(s => s + '5')} />
-            <Button text="6" onPress={() => setState(s => s + '6')} />
-          </Row>
-          <Row>
-            <Button text="1" onPress={() => setState(s => s + '1')} />
-            <Button text="2" onPress={() => setState(s => s + '2')} />
-            <Button text="3" onPress={() => setState(s => s + '3')} />
-          </Row>
-          <Row>
-            <Button
-              text="0"
-              size="double"
-              onPress={() => setState(s => s + '0')}
-            />
-            <Button text="C" theme="secondary" onPress={() => setState('')} />
-          </Row>
-          <Row>
-            <Button text="Забрать" theme="accent" onPress={take} />
-          </Row>
-        </View>
+          {data.available_balance} с
+        </Text>
       </View>
-    </>
+      <View style={styles.keyboard}>
+        <Text style={styles.value}>{state ? ` ${state} сом` : ''}</Text>
+        {busy ? (
+          <View
+            style={{
+              minHeight: (screenSize.height / 100) * 30,
+              width: screenSize.width - 10,
+              justifyContent: 'center',
+            }}>
+            <ActivityIndicator size={50} />
+          </View>
+        ) : (
+          <>
+            <Row>
+              <Button text="7" onPress={() => setState(s => s + '7')} />
+              <Button text="8" onPress={() => setState(s => s + '8')} />
+              <Button text="9" onPress={() => setState(s => s + '9')} />
+            </Row>
+            <Row>
+              <Button text="4" onPress={() => setState(s => s + '4')} />
+              <Button text="5" onPress={() => setState(s => s + '5')} />
+              <Button text="6" onPress={() => setState(s => s + '6')} />
+            </Row>
+            <Row>
+              <Button text="1" onPress={() => setState(s => s + '1')} />
+              <Button text="2" onPress={() => setState(s => s + '2')} />
+              <Button text="3" onPress={() => setState(s => s + '3')} />
+            </Row>
+            <Row>
+              <Button
+                text="0"
+                disabled={state === ''}
+                onPress={() => setState(s => s + '0')}
+              />
+              <Button text="C" theme="secondary" onPress={() => setState('')} />
+            </Row>
+            <Row>
+              <Button
+                text="Забрать"
+                theme="accent"
+                onPress={take}
+                disabled={state === ''}
+              />
+            </Row>
+          </>
+        )}
+      </View>
+    </View>
   );
 }
 

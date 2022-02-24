@@ -101,7 +101,7 @@ const ParentStudent = ({navigation, route}) => {
             disabled={
               fullName.length < 3 || busy || !picture || pictureLoading
             }>
-            Изменить
+            Сохранить
           </Button>
           <Button
             mode={'outlined'}

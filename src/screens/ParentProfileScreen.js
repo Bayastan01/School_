@@ -11,7 +11,6 @@ const ParentProfileScreen = () => {
   const user = useAppSelector(state => state.app.user);
   const [busy, setBusy] = useState(false);
   const [fullName, setFullName] = useState('');
-  const [phone_number, setPhone_number] = useState('');
 
   const signOut = () => {
     // TODO: confirm
@@ -20,7 +19,6 @@ const ParentProfileScreen = () => {
 
   useEffect(() => {
     setFullName(user.full_name);
-    setPhone_number(user.phone_number);
   }, []);
 
   return (
@@ -43,9 +41,8 @@ const ParentProfileScreen = () => {
         <TextInput
           label="Телефон номер"
           style={{marginTop: 8}}
-          onChangeText={setPhone_number}
-          value={phone_number}
-          disabled={busy}
+          value={`+${user.phone_number}`}
+          disabled
         />
         <Button
           mode="contained"

@@ -21,12 +21,6 @@ const styles = StyleSheet.create({
     borderRadius: Math.floor(buttonWidth),
     margin: 5,
   },
-  buttonDouble: {
-    width: screen.width / 2 - 10,
-    flex: 0,
-    alignItems: 'flex-start',
-    paddingLeft: 40,
-  },
   buttonSecondary: {
     backgroundColor: '#a6a6a6',
   },
@@ -35,13 +29,9 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ({onPress, text, size, theme}) => {
+export default ({onPress, disabled, text, theme}) => {
   const buttonStyles = [styles.button];
   const textStyles = [styles.text];
-
-  if (size === 'double') {
-    buttonStyles.push(styles.buttonDouble);
-  }
 
   if (theme === 'secondary') {
     buttonStyles.push(styles.buttonSecondary);
@@ -51,7 +41,7 @@ export default ({onPress, text, size, theme}) => {
   }
 
   return (
-    <TouchableOpacity onPress={onPress} style={buttonStyles}>
+    <TouchableOpacity onPress={disabled ? null : onPress} style={buttonStyles}>
       <Text style={textStyles}>{text}</Text>
     </TouchableOpacity>
   );

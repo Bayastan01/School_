@@ -15,6 +15,11 @@ export const appStore = createSlice({
   name: 'appStore',
   initialState,
   reducers: {
+    incStoreBalance: (state, action) => {
+      if (state.user_type === 'store') {
+        state.store.balance += action.payload;
+      }
+    },
     makeAuth: (state, action) => {
       state.is_authorized = true;
       state.user = action.payload.data.user;
@@ -52,6 +57,6 @@ export const appStore = createSlice({
   },
 });
 
-export const {makeAuth, clearSession} = appStore.actions;
+export const {makeAuth, clearSession, incStoreBalance} = appStore.actions;
 
 export default appStore.reducer;

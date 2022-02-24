@@ -22,7 +22,7 @@ const StoreHomeStack = () => {
           component={StoreHomeScreen}
         />
         <Stack.Screen
-          options={{title: APP_TITLE}}
+          options={{title: 'Счет школьника'}}
           name={'SellerStudentScreen'}
           component={SellerStudentScreen}
         />

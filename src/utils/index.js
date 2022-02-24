@@ -14,7 +14,7 @@ const EXCEPTION_MESSAGES = {
   user_not_found: 'Пользователь не найден!',
   employee_not_found: 'Сотрудник не найден!',
   network_error: 'Ошибка соединения с сервером!',
-  not_enough_balance: 'недостаточно средств!',
+  not_enough_balance: 'Недостаточно средств!',
 };
 
 export class BaseException extends Error {
@@ -83,3 +83,11 @@ export class NativeFile {
     };
   }
 }
+
+const QR_STATUS_LABELS = {
+  delivered: 'доставлено',
+  pending_for_payment: 'в ожидании оплаты',
+  being_prepared: 'в ожидании',
+};
+
+export const getQrStatusLabel = g => QR_STATUS_LABELS[g];
