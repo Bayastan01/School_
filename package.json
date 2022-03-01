@@ -1,5 +1,5 @@
 {
-  "name": "BesoftSchool",
+  "name": "besoft-school",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -10,10 +10,30 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@react-native-async-storage/async-storage": "^1.16.1",
+    "@react-navigation/material-bottom-tabs": "^6.1.1",
+    "@react-navigation/material-top-tabs": "^6.1.1",
+    "@react-navigation/native": "^6.0.8",
+    "@react-navigation/native-stack": "^6.5.0",
+    "@reduxjs/toolkit": "^1.8.0",
+    "axios": "^0.26.0",
+    "material-ui-colors": "^1.0.0",
+    "moment": "^2.29.1",
+    "number-separator": "^2.0.0",
     "react": "17.0.2",
     "react-native": "0.67.3",
+    "react-native-actions-sheet": "^0.6.0",
+    "react-native-camera": "^4.2.1",
+    "react-native-image-picker": "^4.7.3",
+    "react-native-pager-view": "^5.4.11",
     "react-native-paper": "^4.11.2",
-    "react-native-vector-icons": "^9.1.0"
+    "react-native-safe-area-context": "^4.1.0",
+    "react-native-screens": "^3.13.0",
+    "react-native-smooth-pincode-input": "^1.0.9",
+    "react-native-storage": "^1.0.1",
+    "react-native-tab-view": "^3.1.1",
+    "react-native-vector-icons": "^9.1.0",
+    "react-redux": "^7.2.6"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
