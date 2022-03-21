@@ -2,6 +2,7 @@ import {
   Alert,
   Image,
   PermissionsAndroid,
+  Platform,
   StyleSheet,
   TouchableOpacity,
   View,
@@ -22,12 +23,12 @@ const IMAGE_PICKER_OPTIONS = {
 };
 
 const ImagePicker = ({
-                       setPictureLoading,
-                       pictureLoading,
-                       pictureCode,
-                       setPicture,
-                       picture,
-                     }) => {
+  setPictureLoading,
+  pictureLoading,
+  pictureCode,
+  setPicture,
+  picture,
+}) => {
   const actionSheetRef = createRef();
 
   const onChangePicture = p => {
@@ -56,17 +57,23 @@ const ImagePicker = ({
 
   const requestCameraPermission = async () => {
     try {
-      const granted = await PermissionsAndroid.request(
-        PermissionsAndroid.PERMISSIONS.CAMERA,
-        {
-          title: 'App Camera Permission',
-          message: 'App needs access to your camera ',
-          buttonNeutral: 'Ask Me Later',
-          buttonNegative: 'Cancel',
-          buttonPositive: 'OK',
-        },
-      );
-      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+      const granted =
+        Platform.OS === 'android'
+          ? await PermissionsAndroid.request(
+              PermissionsAndroid.PERMISSIONS.CAMERA,
+              {
+                title: 'App Camera Permission',
+                message: 'App needs access to your camera ',
+                buttonNeutral: 'Ask Me Later',
+                buttonNegative: 'Cancel',
+                buttonPositive: 'OK',
+              },
+            )
+          : false;
+      if (
+        granted === PermissionsAndroid.RESULTS.GRANTED ||
+        Platform.OS !== 'android'
+      ) {
         launchCamera(IMAGE_PICKER_OPTIONS).then(res => {
           if (res.didCancel) {
             return;

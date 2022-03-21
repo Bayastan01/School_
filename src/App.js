@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {View} from 'react-native';
+import {StatusBar, View} from 'react-native';
 import WelcomeStack from './stacks/WelcomeStack';
 import ParentStack from './stacks/ParentStack';
 import StoreStack from './stacks/StoreStack';
@@ -79,6 +79,7 @@ const App = () => {
 
   return (
     <>
+      <StatusBar barStyle={(is_authorized ? 'light' : 'dark') + '-content'} />
       {!is_authorized ? (
         <WelcomeStack />
       ) : user_type === 'parent' ? (

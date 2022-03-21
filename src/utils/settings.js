@@ -1,10 +1,10 @@
 export const DEBUG_MODE = process.env.NODE_ENV !== 'production';
 
 export const APP_TITLE = 'Besoft School';
-//export const APP_VERSION = 6;
+//export const APP_VERSION = 7;
 
 export const API_URL = DEBUG_MODE
-  ? 'http://172.20.10.3:5002'
+  ? 'http://192.168.0.105:5002'
   : 'https://api.school.besoft.kg';
 export const API_VERSION = 1;
 

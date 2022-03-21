@@ -7,7 +7,6 @@
  */
 
 import React from 'react';
-import {StatusBar} from 'react-native';
 import {DefaultTheme, Provider as PaperProvider} from 'react-native-paper';
 import {NavigationContainer} from '@react-navigation/native';
 import App from './App';
@@ -31,7 +30,6 @@ const Root = () => {
       <Provider store={stores}>
         <NavigationContainer>
           <PaperProvider theme={theme}>
-            <StatusBar barStyle={'light-content'} />
             <App />
           </PaperProvider>
         </NavigationContainer>

@@ -24,7 +24,7 @@ const request = async (cmd, method, data, silence = false, upload = false) => {
   } catch (e) {
     const err = new BaseException(e.message);
 
-    console.dir(e);
+    //console.dir(e);
 
     if ('response' in e && e.response !== undefined) {
       err.handleFromResponse(e);

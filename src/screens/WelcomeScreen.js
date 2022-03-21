@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import {
-  StyleSheet,
   TouchableOpacity,
   View,
   KeyboardAvoidingView,
@@ -97,10 +96,10 @@ const WelcomeScreen = () => {
             <Text style={{color: '#fff'}}> Кем вы являетесь? </Text>
           ) : null}
           {step === 1 && who_are_you === 'parent' ? (
-            <Text style={{color: '#fff'}}>Заполните ! </Text>
+            <Text style={{color: '#fff'}}>Заполните!</Text>
           ) : null}
           {step === 1 && who_are_you === 'store' ? (
-            <Text style={{color: '#fff'}}>Заполните ! </Text>
+            <Text style={{color: '#fff'}}>Заполните!</Text>
           ) : null}
         </Title>
         <View style={{marginVertical: 12}}>
@@ -155,7 +154,5 @@ const WelcomeScreen = () => {
     </KeyboardAvoidingView>
   );
 };
-
-const styles = StyleSheet.create({});
 
 export default WelcomeScreen;

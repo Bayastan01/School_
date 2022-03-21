@@ -26,7 +26,7 @@ export class BaseException extends Error {
 
   title = 'Ошибка!';
 
-  handleNetworkError = err => {
+  handleNetworkError = () => {
     this.status = 'network_error';
 
     this.setMessage();
