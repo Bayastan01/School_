@@ -8,7 +8,8 @@ import numberSeparator from 'number-separator';
 import {ActivityIndicator} from 'react-native-paper';
 
 const screen = Dimensions.get('screen');
-const minSize = Math.floor(screen.height > screen.width ? screen.width : screen.height) - 24;
+const minSize =
+  Math.floor(screen.height > screen.width ? screen.width : screen.height) - 24;
 
 function StoreHomeScreen({navigation}) {
   const store = useAppSelector(state => state.app.store);

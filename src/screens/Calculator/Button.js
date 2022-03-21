@@ -15,11 +15,11 @@ const styles = StyleSheet.create({
   button: {
     backgroundColor: '#333333',
     flex: 1,
-    height: Math.floor(buttonWidth - 10),
+    height: Math.floor(buttonWidth - 12),
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: Math.floor(buttonWidth),
-    margin: 5,
+    margin: 4,
   },
   buttonSecondary: {
     backgroundColor: '#a6a6a6',
