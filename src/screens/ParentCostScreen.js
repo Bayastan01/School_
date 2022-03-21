@@ -1,28 +1,52 @@
 import React, {useEffect, useState} from 'react';
 import {FlatList, StyleSheet, Text, View} from 'react-native';
-import {Avatar, Divider} from 'react-native-paper';
+import {ActivityIndicator, Avatar, Divider} from 'react-native-paper';
 import requester from '../utils/requester';
 import moment from 'moment';
 import {grey, red} from 'material-ui-colors';
 import numberSeparator from 'number-separator';
 import {getImageUrl} from '../utils';
+import {ITEMS_PER_PAGE} from '../utils/settings';
 
 const ParentCostScreen = () => {
   const [items, setItems] = useState([]);
   const [busy, setBusy] = useState(false);
+  const [page, setPage] = useState(2);
+  const [changingPage, setChangingPage] = useState(false);
+  const [stopNextPage, setStopNextPage] = useState(false);
 
   const fetchItems = () => {
-    if (busy) {
+    if (busy || changingPage) {
       return;
     }
+    setPage(2);
+    setStopNextPage(false);
     setBusy(true);
     requester
       .get('parent/transaction/consumption')
       .then(res => {
         setItems(res.payload);
+        setStopNextPage(res.payload.length < ITEMS_PER_PAGE);
       })
       .finally(() => {
         setBusy(false);
+      });
+  };
+
+  const nextPage = () => {
+    if (changingPage || stopNextPage || busy) {
+      return;
+    }
+    setChangingPage(true);
+    requester
+      .get('parent/transaction/consumption', {page})
+      .then(res => {
+        setItems(p => [...p, ...res.payload]);
+        setStopNextPage(res.payload.length < ITEMS_PER_PAGE);
+        setPage(p => p + 1);
+      })
+      .finally(() => {
+        setChangingPage(false);
       });
   };
 
@@ -32,9 +56,21 @@ const ParentCostScreen = () => {
 
   return (
     <FlatList
-      style={{padding: 8}}
+      contentContainerStyle={{padding: 8}}
+      style={{flex: 1}}
       keyExtractor={item => item.id}
       data={items}
+      onEndReached={() => nextPage()}
+      ListFooterComponent={
+        changingPage ? (
+          <View
+            justifyContent={'center'}
+            alignItems={'center'}
+            style={{height: 100}}>
+            <ActivityIndicator />
+          </View>
+        ) : null
+      }
       onRefresh={() => fetchItems()}
       refreshing={busy}
       ItemSeparatorComponent={() => <Divider />}

@@ -1,22 +1,14 @@
 import React, {useState} from 'react';
-import {View, StyleSheet, Text, Platform, Dimensions} from 'react-native';
+import {View, Text, Platform, Dimensions} from 'react-native';
 import {RNCamera} from 'react-native-camera';
 import {useAppSelector} from '../utils';
 import SellerStudentScreen from './SellerStudentScreen';
 import requester from '../utils/requester';
+import numberSeparator from 'number-separator';
+import {ActivityIndicator} from 'react-native-paper';
 
 const screen = Dimensions.get('screen');
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: 'column',
-  },
-  camera: {
-    width: screen.height > screen.width ? screen.width : screen.height,
-    height: screen.height > screen.width ? screen.width : screen.height,
-  },
-});
+const minSize = Math.floor(screen.height > screen.width ? screen.width : screen.height) - 24;
 
 function StoreHomeScreen({navigation}) {
   const store = useAppSelector(state => state.app.store);
@@ -56,35 +48,46 @@ function StoreHomeScreen({navigation}) {
   };
 
   return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: 'space-around',
-        alignItems: 'center',
-        flexDirection: 'column',
-      }}>
+    <View flex={1}>
       <View
         style={{
           padding: 8,
           flexDirection: 'row',
-          alignSelf: 'stretch',
+          alignItems: 'center',
           justifyContent: 'space-between',
         }}>
         <Text>{user.full_name}</Text>
-        <Text>{store.balance} c</Text>
+        <Text style={{fontSize: 24}}>
+          {numberSeparator(store.balance)}{' '}
+          <Text style={{textDecorationLine: 'underline'}}>с</Text>
+        </Text>
       </View>
 
       <View
-        style={{flexGrow: 1, alignItems: 'center', justifyContent: 'center'}}>
+        style={{
+          flex: 1,
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}>
         {busy ? (
-          <Text>Loading</Text>
+          <ActivityIndicator />
         ) : (
-          <RNCamera
-            onBarCodeRead={onBarCodeRead}
-            barCodeTypes={[RNCamera.Constants.BarCodeType.qr]}
-            type={RNCamera.Constants.Type.back}
-            style={styles.camera}
-          />
+          <View style={{padding: 12}}>
+            <RNCamera
+              onBarCodeRead={onBarCodeRead}
+              barCodeTypes={[RNCamera.Constants.BarCodeType.qr]}
+              type={RNCamera.Constants.Type.back}
+              style={{
+                width: minSize,
+                height: minSize,
+                borderRadius: 12,
+                overflow: 'hidden',
+                borderStyle: 'solid',
+                borderWidth: 1,
+                borderColor: '#808080',
+              }}
+            />
+          </View>
         )}
       </View>
     </View>

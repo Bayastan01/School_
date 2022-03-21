@@ -1,6 +1,7 @@
-import {Alert, Platform} from 'react-native';
+import {Platform} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {API_URL, API_VERSION} from './settings';
+import Toast from 'react-native-toast-message';
 
 export const phoneNumberValidator = p =>
   typeof p === 'string' && p.startsWith('+996') && p.length === 13;
@@ -43,7 +44,12 @@ export class BaseException extends Error {
   };
 
   show = () => {
-    Alert.alert(this.title, this.message);
+    Toast.show({
+      type: 'error',
+      position: 'bottom',
+      text1: this.title,
+      text2: this.message,
+    });
   };
 
   setMessage = () => {

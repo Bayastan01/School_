@@ -14,6 +14,7 @@ import App from './App';
 import {Provider} from 'react-redux';
 import stores from './stores';
 import {teal} from 'material-ui-colors';
+import Toast from 'react-native-toast-message';
 
 const theme = {
   ...DefaultTheme,
@@ -26,14 +27,17 @@ const theme = {
 
 const Root = () => {
   return (
-    <Provider store={stores}>
-      <NavigationContainer>
-        <PaperProvider theme={theme}>
-          <StatusBar barStyle={'light-content'} />
-          <App />
-        </PaperProvider>
-      </NavigationContainer>
-    </Provider>
+    <>
+      <Provider store={stores}>
+        <NavigationContainer>
+          <PaperProvider theme={theme}>
+            <StatusBar barStyle={'light-content'} />
+            <App />
+          </PaperProvider>
+        </NavigationContainer>
+      </Provider>
+      <Toast />
+    </>
   );
 };
 

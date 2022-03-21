@@ -26,7 +26,7 @@ const StoreFinanceStack = () => {
         <Tab.Screen
           name="FinanceScreen"
           component={SellerFinance}
-          options={{tabBarLabel: 'Обналичи'}}
+          options={{tabBarLabel: 'Обналичивания'}}
         />
       </Tab.Navigator>
     </SafeAreaView>

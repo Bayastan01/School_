@@ -3,7 +3,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import ParentHomeScreen from '../screens/ParentHomeScreen';
 import {APP_TITLE} from '../utils/settings';
 import {grey, teal} from 'material-ui-colors';
-import TopUpYourAccount from '../screens/TopUpYourAccount';
+import ReplenishBalanceScreen from '../screens/ReplenishBalanceScreen';
 import AddStudentScreen from '../screens/AddStudentScreen';
 import ParentStudent from '../screens/ParentStudent';
 
@@ -36,7 +36,7 @@ const ParentHomeStack = () => {
         <Stack.Screen
           options={{title: 'Пополнение счета'}}
           name={'ReplenishBalance'}
-          component={TopUpYourAccount}
+          component={ReplenishBalanceScreen}
         />
       </Stack.Navigator>
     </>
