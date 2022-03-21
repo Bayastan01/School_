@@ -9,6 +9,7 @@ const screenSize = Dimensions.get('window');
 const SellerPersonScreen = () => {
   const dispatch = useAppDispatch();
   const user = useAppSelector(state => state.app.user);
+  const store = useAppSelector(state => state.app.store);
 
   const [fullName, setFullName] = useState('');
   const [busy, setBusy] = useState(false);
@@ -45,9 +46,16 @@ const SellerPersonScreen = () => {
           value={`+${user.phone_number}`}
           disabled
         />
+        <TextInput
+          label="Название магазина"
+          style={{marginTop: 8}}
+          value={store.title}
+          disabled
+        />
         <Button
           mode="contained"
           style={{marginTop: 8}}
+          disabled
           onPress={() => setBusy(true)}>
           Сохранить
         </Button>

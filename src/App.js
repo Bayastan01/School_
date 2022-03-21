@@ -67,6 +67,7 @@ const App = () => {
 
   useEffect(() => {
     checkUser().then();
+    // TODO: check for updates, APP_VERSION
   }, []);
 
   if (checking) {

@@ -66,7 +66,7 @@ function SellerStudentScreen({route}) {
     setBusy(true);
     requester
       .post('store/student', {
-        code: `BS${data.qr_code}`,
+        code: `BS${data.card.code}`,
         sum: +state,
       })
       .then(res => {
@@ -74,7 +74,12 @@ function SellerStudentScreen({route}) {
         successSound.play();
         navigation.goBack();
       })
-      .catch(() => errorSound.play())
+      .catch(e => {
+        if (e.status === 'not_enough_balance') {
+          setState('');
+        }
+        errorSound.play();
+      })
       .finally(() => setBusy(false));
   };
 

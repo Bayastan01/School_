@@ -12,10 +12,9 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import {grey, teal} from 'material-ui-colors';
 import {FAB} from 'react-native-paper';
 import requester from '../utils/requester';
-import {getImageUrl, getQrStatusLabel, useAppSelector} from '../utils';
+import {getImageUrl, useAppSelector} from '../utils';
 import {useIsFocused} from '@react-navigation/native';
 import numberSeparator from 'number-separator';
-import moment from 'moment';
 
 const ParentHomeScreen = ({navigation}) => {
   const isFocused = useIsFocused();
@@ -115,15 +114,6 @@ const ParentHomeScreen = ({navigation}) => {
                   <Text style={styles.itemSchool}>
                     Лимит: {numberSeparator(item.limit)} сом
                   </Text>
-                  {item.qr_status === 'delivered' ? (
-                    <Text style={styles.itemSchool}>
-                      Срок карты: {moment(item.qr_expires_on).calendar()}
-                    </Text>
-                  ) : (
-                    <Text style={styles.itemSchool}>
-                      Карта: {getQrStatusLabel(item.qr_status)}
-                    </Text>
-                  )}
                 </View>
               </View>
             </TouchableOpacity>
@@ -167,11 +157,11 @@ const styles = StyleSheet.create({
   },
   itemText: {
     color: grey[900],
-    fontSize: 14,
+    fontSize: 17,
   },
   itemSchool: {
     color: grey[800],
-    fontSize: 12,
+    fontSize: 14,
   },
 });
 

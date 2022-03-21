@@ -46,6 +46,7 @@ const ParentProfileScreen = () => {
         />
         <Button
           mode="contained"
+          disabled
           style={{marginTop: 8}}
           onPress={() => setBusy(true)}>
           Сохранить

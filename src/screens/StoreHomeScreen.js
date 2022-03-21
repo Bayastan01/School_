@@ -18,7 +18,7 @@ function StoreHomeScreen({navigation}) {
   const [busy, setBusy] = useState(false);
 
   const readQRCode = async data => {
-    if (data.substring(0, 2).toUpperCase() !== 'BS' || data.length !== 34) {
+    if (data.substring(0, 2).toUpperCase() !== 'BS') {
       return;
     }
     try {
@@ -29,7 +29,7 @@ function StoreHomeScreen({navigation}) {
         data: res.payload,
       });
     } catch (e) {
-      console.log(e);
+      console.log(e.status);
     }
   };
 

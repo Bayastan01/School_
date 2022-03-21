@@ -54,7 +54,7 @@ const AuthStoreComponent = ({onBack}) => {
         );
         console.log(res);
       })
-      .catch(e => {
+      .catch(() => {
         setStep(2);
       });
   };

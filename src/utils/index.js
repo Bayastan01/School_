@@ -16,6 +16,9 @@ const EXCEPTION_MESSAGES = {
   employee_not_found: 'Сотрудник не найден!',
   network_error: 'Ошибка соединения с сервером!',
   not_enough_balance: 'Недостаточно средств!',
+  card_is_invalid: 'Недействительная карта!',
+  invalid_verification_code: 'Недействительный код!',
+  incorrect_code: 'Неверный код!',
 };
 
 export class BaseException extends Error {
@@ -46,7 +49,7 @@ export class BaseException extends Error {
   show = () => {
     Toast.show({
       type: 'error',
-      position: 'bottom',
+      position: 'top',
       text1: this.title,
       text2: this.message,
     });

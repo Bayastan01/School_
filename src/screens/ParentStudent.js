@@ -89,7 +89,7 @@ const ParentStudent = ({navigation, route}) => {
           <TextInput
             label="Лимит за день"
             onChangeText={l => setLimit(l)}
-            style={styles.input}
+            style={{marginTop: 8}}
             value={limit}
             keyboardType={'numeric'}
           />
