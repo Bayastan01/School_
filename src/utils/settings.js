@@ -4,7 +4,7 @@ export const DEBUG_MODE = process.env.NODE_ENV !== 'production';
 
 export const APP_TITLE = 'Besoft School';
 export const APP_VERSION = Platform.select({
-  android: 7,
+  android: 9,
   ios: 1,
 });
 

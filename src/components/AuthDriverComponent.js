@@ -7,7 +7,7 @@ import requester from '../utils/requester';
 import {VERIFICATION_CODE_LENGTH} from '../utils/settings';
 import {makeAuth} from '../stores/appStore';
 
-const AuthStoreComponent = ({onBack}) => {
+const AuthDriverComponent = ({onBack}) => {
   const dispatch = useAppDispatch();
 
   const [phone_number, setPhoneNumber] = useState('+996');
@@ -40,7 +40,7 @@ const AuthStoreComponent = ({onBack}) => {
     }
     setStep(3);
     requester
-      .post('auth/store/login', {
+      .post('auth/driver/login', {
         phone_number: phone_number.slice(1),
         verification_code,
       })
@@ -64,7 +64,7 @@ const AuthStoreComponent = ({onBack}) => {
     }
     setStep(1);
     requester
-      .post('auth/store/check', {
+      .post('auth/driver/check', {
         phone_number: phone_number.slice(1),
       })
       .then(res => {
@@ -151,4 +151,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AuthStoreComponent;
+export default AuthDriverComponent;

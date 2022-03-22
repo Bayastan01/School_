@@ -8,25 +8,8 @@ import {useNavigation} from '@react-navigation/native';
 import requester from '../utils/requester';
 import {getImageUrl, useAppDispatch} from '../utils';
 import {incStoreBalance} from '../stores/appStore';
-import Sound from 'react-native-sound';
+import {errorSound, successSound} from '../App';
 
-Sound.setCategory('Playback');
-
-const successSound = new Sound('success.mp3', Sound.MAIN_BUNDLE, (error) => {
-  if (error) {
-    console.log('failed to load the sound', error);
-    return;
-  }
-  successSound.setVolume(1);
-});
-
-const errorSound = new Sound('error.mp3', Sound.MAIN_BUNDLE, (error) => {
-  if (error) {
-    console.log('failed to load the sound', error);
-    return;
-  }
-  errorSound.setVolume(1);
-});
 
 const styles = StyleSheet.create({
   keyboard: {

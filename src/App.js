@@ -11,6 +11,30 @@ import {clearSession, makeAuth} from './stores/appStore';
 import {ActivityIndicator} from 'react-native-paper';
 import moment from 'moment';
 import 'moment/locale/ru';
+import DriverStack from './stacks/DriverStack';
+import Sound from 'react-native-sound';
+
+Sound.setCategory('Playback'); // TODO check categories and set suitable category
+
+export const successSound = new Sound(
+  'success.mp3',
+  Sound.MAIN_BUNDLE,
+  error => {
+    if (error) {
+      console.log('failed to load the sound', error);
+      return;
+    }
+    successSound.setVolume(1);
+  },
+);
+
+export const errorSound = new Sound('error.mp3', Sound.MAIN_BUNDLE, error => {
+  if (error) {
+    console.log('failed to load the sound', error);
+    return;
+  }
+  errorSound.setVolume(1);
+});
 
 moment.locale('ru-RU');
 
@@ -89,6 +113,8 @@ const App = () => {
         <StudentScreen />
       ) : user_type === 'store' ? (
         <StoreStack />
+      ) : user_type === 'driver' ? (
+        <DriverStack />
       ) : null}
     </>
   );

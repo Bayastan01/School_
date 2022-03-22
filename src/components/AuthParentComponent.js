@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 import {StyleSheet, View, Platform} from 'react-native';
 import {Button, TextInput} from 'react-native-paper';
 import SmoothPinCodeInput from 'react-native-smooth-pincode-input';
-import {teal} from 'material-ui-colors';
 import {phoneNumberValidator, useAppDispatch} from '../utils';
 import {VERIFICATION_CODE_LENGTH} from '../utils/settings';
 import requester from '../utils/requester';
@@ -114,8 +113,7 @@ const AuthParentComponent = ({onBack}) => {
           mode={'contained'}
           disabled={!canNext()}
           style={{marginTop: 8}}
-          contentStyle={{backgroundColor: 'white'}}
-          labelStyle={{color: teal[900]}}>
+          color={'white'}>
           Отправить код
         </Button>
       ) : null}
@@ -134,8 +132,7 @@ const AuthParentComponent = ({onBack}) => {
             mode={'contained'}
             disabled={!canNext()}
             style={{marginTop: 8}}
-            contentStyle={{backgroundColor: 'white'}}
-            labelStyle={{color: teal[900]}}>
+            color={'white'}>
             Подтвердить код
           </Button>
           {Platform.OS === 'ios' ? (
@@ -143,8 +140,7 @@ const AuthParentComponent = ({onBack}) => {
               onPress={() => onBack()}
               mode={'contained'}
               style={{marginTop: 8}}
-              contentStyle={{backgroundColor: 'white'}}
-              labelStyle={{color: teal[900]}}>
+              color={'white'}>
               Назад
             </Button>
           ) : null}

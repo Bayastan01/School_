@@ -1,0 +1,2 @@
+- Install to iOS release mode
+npx react-native run-ios --configuration Release --device "iPhone (Bekbolot)"

@@ -9,6 +9,7 @@ const initialState = {
   employee: null,
   user_type: null,
   parent: null,
+  driver: null,
 };
 
 export const appStore = createSlice({
@@ -20,11 +21,17 @@ export const appStore = createSlice({
         state.store.balance += action.payload;
       }
     },
+    incDriverBalance: (state, action) => {
+      if (state.user_type === 'driver') {
+        state.driver.balance += action.payload;
+      }
+    },
     makeAuth: (state, action) => {
       state.is_authorized = true;
       state.user = action.payload.data.user;
       state.store = action.payload.data.store;
       state.parent = action.payload.data.parent;
+      state.driver = action.payload.data.driver;
       state.employee = action.payload.data.employee;
       state.token = action.payload.data.token;
 
@@ -32,6 +39,8 @@ export const appStore = createSlice({
         state.user_type = 'store';
       } else if (state.parent) {
         state.user_type = 'parent';
+      } else if (state.driver) {
+        state.user_type = 'driver';
       }
 
       if (!action.payload.from_storage) {
@@ -49,6 +58,7 @@ export const appStore = createSlice({
       state.token = null;
       state.store = null;
       state.parent = null;
+      state.driver = null;
       state.employee = null;
       state.user_type = null;
 
@@ -57,6 +67,6 @@ export const appStore = createSlice({
   },
 });
 
-export const {makeAuth, clearSession, incStoreBalance} = appStore.actions;
+export const {makeAuth, clearSession, incStoreBalance, incDriverBalance} = appStore.actions;
 
 export default appStore.reducer;

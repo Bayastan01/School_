@@ -3,12 +3,12 @@ import {FlatList, StyleSheet, Text, View} from 'react-native';
 import {ActivityIndicator, Avatar, Divider} from 'react-native-paper';
 import requester from '../utils/requester';
 import moment from 'moment';
-import {grey, red} from 'material-ui-colors';
+import {green, grey} from 'material-ui-colors';
 import numberSeparator from 'number-separator';
 import {getImageUrl} from '../utils';
 import {ITEMS_PER_PAGE} from '../utils/settings';
 
-const ParentCostScreen = () => {
+const DriverPaymentsScreen = () => {
   const [items, setItems] = useState([]);
   const [busy, setBusy] = useState(false);
   const [page, setPage] = useState(2);
@@ -23,7 +23,7 @@ const ParentCostScreen = () => {
     setStopNextPage(false);
     setBusy(true);
     requester
-      .get('parent/transaction/consumption')
+      .get('driver/transaction/payment', {page: 1})
       .then(res => {
         setItems(res.payload);
         setStopNextPage(res.payload.length < ITEMS_PER_PAGE);
@@ -39,7 +39,7 @@ const ParentCostScreen = () => {
     }
     setChangingPage(true);
     requester
-      .get('parent/transaction/consumption', {page})
+      .get('driver/transaction/payment', {page})
       .then(res => {
         setItems(p => [...p, ...res.payload]);
         setStopNextPage(res.payload.length < ITEMS_PER_PAGE);
@@ -79,32 +79,26 @@ const ParentCostScreen = () => {
           <View
             style={{
               flexDirection: 'row',
-              paddingVertical: 8,
-              marginHorizontal: 12,
+              padding: 8,
               alignItems: 'center',
             }}>
-            <Avatar.Icon
-              style={{backgroundColor: item.driver ? '#007ac1' : '#b0003a'}}
+            <Avatar.Image
               size={50}
-              icon={item.driver ? 'bus-school' : 'coffee'}
+              source={{uri: getImageUrl(item.student.picture.path)}}
             />
             <View
               style={{
                 flexGrow: 1,
-                marginLeft: 12,
+                marginLeft: 10,
               }}>
-              <Text style={styles.title}>
-                {item.store ? item.store.title : ''}
-                {item.driver ? item.driver.state_number : ''}
-                {/* TODO: QR card payments*/}
-              </Text>
+              <Text style={styles.title}>{item.student.full_name}</Text>
               <Text style={{color: grey[900]}}>{item.student.full_name}</Text>
               <Text style={{color: grey[700]}}>
                 {moment(item.created_at).calendar()}
               </Text>
             </View>
             <Text style={styles.amount}>
-              -{numberSeparator(item.amount)}{' '}
+              +{numberSeparator(item.amount)}{' '}
               <Text style={{textDecorationLine: 'underline'}}>с</Text>
             </Text>
           </View>
@@ -123,8 +117,8 @@ const styles = StyleSheet.create({
   amount: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: red[900],
+    color: green[900],
   },
 });
 
-export default ParentCostScreen;
+export default DriverPaymentsScreen;

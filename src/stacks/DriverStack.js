@@ -1,14 +1,14 @@
 import React from 'react';
 import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
-import StoreProfileScreen from '../screens/StoreProfileScreen';
-import StoreFinanceStack from '../screens/StoreFinanceStack';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {grey, teal} from 'material-ui-colors';
-import StoreHomeStack from './StoreHomeStack';
+import DriverHomeStack from './DriverHomeStack';
+import DriverProfileScreen from '../screens/DriverProfileScreen';
+import DriverFinanceStack from './DriverFinanceStack';
 
 const Tab = createMaterialBottomTabNavigator();
 
-const StoreStack = () => {
+const DriverStack = () => {
   return (
     <>
       <Tab.Navigator
@@ -17,7 +17,7 @@ const StoreStack = () => {
         barStyle={{backgroundColor: teal[900]}}>
         <Tab.Screen
           name="HomeStack"
-          component={StoreHomeStack}
+          component={DriverHomeStack}
           options={{
             tabBarLabel: 'Главная',
             tabBarIcon: ({color}) => (
@@ -27,7 +27,7 @@ const StoreStack = () => {
         />
         <Tab.Screen
           name="FinanceStack"
-          component={StoreFinanceStack}
+          component={DriverFinanceStack}
           options={{
             tabBarLabel: 'Финанс',
             tabBarIcon: ({color}) => (
@@ -41,7 +41,7 @@ const StoreStack = () => {
         />
         <Tab.Screen
           name="ProfileScreen"
-          component={StoreProfileScreen}
+          component={DriverProfileScreen}
           options={{
             tabBarLabel: 'Профиль',
             tabBarIcon: ({color}) => (
@@ -58,4 +58,4 @@ const StoreStack = () => {
   );
 };
 
-export default StoreStack;
+export default DriverStack;

@@ -6,10 +6,10 @@ import {Avatar, Button, TextInput} from 'react-native-paper';
 
 const screenSize = Dimensions.get('window');
 
-const SellerPersonScreen = () => {
+const DriverProfileScreen = () => {
   const dispatch = useAppDispatch();
   const user = useAppSelector(state => state.app.user);
-  const store = useAppSelector(state => state.app.store);
+  const driver = useAppSelector(state => state.app.driver);
 
   const [fullName, setFullName] = useState('');
   const [busy, setBusy] = useState(false);
@@ -47,9 +47,9 @@ const SellerPersonScreen = () => {
           disabled
         />
         <TextInput
-          label="Название магазина"
+          label="Гос.номер авто"
           style={{marginTop: 8}}
-          value={store.title}
+          value={driver.state_number}
           disabled
         />
         <Button
@@ -70,4 +70,4 @@ const SellerPersonScreen = () => {
   );
 };
 
-export default SellerPersonScreen;
+export default DriverProfileScreen;

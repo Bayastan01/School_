@@ -19,12 +19,14 @@ import {grey, teal, common} from 'material-ui-colors';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import AuthParentComponent from '../components/AuthParentComponent';
 import AuthStoreComponent from '../components/AuthStoreComponent';
+import AuthDriverComponent from '../components/AuthDriverComponent';
 
 const USER_TYPES = [
   {name: 'parent', label: 'Родитель'},
   // {name: 'head_teacher', label: 'Директор школы'},
   // {name: 'student', label: 'Школьник'},
   {name: 'store', label: 'Продавец или кафе'},
+  {name: 'driver', label: 'Водитель'},
   // {name: 'сlassroom_teacher', label: 'Классный руководитель'},
 ];
 
@@ -93,12 +95,9 @@ const WelcomeScreen = () => {
         />
         <Title style={{color: common.white, textAlign: 'center'}}>
           {step === 0 ? (
-            <Text style={{color: '#fff'}}> Кем вы являетесь? </Text>
+            <Text style={{color: '#fff'}}>Кем вы являетесь?</Text>
           ) : null}
-          {step === 1 && who_are_you === 'parent' ? (
-            <Text style={{color: '#fff'}}>Заполните!</Text>
-          ) : null}
-          {step === 1 && who_are_you === 'store' ? (
+          {step === 1 ? (
             <Text style={{color: '#fff'}}>Заполните!</Text>
           ) : null}
         </Title>
@@ -139,14 +138,20 @@ const WelcomeScreen = () => {
               ) : null}
             </>
           ) : null}
+          {step === 1 ? (
+            <>
+              {who_are_you === 'driver' ? (
+                <AuthDriverComponent onBack={() => setStep(0)} />
+              ) : null}
+            </>
+          ) : null}
         </View>
         {step === 0 ? (
           <Button
             onPress={() => setStep(1)}
             mode={'contained'}
-            disabled={!who_are_you}
-            contentStyle={{backgroundColor: 'white'}}
-            labelStyle={{color: teal[900]}}>
+            color={'white'}
+            disabled={!who_are_you}>
             Далее
           </Button>
         ) : null}
